@@ -1,5 +1,5 @@
-import concurrently from "concurrently";
-import chalk from "chalk";
+import concurrently from 'concurrently';
+import chalk from 'chalk';
 
 const start = (new Date()).getTime();
 const { result, commands } = concurrently(
@@ -14,7 +14,9 @@ const { result, commands } = concurrently(
     }
   ],
   { // Options
+    prefix: `${chalk.dim('{time}')} {name} `,
     restartTries: 0,
+    timestampFormat: 'HH:mm'
   }
 )
 
