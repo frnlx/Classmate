@@ -5,10 +5,6 @@ import styled from '@emotion/styled';
 
 const inter = Inter({ subsets: ['latin'] })
 
-const body = styled.div`
-
-`;
-
 export default function Page() {
   return (
     <main>
