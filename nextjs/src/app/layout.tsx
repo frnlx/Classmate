@@ -1,10 +1,9 @@
-import './globals.css'
+import styled from '@emotion/styled';
+import './style.sass'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       {/*
