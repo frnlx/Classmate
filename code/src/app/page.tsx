@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <main>
-      <div className=''>
-        <h1>Welcome to Main Page</h1>
+      <div className='flex flex-col align-top'>
+        <h1>Welcome to Landing Page</h1>
         <Link href='/app'>Go to App</Link>
       </div>
     </main>

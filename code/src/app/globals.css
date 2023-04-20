@@ -6,11 +6,44 @@
   box-sizing: border-box;
 }
 
+a{
+  display: block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  margin-top: 0.8rem;
+  background-color: #e2e8f0;
+  width: fit-content;
+  box-shadow:0 0 0 1px #cbd5e1;
+  font-weight: 700;
+  color: #475569
+}
+
+a:hover{
+  background-color: #cbd5e1
+}
+
+button {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  margin-top: 0.8rem;
+  background-color: #3b82f6;
+  width: fit-content;
+  box-shadow: 0 0 0 1px #3b82f6;
+  font-weight: 700;
+  color: #eff6ff; 
+}
+
+button:hover {
+  background-color: #2563eb
+}
+
 h1{
   font-size: 2.25rem;
   line-height: 2.5rem;
   letter-spacing: -0.025em;
   font-weight: 700;
+  margin-top:1rem;
 }
 
 h2{
@@ -18,6 +51,7 @@ h2{
   line-height: 2rem;
   letter-spacing: -0.025em;
   font-weight: 700;
+  margin-top: 1rem;
 }
 
 h3{
@@ -25,23 +59,45 @@ h3{
   line-height: 1.75rem;
   letter-spacing: -0.025em;
   font-weight: 600;
+  margin-top: 0.6rem;
 }
 
 h4{
   letter-spacing: -0.025em;
   font-weight: 600;
+  margin-top: 0.6rem;
 }
 
 body{
   background-color:#f8fafc;
   display: flex;
   justify-content: center;
+  max-width: 100vw;
+  width: 100vw;
 }
 
 main{
   background-color: #fff;
+  width: 100%;
   max-width: 800px;
   min-height: 100vh;
   flex: 1 1 auto;
-  padding: 20px
+  padding: 4rem;
+}
+
+main > div {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+div {
+  width: 100%;
+}
+
+p{
+  overflow-wrap: break-word;
+  /* margin-bottom: 4px; */
+  
 }
