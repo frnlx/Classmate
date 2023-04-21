@@ -3,7 +3,6 @@
 import { useSession } from "next-auth/react";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import { useRouter } from "next/router";
 import { redirect } from "next/navigation";
 import SignOutButton from "./auth/sign-out-button";
 
@@ -14,6 +13,7 @@ const ClientInfo = () => {
     onUnauthenticated() {
       return redirect('/app/auth')
     },
+
   })
 
   if (session) {
@@ -36,6 +36,8 @@ const ClientInfo = () => {
           <br />{session.user?.email}</p>
         <p><span className='text-zinc-400 font-semibold text-sm'>Image:</span>
           <br />{session.user?.image}</p>
+        <p><span className='text-zinc-400 font-semibold text-sm'>Raw:</span>
+          <br />{JSON.stringify(session, null, 2)}</p>
         <SignOutButton />
       </div>
     )

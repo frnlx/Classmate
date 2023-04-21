@@ -1,6 +1,6 @@
 'use client'
 import { Session } from 'next-auth'
-import { SessionProvider, getSession } from 'next-auth/react'
+import { SessionProvider } from 'next-auth/react'
 
 type Props = {
   session: Session | null | undefined
@@ -9,10 +9,10 @@ type Props = {
 
 const Providers = (props: Props) => { 
 
+  console.log(props.session)
+
   return (
-    <SessionProvider
-      session={props.session}
-    >
+    <SessionProvider session={props.session} >
       {props.children}
     </SessionProvider>
   )

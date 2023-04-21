@@ -6,15 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type": "npx supabase gen types typescript --project-id \"hkubiiqdysxeevyoqszd\" --schema public > src/server/types/database.d.ts"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.5.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@supabase/auth-helpers-nextjs": "^0.6.1",
+    "@supabase/supabase-js": "^2.21.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "autoprefixer": "10.4.14",
+    "chalk": "^5.2.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "framer-motion": "^10.12.4",
     "javascript-time-ago": "^2.5.9",
     "next": "13.3.0",
     "next-auth": "^4.22.1",
@@ -23,5 +31,9 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "encoding": "^0.1.13",
+    "prisma": "^4.13.0"
   }
 }
