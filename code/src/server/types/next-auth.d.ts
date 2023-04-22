@@ -1,17 +1,19 @@
 import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
+import { User } from "../lib/models/users";
 
 declare module 'next-auth' {
   interface Session {
     test: string
-    user: {
-      test: string
-      // custom data
-    } & DefaultSession['user']
+    user: User
   }
 
-  interface User extends DefaultUser{
-    
-  } 
+  // interface User{
+  //   bio: string
+  //   created_at: string
+  //   id: string
+  //   name: string
+  //   pfp: string
+  // } 
 
   interface Account{
 

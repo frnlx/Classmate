@@ -2,7 +2,7 @@ import ClientInfo from '@/component/client/clientinfo'
 import CountriesInfo from '@/component/client/countriesinfo'
 import Card from '@/component/ui/card'
 import config from '@/server/config'
-import { supabase as supabase } from '@/server/config/db'
+import { supabase as supabase } from '@/server/config/dbConfig'
 import { getServerSession } from 'next-auth'
 import { Inter } from 'next/font/google'
 import Link from 'next/link'
@@ -27,7 +27,7 @@ export default async function Home() {
 
         {/* <Link href='/app/auth'>Authentication</Link> */}
 
-        <Link href='/app/user'>User Setting</Link>
+        <Link href='/app/profile'>User Setting</Link>
 
         {/* <h3>Server Session Info</h3>
         {

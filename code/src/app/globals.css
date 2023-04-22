@@ -22,20 +22,29 @@ a:hover{
   background-color: #cbd5e1
 }
 
-button {
+button,input[type="submit"] {
   display: block;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   margin-block: 0.8rem;
-  background-color: #3b82f6;
+  background-color: #3b82f6 !important;
   width: fit-content;
-  box-shadow: 0 0 0 1px #3b82f6;
   font-weight: 700;
   color: #eff6ff; 
+  cursor: pointer;
 }
 
-button:hover {
-  background-color: #2563eb
+button:hover, input[type="submit"]:hover {
+  background-color: #2563eb !important
+}
+
+button[disabled]{
+  background-color: #94a3b8 !important;
+  cursor: unset;
+}
+button[disabled]:hover {
+  background-color: #94a3b8 !important;
+  cursor: unset;
 }
 
 h1{
@@ -100,4 +109,24 @@ div {
 p{
   overflow-wrap: break-word;
   /* margin-bottom: 4px; */
+}
+
+form{
+  width: 100%;
+}
+
+input{
+  background-color: #e2e8f0;
+  color:#475569;
+  display: block;
+  padding: 0.4rem 1rem;
+  margin-block: 0.4rem;
+  border-radius: 4px;
+  width: 80%;
+}
+
+.inline{
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem
 }

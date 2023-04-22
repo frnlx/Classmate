@@ -1,7 +1,7 @@
 import { AuthOptions } from "next-auth";
 import { Provider } from "next-auth/providers";
 import GoogleProvider from "next-auth/providers/google";
-import env from "./env";
+import env from "./envConfig";
 import { log } from "../lib/logger";
 import { afterLogOut, afterSuccessfullSignIn, checkIfAllowedToSignIn, modifySessionAfterSignIn, jwtManuallyUpdated as sessionManuallyUpdatedFromClient } from "../modules/auth";
 
@@ -21,7 +21,7 @@ export const auth: AuthOptions = {
   // Authentication Tokens
   session: {
     strategy: 'jwt',
-    maxAge: 20,
+    maxAge: 600,
     updateAge: 5,
   },
   jwt: {},
@@ -46,14 +46,7 @@ export const auth: AuthOptions = {
 
     // Determines if token will stored in a session
     async session({ session, token }) {
-
       await modifySessionAfterSignIn(session, token);
-      session.user.test = 'asdf';
-      session.test = 'asddddff'
-
-      // log('TOKEN ' + JSON.stringify(token, null, 2))
-      // log('SESSION ' + JSON.stringify(session, null, 2))
-
       return session
     },
 

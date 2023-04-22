@@ -1,4 +1,5 @@
 'use client'
+import { ChakraProvider } from '@chakra-ui/react'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 
@@ -13,7 +14,9 @@ const Providers = (props: Props) => {
 
   return (
     <SessionProvider session={props.session} >
-      {props.children}
+      {/* <ChakraProvider> */}
+        {props.children}
+      {/* </ChakraProvider> */}
     </SessionProvider>
   )
 }

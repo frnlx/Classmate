@@ -13,7 +13,6 @@ const ClientInfo = () => {
     onUnauthenticated() {
       return redirect('/app/auth')
     },
-
   })
 
   if (session) {
@@ -33,9 +32,7 @@ const ClientInfo = () => {
         <p><span className='text-zinc-400 font-semibold text-sm'>Name:</span>
           <br />{session.user?.name}</p>
         <p><span className='text-zinc-400 font-semibold text-sm'>Email:</span>
-          <br />{session.user?.email}</p>
-        <p><span className='text-zinc-400 font-semibold text-sm'>Image:</span>
-          <br />{session.user?.image}</p>
+          <br />{session.user?.pfp}</p>
         <p><span className='text-zinc-400 font-semibold text-sm'>Raw:</span>
           <br />{JSON.stringify(session, null, 2)}</p>
         <SignOutButton />
