@@ -1,9 +1,10 @@
 'use client'
 
-import { User } from "@/server/lib/models/users";
+import { User } from "@/server/lib/models/user";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -28,13 +29,9 @@ const UpdateProfileForm = () => {
     clearErrors,
     setError,
     reset,
-    formState: { errors, isDirty }
+    formState: { errors, isDirty, isLoading }
   } = useForm<Inputs>({
-    defaultValues: {
-      required_name: session!.user.name,
-      bio: session!.user.bio
-    },
-
+    defaultValues: async () => await getDefaultValues(),
   });
 
   const getDefaultValues = async () => {
@@ -47,6 +44,7 @@ const UpdateProfileForm = () => {
       }
     } catch (error) {
       console.log('Something Went Wrong')
+      console.log(error)
       return {
         required_name: '',
         bio: ''
@@ -59,6 +57,10 @@ const UpdateProfileForm = () => {
       try {
         console.log(data)
         await axios.post(`/api/user/${session?.user.id}/update`, data)
+
+        const val = await getDefaultValues();
+        reset(val);
+
         clearErrors()
       } catch (error) {
 
@@ -75,7 +77,8 @@ const UpdateProfileForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} >
 
       <label>Name {errors.required_name && <span>👇{errors.required_name.message}</span>}</label>
-      <input defaultValue={session!.user.name}
+      <input
+        disabled={isLoading}
         {...register("required_name",
           {
             required: "Your username can't be empty",
@@ -89,7 +92,8 @@ const UpdateProfileForm = () => {
       
       
       <label>Bio {errors.bio && <span>👇{errors.bio.message}</span>}</label>
-      <input defaultValue={session!.user.bio}
+      <input
+        disabled={isLoading}
         {...register("bio")}
       />
       
@@ -102,7 +106,11 @@ const UpdateProfileForm = () => {
         <button
           type="reset"
           disabled={!isDirty}
-          onClick={()=>reset()}
+          onClick={async (e) => {
+            e.preventDefault()
+            const val = await getDefaultValues();
+            reset(val);
+          }}
         >Reset</button>
       </div>
 

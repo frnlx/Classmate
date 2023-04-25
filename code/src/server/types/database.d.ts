@@ -9,6 +9,46 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      class_members: {
+        Row: {
+          class_id: string
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+      }
+      classes: {
+        Row: {
+          classname: string
+          classpfpurl: string | null
+          created_at: string | null
+          id: string
+        }
+        Insert: {
+          classname: string
+          classpfpurl?: string | null
+          created_at?: string | null
+          id?: string
+        }
+        Update: {
+          classname?: string
+          classpfpurl?: string | null
+          created_at?: string | null
+          id?: string
+        }
+      }
       countries: {
         Row: {
           id: number

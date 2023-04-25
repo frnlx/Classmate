@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <main>
       <div className='flex flex-col align-top'>

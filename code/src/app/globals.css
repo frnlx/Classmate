@@ -85,14 +85,14 @@ body{
   width: 100vw;
 }
 
-main{
+/* main{
   background-color: #fff;
   width: 100%;
   max-width: 800px;
   min-height: 100vh;
   flex: 1 1 auto;
   padding: 4rem;
-}
+} */
 
 main > div {
   display: flex;
@@ -129,4 +129,8 @@ input{
   display: flex;
   flex-direction: row;
   gap: 0.6rem
+}
+
+li{
+  
 }

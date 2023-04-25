@@ -2,7 +2,7 @@ import { Account, Profile, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { supabase } from "../config/dbConfig";
 import { log } from "../lib/logger";
-import { createUser, findUser } from "../lib/models/users";
+import { createUser, findUser } from "../lib/models/user";
 
 export async function checkIfAllowedToSignIn() {
   return true;
