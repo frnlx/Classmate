@@ -1,17 +1,12 @@
-import ClientInfo from '@/component/client/clientinfo'
-import CountriesInfo from '@/component/client/countriesinfo'
-import ServerSessionInfo from '@/component/server/serverSession'
-import Card from '@/component/ui/card'
 import config from '@/server/config'
-import { supabase as supabase } from '@/server/config/dbConfig'
 import { getServerSession } from 'next-auth'
-import { Inter } from 'next/font/google'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import BaseUI from '../../component/app/AppBaseUI'
 import ClassList from '../../component/app/AppClassList'
 import ClassUI from '../../component/app/AppClassUI'
-import SelectedClassContextProvider from '@/component/app/context/ClassContextProvider'
+import SelectedClassContextProvider from '@/component/app/context/ClassContext'
+import MeScreen from '@/component/app/class/meScreen'
+import ClassScreen from '@/component/app/class/classScreen'
 
 export default async function AppHome() {
 
@@ -26,7 +21,15 @@ export default async function AppHome() {
       <SelectedClassContextProvider>
         <ClassList />
         <ClassUI>
+          <MeScreen>
+            <h1>{session.user.name}</h1>
+            <div>Test</div>
+          </MeScreen>
+          <ClassScreen>
+            <div>This is for class screen</div>
+            <div>Todo: member list here</div>
             {/* Todo: Member List */}
+          </ClassScreen>
         </ClassUI>
       </SelectedClassContextProvider>
       {/* <Card>
