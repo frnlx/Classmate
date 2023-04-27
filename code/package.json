@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "type": "npx supabase gen types typescript --project-id \"hkubiiqdysxeevyoqszd\" --schema public > src/server/types/database.d.ts"
+    "type": "supabase gen types typescript --project-id \"hkubiiqdysxeevyoqszd\" --schema public > src/server/types/database.d.ts",
+    "migrate": "prisma migrate reset && prisma migrate dev --name init"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@prisma/client": "^4.13.0",
     "@supabase/auth-helpers-nextjs": "^0.6.1",
     "@supabase/supabase-js": "^2.21.0",
     "@types/node": "18.15.11",
@@ -24,6 +26,7 @@
     "eslint-config-next": "13.3.0",
     "framer-motion": "^10.12.4",
     "javascript-time-ago": "^2.5.9",
+    "nanoid": "^4.0.2",
     "next": "^13.3.1",
     "next-auth": "^4.22.1",
     "react": "18.2.0",

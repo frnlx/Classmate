@@ -36,8 +36,7 @@ const UpdateProfileForm = () => {
 
   const getDefaultValues = async () => {
     try {
-      const res = await axios.get(`/api/user/${session?.user.id}`)
-      const data = res.data as User
+      const data = (await axios(Routes.UserInfo(session!.user.id))).data as User
       return {
         required_name: data.name,
         bio: data.bio
@@ -56,7 +55,7 @@ const UpdateProfileForm = () => {
     async (data) => {
       try {
         console.log(data)
-        await axios.post(`/api/user/${session?.user.id}/update`, data)
+        await axios.post(Routes.UserUpdate(session!.user.id), data)
 
         const val = await getDefaultValues();
         reset(val);

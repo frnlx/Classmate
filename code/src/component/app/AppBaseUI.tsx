@@ -4,7 +4,7 @@ type props = {
   children: ReactNode
 }
 
-const BaseUI = ({ children }: props) => {
+const Background = ({ children }: props) => {
   return (
     <div className="bg-slate-950 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0">
       {children}
@@ -12,4 +12,4 @@ const BaseUI = ({ children }: props) => {
   );
 }
  
-export default BaseUI;
+export default Background;

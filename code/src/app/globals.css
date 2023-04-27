@@ -13,13 +13,14 @@ a{
   margin-block: 0.8rem;
   background-color: #e2e8f0;
   width: fit-content;
-  box-shadow:0 0 0 1px #cbd5e1;
+  box-shadow:0 0 0 1px #cbd5e166;
   font-weight: 700;
-  color: #475569
+  color: #475569;
+  border: transparent;
 }
 
 a:hover{
-  background-color: #cbd5e1
+  background-color: #cbd5e155
 }
 
 button,input[type="submit"] {

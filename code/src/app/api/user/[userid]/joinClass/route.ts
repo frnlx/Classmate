@@ -6,23 +6,27 @@ import { prisma } from '@/server/config/dbConfig'
 
 export async function POST(request: NextRequest, { params }: RouteParam) {
   try {
+    console.log("Hi")
     const userid = params['userid'] as string
-    
+
     const session = await getServerSession(config.auth)
     if (!session) return NextResponse.json({}, { status: 401, statusText: 'Unauthorizedd' })
-    
+
     const data = await request.json()
+    console.log("Hi")
 
     await prisma.user.update({
       where: { id: userid },
       data: {
-        name: data.required_name,
-        bio: data.bio
+        classes: {
+          connect: {
+            id: data.classId
+          }
+        }
       }
     })
-    
-    return NextResponse.json({}, { status: 200, statusText: 'OKk' })
-  
+
+    return NextResponse.json({}, { status: 200 })
   } catch (error) {
     console.log(error)
     return NextResponse.json(error, { status: 500 })

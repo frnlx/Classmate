@@ -3,7 +3,7 @@ import { Provider } from "next-auth/providers";
 import GoogleProvider from "next-auth/providers/google";
 import env from "./envConfig";
 import { log } from "../lib/logger";
-import { afterLogOut, afterSuccessfullSignIn, checkIfAllowedToSignIn, modifySessionAfterSignIn, jwtManuallyUpdated as sessionManuallyUpdatedFromClient } from "../modules/auth";
+import { afterLogOut, afterSuccessfullSignIn, checkIfAllowedToSignIn, modifySessionAfterSignIn, jwtManuallyUpdated as sessionManuallyUpdatedFromClient } from "../lib/auth";
 
 const authProviders:Provider[] = [
   GoogleProvider({
@@ -40,6 +40,8 @@ export const auth: AuthOptions = {
         await afterSuccessfullSignIn(token, user, account, profile)
       if (session)
         await sessionManuallyUpdatedFromClient(token, session)
+      
+      // log("log: " + !!account)
       
       return token // continues to session callback
     },

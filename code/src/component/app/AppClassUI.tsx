@@ -12,9 +12,6 @@ const ClassUI = ({ children }: props) => {
 
   return (
     <div className="text-slate-200 p-10">
-      <div>
-        {selectedClass}
-      </div>
       {children}
     </div>
   );

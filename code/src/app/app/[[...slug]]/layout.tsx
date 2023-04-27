@@ -14,21 +14,14 @@ export const metadata = {
 
 export default async function RootLayout(p: { children: React.ReactNode, params: {slug: string[] } }) {
   
-  const session = await getServerSession(config.auth)
-
-  if (!session) {
-    redirect('/auth')
-  }
+  const slug1 = p.params.slug && p.params.slug[0] ? p.params.slug[0] : undefined;
 
   return (
-    <Providers session={session}>
-      <main>
-        <Background>
-          <LoadUserData session={session}>
-            {p.children}
-          </LoadUserData>
-        </Background>
-      </main>
-    </Providers>
+    <SelectedClassContextProvider url={slug1} >
+      <ClassList />
+      <ClassUI>
+        {p.children}
+      </ClassUI>
+    </SelectedClassContextProvider>
   );
 }

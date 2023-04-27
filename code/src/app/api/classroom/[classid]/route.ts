@@ -8,22 +8,22 @@ import { HttpStatusCode } from 'axios'
 export async function GET(request: NextRequest, { params }: RouteParam) {
   try {
 
-    const userid = params['userid'] as string
+    const classId = params['classid'] as string
 
     const session = await getServerSession(config.auth)
     if (!session || !session.user.id)
       return NextResponse.json({}, { status: 401, statusText: 'Unauthorized' })
 
-    const userData = await prisma.user.findUnique({
-      where: { id: userid },
+    const classData = await prisma.classroom.findUnique({
+      where: { id: classId },
       include: {
-        classes: true,
+        members: true
       }
     })
 
-    return NextResponse.json(userData, { status: 200 })
+    return NextResponse.json(classData, { status: 200, statusText: 'OKk' })
 
-  } catch (error) {
+  } catch (error) { 
     console.log(error)
     return NextResponse.json(error, { status: 500 })
   }

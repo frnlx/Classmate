@@ -1,12 +1,13 @@
 'use client'
 
+import { Button } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 
 const SignOutButton = () => {
   return (
-    <button onClick={() => signOut({
+    <Button onClick={() => signOut({
       callbackUrl: '/app/auth'
-    })}>Sign out</button>
+    })}>Sign out</Button>
   )
 }
 
