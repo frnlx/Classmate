@@ -7,7 +7,7 @@ Requires Nodejs
 
 # Running
 
-Requires setting up .env
+Requires setting up .env and internet connection to connect to Supabase Server
 
 Required variables:
 
@@ -20,3 +20,4 @@ Required variables:
 - GOOGLE_CLIENT_SECRET
 - NEXTAUTH_SECRET
 - NEXTAUTH_URL
+
