@@ -21,11 +21,20 @@ model User {
 }
 
 model Classroom {
-  id         String   @id @default(cuid())
+  id         String     @id @default(cuid())
   name       String
   members    User[]
-  owner      User     @relation("owner", fields: [ownerId], references: [id])
+  owner      User       @relation("owner", fields: [ownerId], references: [id])
   ownerId    String
-  created_at DateTime @default(now())
+  categories Category[]
+  created_at DateTime   @default(now())
   inviteID   String
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String
+  title       String
+  Classroom   Classroom? @relation(fields: [classroomId], references: [id])
+  classroomId String?
 }

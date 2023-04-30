@@ -27,8 +27,8 @@ button,input[type="submit"] {
   display: block;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  margin-block: 0.8rem;
-  background-color: #3b82f6 !important;
+  /* margin-block: 0.8rem; */
+  /* background-color: #3b82f6 !important; */
   width: fit-content;
   font-weight: 700;
   color: #eff6ff; 
@@ -36,11 +36,11 @@ button,input[type="submit"] {
 }
 
 button:hover, input[type="submit"]:hover {
-  background-color: #2563eb !important
+  /* background-color: #2563eb !important */
 }
 
 button[disabled]{
-  background-color: #94a3b8 !important;
+  /* background-color: #94a3b8 !important; */
   cursor: unset;
 }
 button[disabled]:hover {

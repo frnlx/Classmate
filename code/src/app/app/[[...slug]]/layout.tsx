@@ -19,9 +19,7 @@ export default async function RootLayout(p: { children: React.ReactNode, params:
   return (
     <SelectedClassContextProvider url={slug1} >
       <ClassList />
-      <ClassUI>
-        {p.children}
-      </ClassUI>
+      {p.children}
     </SelectedClassContextProvider>
   );
 }

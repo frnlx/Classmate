@@ -1,7 +1,9 @@
-import { Account, Profile, Session, User } from "next-auth";
+import { Account, Profile, Session, User, getServerSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { prisma, supabase } from "../config/dbConfig";
 import { log } from "./logger";
+import { auth } from "../config/authConfig";
+import { NextResponse } from "next/server";
 
 export async function checkIfAllowedToSignIn() {
   return true;
@@ -56,4 +58,17 @@ export async function modifySessionAfterSignIn(session: Session, token: JWT) {
 
 export async function afterLogOut() {
   
+}
+
+
+export async function isAuthenticated() {
+  try {
+    const session = await getServerSession(auth)
+    if (!session || !session.user.id)
+      return false;
+    return true;
+  } catch (error) {
+    console.log("Error when getServerSession")
+    return false;
+  }
 }

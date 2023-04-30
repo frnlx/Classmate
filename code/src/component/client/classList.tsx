@@ -1,6 +1,6 @@
 'use client'
 
-import { Class } from "@/server/lib/models/class";
+import { Classroom } from "@prisma/client";
 import { Session } from "next-auth";
 import { useState } from "react";
 
@@ -9,14 +9,14 @@ type props = {
 }
 
 const ClassListPanel = ({ session }: props) => {
-  const [classList, setClassList] = useState<Class[]>()
+  const [classList, setClassList] = useState<Classroom[]>()
 
   return (
     <div>
       {
         classList!.map(classroom =>
           <div key={classroom.id}>
-            <p>{classroom.classname}</p>
+            <p>{classroom.name}</p>
             <button type="button">Delete</button>
           </div>
         )

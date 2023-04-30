@@ -3,10 +3,15 @@ import { getServerSession } from 'next-auth'
 import MeScreen from '@/app/app/[[...slug]]/meScreen'
 import SignOutButton from '@/component/client/auth/sign-out-button'
 import ClassScreen from '@/app/app/[[...slug]]/classScreen'
-import SlugHandler from './SlugHandler'
 import {redirect } from 'next/navigation'
 import ClassMemberList from '@/component/app/class/ClassMemberList'
 import ClassInviteList from '@/component/app/class/ClassInviteList'
+import ClassUI from '@/component/app/AppClassUI'
+import ClassSidebarContent from './classSidebarContent'
+import ClassSidebar from './classSidebar'
+import ClassSidebarItem from './classSidebarItem'
+import ClassCategoryList from './classCategoryList'
+import CreateClassCategory from './createClassCategory'
 
 export default async function ClassroomScreen({ params }: { params: { slug: string[] } }) {
 
@@ -18,7 +23,7 @@ export default async function ClassroomScreen({ params }: { params: { slug: stri
 
   //Handle Dynamic URL and Metadata Here
   return (
-    <SlugHandler slug={params.slug} >
+    <ClassUI>
       <MeScreen>
         <h1>This is Me Screen</h1>
         <p>This is Me Screen, for debug only.</p>
@@ -28,15 +33,37 @@ export default async function ClassroomScreen({ params }: { params: { slug: stri
         <h3>Search for Class</h3>
         <SignOutButton />
       </MeScreen>
-      <ClassScreen>
-        <h1>This is Class Screen</h1>
-        <div>This is server side-rendering</div>
-        <h3>Member List</h3>
-        <ClassMemberList />
-        <h3>Invite Link</h3>
-        <ClassInviteList />
+      <ClassScreen defaultValue='Home'>
+
+        <ClassSidebar>
+          <div>
+            <ClassSidebarItem value='Home' />
+            <ClassSidebarItem value='Assignment'/>
+            {/* <ClassSidebarItem value='Chat'/> */}
+          </div>
+          <ClassCategoryList />
+          <CreateClassCategory />
+        </ClassSidebar>
+
+        <ClassSidebarContent value='Home'>
+          <h1>This is Class Screen</h1>
+          <div>This is server side-rendering</div>
+          <h3>Member List</h3>
+          <ClassMemberList />
+          <h3>Invite Link</h3>
+          <ClassInviteList />
+        </ClassSidebarContent>
+
+        <ClassSidebarContent value='Assignment'>
+          Hellos
+        </ClassSidebarContent>
+        
+        {/* <ClassSidebarContent value='Chat'>
+
+        </ClassSidebarContent> */}
+
       </ClassScreen>
-    </SlugHandler>
+    </ClassUI>
   );
 } 
 

@@ -48,4 +48,5 @@ function handleResponse(response: any) {
 }
 
 
-export type RouteParam = { params: { [key: string]: string | string[] }}
+export type RouteParam = { params: { [key: string]: string }}
+export type RouteParams = { params: { [key: string]: string[] }}

@@ -12,7 +12,7 @@ export async function POST(request: NextRequest, { params }: RouteParam) {
     if (!session)
       return NextResponse.json({}, { status: 401, statusText: 'Unauthorizedd' })
 
-    await prisma.classroom.create({
+    const classroom = await prisma.classroom.create({
       data: {
         name: `${session.user.name}'s Classroom`,
         members: {
@@ -25,9 +25,20 @@ export async function POST(request: NextRequest, { params }: RouteParam) {
             id: `${session.user.id}`
           }
         },
+        categories: {
+          create: [
+            {
+              name: 'Week 1', title: 'Untitled Category'
+            },
+            {
+              name: 'Week 2', title: 'Untitled Category'
+            }
+          ]
+        },
         inviteID: nanoid(6)
       }
-    })
+    });
+    
     
     
     return NextResponse.json({ status: 200, statusText: 'OKk' })

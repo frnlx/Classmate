@@ -20,7 +20,6 @@ const JoinClassButton = (p: prop) => {
         (res) => {
           if (res.status === 200) {
             router.push('/app/')
-            redirect(`/app/${p.classId}`)
           }
         }
       )

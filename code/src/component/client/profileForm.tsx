@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from "@/server/lib/models/user";
+import { User } from "@/server/routes/user";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";

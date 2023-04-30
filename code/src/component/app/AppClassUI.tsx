@@ -11,7 +11,7 @@ const ClassUI = ({ children }: props) => {
   const selectedClass = useSelectedClass();
 
   return (
-    <div className="text-slate-200 p-10">
+    <div className="text-slate-200">
       {children}
     </div>
   );
