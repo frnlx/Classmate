@@ -1,16 +1,43 @@
 import { NextResponse } from "next/server";
 
-export const AppResponse = {
-  unauthorized:
-    (data?: any) =>
-      NextResponse.json(data, { status: 401 }),
-  notAuthenticated:
-    (data?: any) =>
-      NextResponse.json(data, { status: 403 }),
+
+
+export const Res = {
+  /**
+   * Gives Unauthorized Response
+   * @returns NextResponse of status 401
+   */
+  unauth:
+    () => new NextResponse(undefined, { status: 401 }),
+  /**
+   * Gives Not Authenticated Response
+   * @returns NextResponse of status 403
+   */
+  notAuth:
+    () => new NextResponse(undefined, { status: 403 }),
+  /**
+   * Gives JSON Response
+   * @param data 
+   * @returns NextResponse of status 200
+   */
+  json:
+    (data: any) => NextResponse.json(data, { status: 200 }),
+  /**
+   * Gives OK Response
+   * @returns NextResponse of status 200
+   */
   ok:
-    (data?: any) =>
-      NextResponse.json(data, { status: 200 }),
+    () => new NextResponse(undefined, {status: 200}),
+  /**
+   * Gives Internal Server Error Response
+   * @returns NextResponse of status 500
+   */
   error:
-    (data?: any) => 
-      NextResponse.json(data, { status: 500 })
-}
+    () => new NextResponse(undefined, { status: 500 }),
+  /**
+   * Gives Not Found Response
+   * @returns NextResponse of status 404
+   */
+  notFound:
+    () => new NextResponse(undefined, { status: 404 }),
+};

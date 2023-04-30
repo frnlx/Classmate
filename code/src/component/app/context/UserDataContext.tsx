@@ -24,11 +24,14 @@ const LoadUserData = (p: { children: ReactNode, session: Session }) => {
 
   const fetchUserData = () => {
     axios(Routes.UserInfo(p.session.user.id))
-      .then(res => setUserData(res.data))
+      .then(res => {
+        console.log('Fetching user Data')
+        console.log(typeof res.data)
+        setUserData(res.data)
+      })
   }
 
   useEffect(() => {
-    console.log('User Data Context')
     fetchUserData()
   },[])
 

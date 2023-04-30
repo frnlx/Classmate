@@ -2,7 +2,7 @@ import { prisma } from "../config/dbConfig"
 
 export const fetchUser = async (id: string) => {
   try {
-    const data = await prisma.user.findUnique({
+    return await prisma.user.findUnique({
       where: { id },
       include: {
         classes:true
