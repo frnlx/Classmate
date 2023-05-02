@@ -1,12 +1,19 @@
 'use client'
 
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useSelectedClass } from "../../../component/app/context/ClassContext";
 import ClassMemberList from "../../../component/app/class/ClassMemberList";
 import { Root } from "@radix-ui/react-tabs";
 
-const ClassScreen = (p: {children: ReactNode, defaultValue: string}) => {
+const ClassScreen = (p: { children: ReactNode, defaultValue: string }) => {
+  
   const selectedClass = useSelectedClass()
+  const [selectedCategory, setSelectedCategory] = useState<string>()
+
+
+
+  
+
 
   return selectedClass.order !== 0 ? (
     <Root
@@ -16,6 +23,7 @@ const ClassScreen = (p: {children: ReactNode, defaultValue: string}) => {
         console.log('Value changed to '+data)
       }}
       className="flex"
+
     >
       {p.children}
     </Root>

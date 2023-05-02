@@ -12,7 +12,7 @@ import { redirect } from 'next/navigation'
 export const metadata = {
 }
 
-export default async function RootLayout(p: { children: React.ReactNode, params: {slug: string[] } }) {
+export default async function RootLayout(p: { children: React.ReactNode }) {
   
   const session = await getServerSession(config.auth)
 

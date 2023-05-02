@@ -1,9 +1,6 @@
-import config from '@/server/config'
-import { getServerSession } from 'next-auth'
 import MeScreen from '@/app/app/[[...slug]]/meScreen'
 import SignOutButton from '@/component/client/auth/sign-out-button'
 import ClassScreen from '@/app/app/[[...slug]]/classScreen'
-import {redirect } from 'next/navigation'
 import ClassMemberList from '@/component/app/class/ClassMemberList'
 import ClassInviteList from '@/component/app/class/ClassInviteList'
 import ClassUI from '@/component/app/AppClassUI'
@@ -12,14 +9,9 @@ import ClassSidebar from './classSidebar'
 import ClassSidebarItem from './classSidebarItem'
 import ClassCategoryList from './classCategoryList'
 import CreateClassCategory from './createClassCategory'
+import ClassSidebarCategoryContent from './classSidebarCategoryContent'
 
 export default async function ClassroomScreen({ params }: { params: { slug: string[] } }) {
-
-  const session = await getServerSession(config.auth)
-  
-  if (!session) {
-    redirect('/auth')
-  }
 
   //Handle Dynamic URL and Metadata Here
   return (
@@ -57,10 +49,15 @@ export default async function ClassroomScreen({ params }: { params: { slug: stri
         <ClassSidebarContent value='Assignment'>
           Hellos
         </ClassSidebarContent>
+
+        <ClassSidebarCategoryContent>
+          
+        </ClassSidebarCategoryContent>
         
         {/* <ClassSidebarContent value='Chat'>
 
         </ClassSidebarContent> */}
+
 
       </ClassScreen>
     </ClassUI>
