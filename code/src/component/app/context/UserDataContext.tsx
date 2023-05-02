@@ -19,14 +19,15 @@ export const useUpdateUserData = () => useContext(UpdateUserDataContext)
 
 // Context Component
 // -----------------
-const LoadUserData = (p: { children: ReactNode, session: Session }) => {
-  const [userData, setUserData] = useState<UserData | undefined>()
+const LoadUserDataContext = (p: { children: ReactNode, session: Session }) => {
+  const [userData, setUserData] = useState<UserData | null>()
 
   const fetchUserData = () => {
     axios(Routes.UserInfo(p.session.user.id))
       .then(res => {
         console.log('Fetching user Data')
         console.log(typeof res.data)
+        console.log(res.data)
         setUserData(res.data)
       })
   }
@@ -52,4 +53,4 @@ const LoadUserData = (p: { children: ReactNode, session: Session }) => {
 
 // Export
 // ------
-export default LoadUserData
+export default LoadUserDataContext

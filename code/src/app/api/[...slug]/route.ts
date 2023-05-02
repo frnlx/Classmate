@@ -3,6 +3,7 @@ import { prisma } from "@/server/config/dbConfig"
 import { isAuthenticated as isAuth } from "@/server/lib/auth"
 import { Res } from "@/server/lib/responses"
 import { routeHandler, routes } from "@/server/lib/route"
+import { UserData } from "@/server/types/fetchmodels"
 import { nanoid } from "nanoid"
 import { Session, getServerSession } from "next-auth"
 
@@ -16,10 +17,14 @@ routes({
     async (req, [id]) => {
       if (!await isAuth()) return Res.notAuth()
     
-      const data = await prisma.user.findUnique({
+      const data: UserData | null = await prisma.user.findUnique({
         where: { id },
         include: {
-          classes: true
+          classes: {
+            include: {
+              categories: true
+            }
+          }
         }
       })
       

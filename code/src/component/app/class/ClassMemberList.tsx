@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Routes } from "../../lib/route-helper";
 import axios from "axios";
 import { ClassroomData } from "@/server/types/fetchmodels";
-import { useSelectedClass } from "../context/ClassContext";
+import { useRoom } from "../context/RoomContext";
 
 // This is one of the example of a component
 //  to fetch upon mounted.
@@ -15,10 +15,10 @@ import { useSelectedClass } from "../context/ClassContext";
 const ClassMemberList = () => {
   
   const [classMembers, setClassMembers] = useState<User[]>();
-  const selectedClass = useSelectedClass();
+  const room = useRoom();
   
   const fetchClassMembers = () => {
-    axios(Routes.ClassInfo(selectedClass.data!.id)).then(
+    axios(Routes.ClassInfo(room.current.data!.id)).then(
       (res) => {
         setClassMembers((res.data as ClassroomData).members)
       }

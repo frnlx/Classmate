@@ -1,13 +1,14 @@
 'use client'
 
-import { Content } from "@radix-ui/react-tabs";
+import { Tab } from "@headlessui/react";
+import { Content, Root } from "@radix-ui/react-tabs";
 import { ReactNode } from "react";
 
 const ClassSidebarContent = (p: {children: ReactNode, value: string}) => {
   return (
-    <Content value={p.value} className="p-8">
+    <Tab.Panel className="p-8">
       {p.children}
-    </Content>
+    </Tab.Panel>
   );
 }
  
