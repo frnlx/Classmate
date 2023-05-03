@@ -4,7 +4,7 @@ import { Tab } from "@headlessui/react";
 import { Content, Root } from "@radix-ui/react-tabs";
 import { ReactNode } from "react";
 
-const ClassSidebarContent = (p: {children: ReactNode, value: string}) => {
+const SidebarContent = (p: {children: ReactNode, value: string}) => {
   return (
     <Tab.Panel className="p-8">
       {p.children}
@@ -12,4 +12,4 @@ const ClassSidebarContent = (p: {children: ReactNode, value: string}) => {
   );
 }
  
-export default ClassSidebarContent;
+export default SidebarContent;

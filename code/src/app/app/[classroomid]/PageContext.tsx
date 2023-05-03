@@ -2,9 +2,9 @@
 
 import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { useUserData } from "./UserDataContext";
+import { useUserData } from "../UserDataContext";
 import { UserData } from "@/server/types/fetchmodels";
-import { AppRoom, useRoom } from "./RoomContext";
+import { AppRoom, useRoom } from "../RoomContext";
 
 export type AppPage = {
   index: number,
@@ -70,7 +70,8 @@ const PageContextProvider = (p: { children: ReactNode }) => {
         }))
       setPageList([...defaultPages,...list])
       }
-  },[room.data])
+  }, [userData, room.data])
+  // UserData Deps is required so that when the user data is updated, it will also refresh the list.
 
   return (
     <PageContext.Provider value={{

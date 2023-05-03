@@ -1,23 +1,23 @@
 'use client'
 
-import { useRoom } from "@/component/app/context/RoomContext";
+import { useRoom } from "@/app/app/RoomContext";
 import { Tab } from "@headlessui/react";
 import { IconContext } from "@phosphor-icons/react";
 import { ReactNode } from "react";
 
-const ClassSidebar = (p: { children: ReactNode }) => {
+const Sidebar = (p: { children: ReactNode }) => {
   
   const { current: currentRoom } = useRoom();
 
   return (
-    <Tab.List className="bg-slate-900 w-60 h-screen flex-shrink-0">
-      <div className="font-bold leading-5 border-b p-4 pb-6 border-slate-700">
+    <Tab.List className="bg-zinc-950 w-60 h-screen flex-shrink-0 pr-4">
+      <div className="font-bold leading-5 border-b py-4 pb-6 border-slate-700">
         {currentRoom.data!.name}
       </div>
-      <div className="p-4 py-5">
+      <div className="py-2">
         <IconContext.Provider
           value={{
-            size: 22,
+            size: 20,
             weight: 'fill'
           }}
         >
@@ -28,4 +28,4 @@ const ClassSidebar = (p: { children: ReactNode }) => {
   );
 }
  
-export default ClassSidebar;
+export default Sidebar;

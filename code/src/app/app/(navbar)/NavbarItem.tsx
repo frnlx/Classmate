@@ -1,13 +1,11 @@
-import { Classroom } from "@prisma/client";
 import Image from "next/image";
-import { HTMLProps } from "react";
 
 interface prop extends React.HTMLAttributes<HTMLLIElement>{
   selected: boolean,
   image?: string
 }
 
-const ClassListItem = ({className, selected, image, ...rest}:prop) => {
+const NavbarItem = ({className, selected, image, ...rest}:prop) => {
   return (
     <li {...rest} className={"overflow-hidden transition-all duration-200 w-14 h-14 rounded-3xl hover:bg-slate-300 hover:rounded-xl cursor-pointer "+(selected ? "bg-slate-300" : "bg-slate-600")}>
       {
@@ -17,4 +15,4 @@ const ClassListItem = ({className, selected, image, ...rest}:prop) => {
   );
 }
  
-export default ClassListItem;
+export default NavbarItem;

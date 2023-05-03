@@ -1,11 +1,10 @@
-import Background from '@/component/app/AppBaseUI'
-import ClassList from '@/component/app/AppClassList'
-import RoomContextProvider from '@/component/app/context/RoomContext'
-import LoadUserDataContext from '@/component/app/context/UserDataContext'
-import Providers from '@/component/client/providers'
+import RoomContextProvider from '@/app/app/RoomContext'
+import LoadUserDataContext from '@/app/app/UserDataContext'
+import Providers from '@/app/app/providers'
 import config from '@/server/config'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import Navbar from './(navbar)/Navbar'
 
 export const metadata = {
 }
@@ -19,17 +18,17 @@ export default async function RootLayout(p: { children: React.ReactNode }) {
   }
 
   return (
-    <Providers session={session}>
-      <main>
-        <Background>
-          <LoadUserDataContext session={session}>
-            <RoomContextProvider>
-              <ClassList />
-              {p.children}
-            </RoomContextProvider>
-          </LoadUserDataContext>
-        </Background>
-      </main>
-    </Providers>
+    <main className="bg-zinc-900 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-slate-200">
+      <Providers session={session}>
+        <LoadUserDataContext session={session}>
+          <RoomContextProvider>
+
+            <Navbar />
+            {p.children}
+            
+          </RoomContextProvider>
+        </LoadUserDataContext>
+      </Providers>
+    </main>
   );
 }

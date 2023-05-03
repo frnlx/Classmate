@@ -1,5 +1,4 @@
-import ClientInfo from "@/component/client/clientinfo";
-import UpdateProfileForm from "@/component/client/profileForm";
+import UpdateProfileForm from "@/component/client/testing/profileForm";
 import Card from "@/component/ui/card";
 import Link from "next/link";
 

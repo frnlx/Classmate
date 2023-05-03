@@ -79,15 +79,25 @@ routes({
       return Res.json(classData)
     },
   
+  'POST:/classroom/[classid]/createCategory':
+    async (req, [id]) => {
+      if (!await isAuth()) return Res.notAuth()
+      await prisma.category.create({
+        data: {
+          name: 'New Category',
+          title: 'Untitled Category', 
+          Classroom: {
+            connect: { id }
+          }
+        }
+      })
+      return Res.ok()
+    },
   'POST:/classroom/create':
     async (req, params, data) => {
       if (!await isAuth()) return Res.notAuth()
 
-      console.log("B")
-
       const session = await getServerSession(config.auth) as Session
-
-      console.log("C")
 
       await prisma.classroom.create({
         data: {
@@ -104,10 +114,9 @@ routes({
         }
       });
 
-      console.log("A")
-
       return Res.ok()
-    }
+    },
+  
   
   
 })

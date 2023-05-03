@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import { redirect } from "next/navigation";
-import SignOutButton from "./auth/sign-out-button";
+import SignOutButton from "../auth/sign-out-button";
 
 const ClientInfo = () => {
   

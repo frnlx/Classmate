@@ -1,9 +1,7 @@
-import { HTMLProps } from "react";
-
 interface prop extends React.HTMLAttributes<HTMLDivElement>{
 }
 
-const ClassListItem = ({className, ...rest}:prop) => {
+const NavbarItemAddButton = ({className, ...rest}:prop) => {
   return (
     <div {...rest} className={`
     border-4 border-slate-600
@@ -21,4 +19,4 @@ const ClassListItem = ({className, ...rest}:prop) => {
   );
 }
  
-export default ClassListItem;
+export default NavbarItemAddButton;

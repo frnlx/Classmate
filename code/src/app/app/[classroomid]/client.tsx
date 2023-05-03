@@ -1,7 +1,7 @@
 'use client'
 
-import PageContextProvider, { usePage } from "@/component/app/context/PageContext";
-import { useRoom } from "@/component/app/context/RoomContext";
+import PageContextProvider, { usePage } from "@/app/app/[classroomid]/PageContext";
+import { useRoom } from "@/app/app/RoomContext";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
@@ -30,24 +30,20 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
   // The dependencies are required if User acecss directly via link.
 
   return (
-    loading ?
-      <></>
-      :
-      <>
-        <Tab.Group
-          manual
-          vertical
-          defaultIndex={0}
-          as={'div'}
-          className="flex"
-          selectedIndex={page.current.index}
-          onChange={(index) => {
-            router.push(`/app/${room.current.id}/${page.list[index].id}`)
-          }}
-        >
-          {p.children}
-        </Tab.Group>
-      </>
+    !loading ?
+      <Tab.Group
+        manual
+        vertical
+        defaultIndex={0}
+        as={'div'}
+        className="flex"
+        selectedIndex={page.current.index}
+        onChange={(index) => {
+          router.push(`/app/${room.current.id}/${page.list[index].id}`)
+        }}
+      >
+        {p.children}
+      </Tab.Group> : null
   );
 }
  

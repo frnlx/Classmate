@@ -1,31 +1,30 @@
-import PageContextProvider from "@/component/app/context/PageContext";
+import PageContextProvider from "@/app/app/[classroomid]/PageContext";
 import { ReactNode } from "react";
 import ClassPageClientHandler from "./client";
-import ClassSidebar from "./(sidebar)/classSidebar";
-import ClassSidebarItem from "./(sidebar)/(list)/classSidebarItem";
-import ClassCategoryList from "./(sidebar)/(list)/classCategoryList";
-import CreateClassCategory from "./(sidebar)/(list)/createClassCategory";
-import ClassSidebarContent from "./(sidebar)/classSidebarContent";
-import ClassMemberList from "@/component/app/class/ClassMemberList";
-import ClassInviteList from "@/component/app/class/ClassInviteList";
+import SidebarItem from "./(sidebar)/SidebarItem";
+import CategoryList from "./(sidebar)/CategoryList";
+import CategoryAddButton from "./(sidebar)/CategoryAddButton";
+import Sidebar from "./(sidebar)/Sidebar";
 
 const AppRoomLayout = (p: {children: ReactNode, params: any}) => {
   return (
     <PageContextProvider>
       <ClassPageClientHandler params={p.params}>
-        <ClassSidebar>
+
+        <Sidebar>
           <div>
-            <ClassSidebarItem value='Home' />
-            <ClassSidebarItem value='Assignment' />
+            <SidebarItem value='Home' />
+            <SidebarItem value='Assignment' />
           </div>
-          <ClassCategoryList />
-          <CreateClassCategory />
-        </ClassSidebar>
+          <CategoryList />
+          <CategoryAddButton />
+        </Sidebar>
+        
         <div className="p-8">
-        {p.children}
+          {p.children}
         </div>
+
       </ClassPageClientHandler>
-      
     </PageContextProvider>
   );
 }

@@ -3,6 +3,7 @@ import { prisma } from "@/server/config/dbConfig";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import JoinClassButton from "./JoinClassButton";
+import AppBackground from "../background";
 
 const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
 
@@ -20,7 +21,7 @@ const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
   
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center text-slate-200 bg-slate-900">
+    <AppBackground>
       {
         classroom ?
           classroom.members.find(user=>user.id !== session.user.id) ? 
@@ -39,7 +40,7 @@ const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
             Invalid Invite Link!
           </h2>
       }
-    </div>
+    </AppBackground>
   );
 }
  

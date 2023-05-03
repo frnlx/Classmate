@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Routes } from "../../lib/route-helper";
 import axios from "axios";
 import { ClassroomData } from "@/server/types/fetchmodels";
-import { useRoom } from "../context/RoomContext";
+import { useRoom } from "../../../app/app/RoomContext";
 
 // This is one of the example of a component
 //  to fetch upon mounted.
@@ -21,6 +21,10 @@ const ClassMemberList = () => {
     axios(Routes.ClassInfo(room.current.data!.id)).then(
       (res) => {
         setClassMembers((res.data as ClassroomData).members)
+      }
+    ).catch(
+      (err) => {
+        // if 404 error due to unauthenticated pls redirect to auth page.
       }
     )
   }
