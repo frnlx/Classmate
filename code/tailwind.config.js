@@ -13,7 +13,8 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       boxShadow: {
-        'outline' : '0 0 1px 3px #334155'
+        'outline': '0 0 1px 3px #334155',
+        'outline-section': '0 0 1px 1px #4B5563'
       }
     },
   },

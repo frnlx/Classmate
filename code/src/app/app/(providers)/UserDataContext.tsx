@@ -19,7 +19,7 @@ export const useUpdateUserData = () => useContext(UpdateUserDataContext)
 
 // Context Component
 // -----------------
-const LoadUserDataContext = (p: { children: ReactNode, session: Session }) => {
+const LoadUserDataContext = (p: { children: ReactNode, session: Session, loading: ReactNode }) => {
   const [userData, setUserData] = useState<UserData | null>()
 
   const fetchUserData = () => {
@@ -34,7 +34,7 @@ const LoadUserDataContext = (p: { children: ReactNode, session: Session }) => {
 
   useEffect(() => {
     fetchUserData()
-  },[])
+  }, [])
 
   return (
     userData ?
@@ -44,10 +44,7 @@ const LoadUserDataContext = (p: { children: ReactNode, session: Session }) => {
         </UserDataContext.Provider>
       </UpdateUserDataContext.Provider>
       :
-      <div className="text-slate-500 w-full h-full flex justify-center items-center">
-        <span className="text-2xl font-semibold">Loading...</span>
-        <SignOutButton />
-      </div>
+      <>{p.loading}</>
   );
 }
 

@@ -15,8 +15,6 @@ const authProviders:Provider[] = [
 export const auth: AuthOptions = {
   // General Configuration
   providers: authProviders,
-  // adapter:
-  // secret
 
   // Authentication Tokens
   session: {
@@ -40,8 +38,6 @@ export const auth: AuthOptions = {
         await afterSuccessfullSignIn(token, user, account, profile)
       if (session)
         await sessionManuallyUpdatedFromClient(token, session)
-      
-      // log("log: " + !!account)
       
       return token // continues to session callback
     },

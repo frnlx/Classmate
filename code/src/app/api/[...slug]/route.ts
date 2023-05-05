@@ -86,13 +86,14 @@ routes({
         data: {
           name: 'New Category',
           title: 'Untitled Category', 
-          Classroom: {
+          classroom: {
             connect: { id }
           }
         }
       })
       return Res.ok()
     },
+  // The dynamid route must come first.
   'POST:/classroom/create':
     async (req, params, data) => {
       if (!await isAuth()) return Res.notAuth()
@@ -107,8 +108,16 @@ routes({
           inviteID: nanoid(6),
           categories: {
             create: [
-              { name: 'Week 1', title: 'Untitled Category' },
-              { name: 'Week 2', title: 'Untitled Category' }
+              {
+                name: 'Week 1',
+                title: 'Untitled Category',
+                sections: {
+                  create: {
+                    name: 'Overview',
+                    order: 0
+                  }
+                }
+              },
             ]
           },
         }
@@ -116,9 +125,40 @@ routes({
 
       return Res.ok()
     },
-  
-  
-  
+})
+
+routes({
+  'GET:/category/[categoryid]':
+    async (req, [id]) => {
+      if (!await isAuth()) return Res.notAuth()
+
+      const data = await prisma.category.findUnique({
+        where: { id },
+        include: {
+          sections: {
+            include: {
+              post: true
+            }
+          }
+        }
+      })
+
+      return Res.json(data)
+    },
+  'POST:/category/[categoryid]/createSection':
+    async (req, [id]) => {
+      if (!await isAuth()) return Res.notAuth()
+
+      const data = await prisma.section.create({
+        data: {
+          name: 'Untitled Section',
+          order: 0,
+          category: { connect: { id } }
+        }
+      })
+
+      return Res.ok()
+    }
 })
 
 export {

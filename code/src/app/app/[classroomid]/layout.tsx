@@ -5,8 +5,10 @@ import SidebarItem from "./(sidebar)/SidebarItem";
 import CategoryList from "./(sidebar)/CategoryList";
 import CategoryAddButton from "./(sidebar)/CategoryAddButton";
 import Sidebar from "./(sidebar)/Sidebar";
+import { getServerSession } from "next-auth";
 
-const AppRoomLayout = (p: {children: ReactNode, params: any}) => {
+const ClassroomLayout = (p: { children: ReactNode, params: any }) => {
+
   return (
     <PageContextProvider>
       <ClassPageClientHandler params={p.params}>
@@ -20,7 +22,7 @@ const AppRoomLayout = (p: {children: ReactNode, params: any}) => {
           <CategoryAddButton />
         </Sidebar>
         
-        <div className="p-8">
+        <div className="p-8 flex flex-col gap-4 flex-grow-1 w-full">
           {p.children}
         </div>
 
@@ -29,4 +31,4 @@ const AppRoomLayout = (p: {children: ReactNode, params: any}) => {
   );
 }
  
-export default AppRoomLayout;
+export default ClassroomLayout;

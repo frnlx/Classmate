@@ -4,7 +4,7 @@ import { ColorModeScript } from '@chakra-ui/react'
 export const metadata = {
 }
 
-export default function RootLayout(p: { children: React.ReactNode }) {
+export default function AuthLayout(p: { children: React.ReactNode }) {
   return (
         <ClientComponentProvider>
           {p.children}

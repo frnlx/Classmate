@@ -1,3 +1,4 @@
+// src/app/api/auth/[...nextauth]
 import config from "@/server/config";
 import NextAuth from "next-auth/next";
 

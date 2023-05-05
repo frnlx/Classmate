@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from "react";
 import SignOutButton from "@/component/client/auth/sign-out-button";
 import MeClientHandler from "./client";
 
-const MeScreen = (p: { children: ReactNode }) => {
+const MeRoom = (p: { children: ReactNode }) => {
   return (
     <MeClientHandler>
       <div>
@@ -19,4 +19,4 @@ const MeScreen = (p: { children: ReactNode }) => {
   );
 }
  
-export default MeScreen;
+export default MeRoom;

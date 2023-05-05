@@ -1,7 +1,7 @@
 'use client'
 
-import { useRoom } from "../RoomContext";
-import { useUpdateUserData, useUserData } from "../UserDataContext";
+import { useRoom } from "../(providers)/RoomContext";
+import { useUpdateUserData, useUserData } from "../(providers)/UserDataContext";
 import axios from "axios";
 import { Routes } from "../../../component/lib/route-helper";
 import { useRouter } from "next/navigation";

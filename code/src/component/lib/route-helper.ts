@@ -7,4 +7,6 @@ export const Routes = {
   ClassInvites: (id: string) => `/api/classroom/${id}/invites`,
   ClassInviteCreate: (id: string) => `/api/classroom/${id}/invites/create`,
   ClassCategoryCreate: (id: string) => `/api/classroom/${id}/createCategory`,
+  CategoryInfo: (id: string) => `/api/category/${id}`,
+  SectionCreate: (id: string) => `/api/category/${id}/createSection`
 }

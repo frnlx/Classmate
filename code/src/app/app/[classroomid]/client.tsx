@@ -1,7 +1,7 @@
 'use client'
 
-import PageContextProvider, { usePage } from "@/app/app/[classroomid]/PageContext";
-import { useRoom } from "@/app/app/RoomContext";
+import { usePage } from "@/app/app/[classroomid]/PageContext";
+import { useRoom } from "@/app/app/(providers)/RoomContext";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
@@ -13,17 +13,20 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   const router = useRouter()
+  const classid = p.params['classroomid']
+  console.log("Params")
+  console.log(classid)
 
   useEffect(() => {
     if (room.list.length > 1) {
-      console.log('Test')
-      const res = room.switch(p.params['classroomid']);
+      if (classid === 'me') {
+        return router.push('/app/me')
+      }
+      const res = room.switch(classid);
       if (res) {
-        console.log("yes?")
         setLoading(false)
       } else {
-        console.log("no?")
-        router.push('/app/me')
+        return router.push('/app/me')
       }
     }
   },[room.list])
@@ -36,7 +39,7 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
         vertical
         defaultIndex={0}
         as={'div'}
-        className="flex"
+        className="flex flex-grow-1 w-full"
         selectedIndex={page.current.index}
         onChange={(index) => {
           router.push(`/app/${room.current.id}/${page.list[index].id}`)

@@ -1,7 +1,7 @@
 'use client'
 
 import { usePage } from "@/app/app/[classroomid]/PageContext"
-import { useRoom } from "@/app/app/RoomContext"
+import { useRoom } from "@/app/app/(providers)/RoomContext"
 import { useRouter } from "next/navigation"
 import { ReactNode, useEffect, useState } from "react"
 

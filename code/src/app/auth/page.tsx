@@ -4,7 +4,7 @@ import AppBackground from '../background'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function AuthenticatePage() {
   return (
     <AppBackground>
         

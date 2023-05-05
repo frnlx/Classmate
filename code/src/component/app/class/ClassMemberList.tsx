@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Routes } from "../../lib/route-helper";
 import axios from "axios";
 import { ClassroomData } from "@/server/types/fetchmodels";
-import { useRoom } from "../../../app/app/RoomContext";
+import { useRoom } from "../../../app/app/(providers)/RoomContext";
 
 // This is one of the example of a component
 //  to fetch upon mounted.

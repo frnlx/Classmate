@@ -35,6 +35,24 @@ model Category {
   id          String     @id @default(cuid())
   name        String
   title       String
-  Classroom   Classroom? @relation(fields: [classroomId], references: [id])
+  classroom   Classroom? @relation(fields: [classroomId], references: [id])
   classroomId String?
+  sections    Section[]
+}
+
+model Section {
+  id         String   @id @default(cuid())
+  name       String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  order      Int
+  post       Post[]
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  Section   Section? @relation(fields: [sectionId], references: [id])
+  sectionId String?
+  order     Int
 }
