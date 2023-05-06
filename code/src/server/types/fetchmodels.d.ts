@@ -1,4 +1,4 @@
-import { Category, Classroom, Post, Section, User } from "@prisma/client";
+import { Category, Classroom, Resource, Section, User } from "@prisma/client";
 
 export type UserData = User & {
   classes: (Classroom & {
@@ -12,6 +12,6 @@ export type ClassroomData = Classroom & {
 
 export type CategoryData = (Category & {
   sections: (Section & {
-    post: Post[];
+    post: Resource[];
   })[];
 })

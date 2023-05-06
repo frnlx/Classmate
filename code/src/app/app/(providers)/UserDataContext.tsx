@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import SignOutButton from "@/component/client/auth/sign-out-button"
 import { Routes } from "@/component/lib/route-helper"
 import { UserData } from "@/server/types/fetchmodels"
-import { User } from "@prisma/client"
 import axios from "axios"
 import { Session } from "next-auth"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"

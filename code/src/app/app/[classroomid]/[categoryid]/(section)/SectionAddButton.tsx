@@ -1,20 +1,37 @@
 import { Routes } from "@/component/lib/route-helper";
+import { CategoryData } from "@/server/types/fetchmodels";
 import { Plus } from "@phosphor-icons/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const AddSectionButton = ({ categoryid }:{categoryid: string}) => {
-  const onClick = () => {
-    axios.post(Routes.SectionCreate(categoryid))
-      .then( res => res.data )
-  }
+type param = {
+  categoryid: string,
+  onSuccess?: (data: CategoryData) => void,
+  onError?: () => void
+}
+
+const AddSectionButton = ({ categoryid }: param) => {
+  
+  const queryClient = useQueryClient()
+  const addSectionMutation = useMutation<CategoryData>({
+    mutationFn: () => {
+      return axios.post(Routes.SectionCreate(categoryid)).then(res => res.data)
+    },
+    onSuccess(data, error) {
+      queryClient.invalidateQueries(['category', categoryid])
+    },
+  })
+
+
+
   return (
-    <button type='button' onClick={onClick}
-      className="p-2 flex flex-row items-center gap-2 hover:bg-slate-700/25 w-full rounded-md"
+    <button type='button' onClick={() => addSectionMutation.mutate()}
+      className="px-4 p-2 flex flex-row items-center gap-2 text-slate-500 hover:text-slate-300 w-full rounded-md"
     >
-      <span className="p-1 bg-slate-700 text-slate-500 rounded-md">
+      <span className="p-1 rounded-md">
         <Plus weight="bold"/>
       </span>
-      <span className="text-slate-500 text-sm font-semibold">
+      <span className="text-sm font-semibold">
         Add a section
       </span>
     </button>

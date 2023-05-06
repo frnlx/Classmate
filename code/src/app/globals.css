@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+.debug-box{
+  border-radius: 2rem !important;
+  outline: white dashed 2px !important;
+}
+
 h1{
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -45,8 +50,8 @@ form{
 }
 
 
-.inline{
+/* .inline{
   display: flex;
   flex-direction: row;
   gap: 0.6rem
-}
+} */

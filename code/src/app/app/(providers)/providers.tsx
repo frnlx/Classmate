@@ -11,12 +11,6 @@ type Props = {
   children: React.ReactNode
 }
 
-
-const { Modal } = chakraTheme.components
-const theme = extendBaseTheme({
-  components: { Modal },
-})
-
 const queryClient = new QueryClient()
 
 const Providers = (props: Props) => {

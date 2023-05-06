@@ -6,7 +6,7 @@ export const metadata = {
 
 const globalFont = Inter({ subsets: ['latin'] })
 
-export default function IndexLayout(p: {
+export default function PageLayout(p: {
   children: React.ReactNode
 }) {
   return (

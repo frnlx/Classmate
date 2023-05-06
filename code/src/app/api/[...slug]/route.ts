@@ -88,6 +88,12 @@ routes({
           title: 'Untitled Category', 
           classroom: {
             connect: { id }
+          },
+          sections: {
+            create: {
+              name: 'Overview',
+              order: 0
+            }
           }
         }
       })
@@ -157,6 +163,24 @@ routes({
         }
       })
 
+      return Res.ok()
+    }
+})
+
+routes({
+  'POST:/section/[sectionid]/createResource':
+    async (req, [id], data) => {
+      if (!await isAuth()) return Res.notAuth()
+      console.log(data)
+      console.log(id)
+      await prisma.resource.create({
+        data: {
+          title: data.title,
+          content: data.content,
+          order: 0,
+          Section: { connect: { id } }
+        }
+      })
       return Res.ok()
     }
 })

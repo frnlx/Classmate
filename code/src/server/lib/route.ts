@@ -58,7 +58,7 @@ export const routeHandler = async (request: NextRequest, { params }: RouteParams
 
         let data = undefined;
         try {
-          let data = await request.json()
+          data = await request.json()
         } catch (error) { }
         return (await routeLookup[route])(request, nextparams, data)
 

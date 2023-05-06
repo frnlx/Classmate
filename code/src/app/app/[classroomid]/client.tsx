@@ -14,8 +14,6 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
 
   const router = useRouter()
   const classid = p.params['classroomid']
-  console.log("Params")
-  console.log(classid)
 
   useEffect(() => {
     if (room.list.length > 1) {

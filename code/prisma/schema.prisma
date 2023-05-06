@@ -41,18 +41,19 @@ model Category {
 }
 
 model Section {
-  id         String   @id @default(cuid())
+  id         String     @id @default(cuid())
   name       String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category   @relation(fields: [categoryId], references: [id])
   categoryId String
   order      Int
-  post       Post[]
+  post       Resource[]
 }
 
-model Post {
+model Resource {
   id        String   @id @default(cuid())
-  title     String
   Section   Section? @relation(fields: [sectionId], references: [id])
   sectionId String?
+  title     String
+  content   String
   order     Int
 }
