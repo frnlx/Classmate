@@ -1,18 +1,18 @@
 import { NextResponse } from "next/server";
-import { isAuthenticated } from "./auth";
+import { isAuth } from "./auth";
 import { Res } from "./responses";
 
 
 
 export async function authenticate() {
-  if (await isAuthenticated())
+  if (await isAuth())
     return Res.notAuth()
 }
 
 
 
 export const mustBeAuthenticated = async (next: ()=>NextResponse) => {
-  if (await isAuthenticated())
+  if (await isAuth())
     return Res.notAuth()
   const res = await next();
   return res;

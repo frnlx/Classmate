@@ -1,7 +1,8 @@
 import { RouteParams } from "@/component/lib/client-helper";
 import { Res } from "@/server/lib/responses";
-import { Awaitable } from "next-auth";
+import { Awaitable, getServerSession } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
+import { auth } from "../config/authConfig";
 
 type RouteHandler = (request: NextRequest, params: string[], body?: any) => Awaitable<NextResponse>
 type RouteLookupType = { [key: string]: RouteHandler }
@@ -84,4 +85,8 @@ export const routeHandler = async (request: NextRequest, { params }: RouteParams
 export function routes(lookups: RouteLookupType) {
   // what would happen if existing route exists?
   routeLookup = { ...routeLookup, ...lookups }
+}
+
+export function route(path: string, func: RouteHandler) {
+  routeLookup = { ... routeLookup, [path]: func }
 }

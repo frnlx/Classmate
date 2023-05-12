@@ -1,6 +1,6 @@
 import config from "@/server/config"
 import { prisma } from "@/server/config/dbConfig"
-import { isAuthenticated as isAuth } from "@/server/lib/auth"
+import { isAuth } from "@/server/lib/auth"
 import { Res } from "@/server/lib/responses"
 import { routeHandler, routes } from "@/server/lib/route"
 import { UserData } from "@/server/types/fetchmodels"

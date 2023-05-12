@@ -30,10 +30,10 @@ export async function afterSuccessfullSignIn(token: JWT, user: User, account: Ac
     // Create a new user
     await prisma.user.create({
       data: {
-        id: user.id || providerAccountId,
-        name: user.name || name!,
+        id: user.id || providerAccountId, // ambil dari Google
+        name: user.name || name!, // ambil dari Profile Google
         bio: '',
-        pfp: user.image || image!
+        pfp: user.image || image! // ambil dari Profile Google
       }
     })
   }
@@ -61,7 +61,7 @@ export async function afterLogOut() {
 }
 
 
-export async function isAuthenticated() {
+export async function isAuth() {
   try {
     const session = await getServerSession(auth)
     if (!session || !session.user.id)
