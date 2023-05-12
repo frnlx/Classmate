@@ -15,6 +15,10 @@ module.exports = {
       boxShadow: {
         'outline': '0 0 1px 3px #334155',
         'outline-section': '0 0 1px 1px #4B5563'
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)'],
+        mono: ['var(--font-roboto-mono)'],
       }
     },
   },
