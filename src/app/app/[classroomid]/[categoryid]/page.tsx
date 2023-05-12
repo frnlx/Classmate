@@ -1,9 +1,6 @@
 import { ReactNode } from "react";
 import RoomCategoryPageClientHandler from "./client";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import DisplayCategoryPage from "./content";
-import { RouteParam, RouteParams } from "@/component/lib/client-helper";
 
 const RoomCategoryPage = (p: { children: ReactNode, params: any }) => {
 
