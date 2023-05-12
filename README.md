@@ -4,6 +4,7 @@ Requires Nodejs
 
 1. `cd code`
 2. `npm i`
+3. `npm run migrate`
 
 # Running
 

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "type": "supabase gen types typescript --project-id \"hkubiiqdysxeevyoqszd\" --schema public > src/server/types/database.d.ts",
-    "migrate": "prisma migrate reset && prisma migrate dev --name init"
+    "migrate": "prisma migrate dev --name init",
+    "reset" : "prisma migrate reset"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",

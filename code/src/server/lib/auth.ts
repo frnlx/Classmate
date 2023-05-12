@@ -66,7 +66,7 @@ export async function isAuth() {
     const session = await getServerSession(auth)
     if (!session || !session.user.id)
       return false;
-    return true;
+    return session;
   } catch (error) {
     console.log("Error when getServerSession")
     return false;

@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
+export type ResponseGenerator = typeof Res;
 
+export type ResponseTypes = Exclude<keyof typeof Res, 'json'>;
 
 export const Res = {
   /**

@@ -3,7 +3,7 @@ import { prisma } from "@/server/config/dbConfig";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import JoinClassButton from "./JoinClassButton";
-import AppBackground from "../background";
+import AppBackground from "../../component/ui/background";
 
 const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
 
