@@ -9,8 +9,6 @@ export async function authenticate() {
     return Res.notAuth()
 }
 
-
-
 export const mustBeAuthenticated = async (next: ()=>NextResponse) => {
   if (await isAuth())
     return Res.notAuth()
@@ -23,6 +21,6 @@ export const logError = (next: () => any) => {
       return next()
     } catch (error) {
       console.log(error)
-      return Res.error(error)
+      return Res.error()
     }
 }

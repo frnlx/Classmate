@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from "react";
 import SignOutButton from "@/component/client/auth/sign-out-button";
 import MeClientHandler from "./client";
 
-const MeRoom = (p: { children: ReactNode }) => {
+const MeRoom = () => {
   return (
     <MeClientHandler>
       <div>
@@ -13,7 +13,6 @@ const MeRoom = (p: { children: ReactNode }) => {
         {/* <PendingInviteRequestList /> */}
         <h3>Search for Class</h3>
         <SignOutButton />
-        {p.children}
       </div>
     </MeClientHandler>
   );

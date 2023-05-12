@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
-const ClassroomPage = (p: { children: ReactNode, params: any }) => {
+const ClassroomPage = (p: { params: any }) => {
   
   redirect(`/app/${p.params['classroomid']}/home`)
 }

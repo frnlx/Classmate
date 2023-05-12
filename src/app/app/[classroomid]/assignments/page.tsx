@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import AssignmentPageClientHandler from "./client";
 
-const RoomHomePage = (p: { children: ReactNode, params: any }) => {
+const RoomHomePage = (p: { params: any }) => {
 
   return (
     <AssignmentPageClientHandler params={p.params} >

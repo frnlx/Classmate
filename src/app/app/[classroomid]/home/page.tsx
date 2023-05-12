@@ -3,7 +3,7 @@ import RoomHomePageClientHandler from "./client";
 import ClassMemberList from "@/component/app/class/ClassMemberList";
 import ClassInviteList from "@/component/app/class/ClassInviteList";
 
-const RoomHomePage = (p: { children: ReactNode, params: any }) => {
+const RoomHomePage = (p: { params: any }) => {
   return (
     <RoomHomePageClientHandler params={p.params}>
       <div>
