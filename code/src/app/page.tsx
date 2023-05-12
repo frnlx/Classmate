@@ -3,9 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function LandingPage() {
+  const emojis = ['⚡', '⚡', '⚡', '🚀', '🚀', '🚀', '🙀', '🎯','🎯','🎯',];
+  const emoji =  emojis[Math.floor(Math.random() * emojis.length)];
+
+
   return (
     <main className='wrapper homepage bg-zinc-900 text-zinc-50 '>
-      <header className='p-4'>
+      <header className='px-4 py-3 sticky top-0 z-50 bg-zinc-900/80 backdrop-blur-sm border-b-zinc-800 border-b'>
         <div className='container m-auto flex justify-between items-center'>
           <a href='/'>
             <Image
@@ -22,7 +26,7 @@ export default function LandingPage() {
       </header>
       <section className='flex flex-col items-center'>
         <div className='px-12 py-24 flex justify-center items-center flex-col gap-2'>
-          <h1 className='text-7xl tracking-tighter m-0 mb-2'>Power Up Your Class.</h1>
+          <h1 className='text-7xl tracking-tighter m-0 mb-2'>{emoji} Power Up Your Class.</h1>
           <p className='mt-0 text-xl opacity-80 text-center px-52 mb-8'>Classmate upgrades your group chat and equips your class with integrated features and more. 100% free.</p>
           <Button nextjs href='/app'><span className='font-semibold'>{`Get Classmate Free ->`}</span></Button>
         </div>
@@ -30,7 +34,7 @@ export default function LandingPage() {
       <section className='preview-1'>
         <div className='flex justify-center'>
           <Image
-            className='shadow-[0px_49px_155px_-68px_#2E4c9A] rounded-3xl outline outline-8 outline-slate-600/25'
+            className='shadow-[0px_-49px_155px_-68px_#2515a1] rounded-3xl outline outline-8 outline-slate-600/25'
             src="https://cdn.discordapp.com/attachments/975009736267288627/1077254273936654486/image.png"
             alt="App Preview" width={644} height={467}
           />
