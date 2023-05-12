@@ -27,7 +27,7 @@ export default function LandingPage() {
       <section className='flex flex-col items-center'>
         <div className='px-12 py-24 flex justify-center items-center flex-col gap-2'>
           <h1 className='text-7xl tracking-tighter m-0 mb-2'>{emoji} Power Up Your Class.</h1>
-          <p className='mt-0 text-xl opacity-80 text-center px-52 mb-8'>Classmate upgrades your group chat and equips your class with integrated features and more. 100% free.</p>
+          <p className='mt-0 text-xl text-slate-300 text-center mb-8 w-[32rem]'>Classmate upgrades your group chat and equips your class with integrated features and more. <u className='underline-offset-4'>Join Now</u>.</p>
           <Button nextjs href='/app'><span className='font-semibold'>{`Get Classmate Free ->`}</span></Button>
         </div>
       </section>
