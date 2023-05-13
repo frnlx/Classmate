@@ -1,8 +1,6 @@
 'use client'
 
 import { usePage } from "@/app/app/[classroomid]/PageContext";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -11,8 +9,6 @@ const RoomCategoryPageClientHandler = (p: { children: ReactNode, classroomid: st
   const [loading, setLoading] = useState<boolean>(true)
   const page = usePage()
   const router = useRouter()
-
-
 
   useEffect(() => {
 
@@ -27,8 +23,6 @@ const RoomCategoryPageClientHandler = (p: { children: ReactNode, classroomid: st
 
   },[page.list])
   // The dependencies are required if User acecss directly via link.
-
-
 
   return (
     !loading ?

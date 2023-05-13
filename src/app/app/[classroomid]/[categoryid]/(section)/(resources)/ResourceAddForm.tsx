@@ -2,7 +2,7 @@
 
 import { Routes } from "@/component/lib/route-helper";
 import { CategoryData } from "@/server/types/fetchmodels";
-import { Alert, AlertDescription, AlertIcon, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Textarea } from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, ModalFooter, Textarea } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
@@ -90,7 +90,10 @@ const ResourceAddForm = (p: {sectionid: string, categoryid: string, onAdd: ()=>v
         />
       </FormControl>
 
-      <Button className="flex-shrink-0" type="submit" isLoading={loading}>Create New Post</Button>
+      <ModalFooter>
+        <Button className="flex-shrink-0" type="submit" variant='solid' colorScheme="blue" isLoading={loading}>Create New Post</Button>
+
+      </ModalFooter>
     </form>
 
   );

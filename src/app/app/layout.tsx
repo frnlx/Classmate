@@ -23,9 +23,10 @@ export default async function AppLayout(p: { children: React.ReactNode }) {
       <Providers session={session}>
         <LoadUserDataContext session={session} loading={<LoadingScreen/>}>
           <RoomContextProvider>
-
+        
             <Navbar />
             {p.children}
+            
             
           </RoomContextProvider>
         </LoadUserDataContext>

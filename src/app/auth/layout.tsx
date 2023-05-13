@@ -1,5 +1,4 @@
 import ClientComponentProvider, { theme } from '@/component/client/ClientComponentProvider'
-import { ColorModeScript } from '@chakra-ui/react'
 
 export const metadata = {
 }

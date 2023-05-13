@@ -1,19 +1,24 @@
 'use client'
 
-import { Button } from "@chakra-ui/react"
 import { Dialog } from "@headlessui/react"
-import { Cross, Crosshair, Plus, X } from "@phosphor-icons/react"
+import { Plus, X } from "@phosphor-icons/react"
 import { useState } from "react"
 import ResourceAddForm from "./ResourceAddForm"
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
 
 const AddPostButton = ({ sectionid, categoryid, onAdd }: { sectionid: string, categoryid: string, onAdd: () => void }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
-      <button type='button' onClick={() => setIsOpen(true)}
+      <button type='button' onClick={onOpen}
         className="p-2 flex flex-row items-center gap-2 hover:bg-slate-700/25 text-slate-500  hover:text-slate-300 w-full rounded-md"
       >
+      {/* <button type='button' onClick={() => setIsOpen(true)}
+        className="p-2 flex flex-row items-center gap-2 hover:bg-slate-700/25 text-slate-500  hover:text-slate-300 w-full rounded-md"
+      > */}
         <span className="p-1 bg-slate-700 rounded-md">
           <Plus weight="bold" />
         </span>
@@ -21,7 +26,35 @@ const AddPostButton = ({ sectionid, categoryid, onAdd }: { sectionid: string, ca
           Add a thing
         </span>
       </button>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent >
+          <ModalHeader>Create New Post</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <div>
+              Fill out the form below to create a new post.
+            </div>
+            <ResourceAddForm
+              sectionid={sectionid}
+              categoryid={categoryid}
+              onAdd={() => {
+                onClose()
+                onAdd()
+              }}
+            />
+          </ModalBody>
+
+
+          {/* <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter> */}
+        </ModalContent>
+      </Modal>
+      {/* <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel className="relative mx-auto w-full max-w-2xl min-w-min h-4/6 rounded bg-zinc-900 p-8 flex flex-col gap-6">
@@ -49,7 +82,7 @@ const AddPostButton = ({ sectionid, categoryid, onAdd }: { sectionid: string, ca
             />
           </Dialog.Panel>
         </div>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }

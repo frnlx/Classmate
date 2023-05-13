@@ -1,5 +1,6 @@
 import './globals.css'
 import { Inter, Roboto_Mono  } from 'next/font/google'
+import ClientLayout from './client';
 
 export const metadata = {
 
@@ -24,6 +25,7 @@ export default function PageLayout(p: {
   return (
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
       <body className={`bg-zinc-950 font-sans`}>
+        {/* <ClientLayout /> */}
         {p.children}
       </body>
     </html>
