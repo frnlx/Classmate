@@ -1,4 +1,4 @@
-import ClientComponentProvider, { theme } from '@/component/client/ClientComponentProvider'
+import ClientComponentProvider from "@/client/ClientComponentProvider"
 
 export const metadata = {
 }

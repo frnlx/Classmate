@@ -1,6 +1,5 @@
 'use client'
 
-import { Routes } from "@/client/lib/route-helper";
 import { CategoryData } from "@/server/types/fetchmodels";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -9,6 +8,7 @@ import Section from "./(section)/Section";
 import AddSectionButton from "./(section)/SectionAddButton";
 import ResourceItem from "./(section)/(resources)/ResourceItem";
 import AddPostButton from "./(section)/(resources)/ResourceAddButton";
+import { Routes } from "@/client/lib/route-helper";
 
 
 

@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from "react";
-import SignOutButton from "@/component/client/auth/sign-out-button";
 import MeClientHandler from "./client";
+import SignOutButton from "@/client/auth/sign-out-button";
 
 const MeRoom = () => {
   return (

@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google'
-import SignInButton from '../../component/client/auth/sign-in-button'
 import AppBackground from '../../client/static/background'
+import SignInButton from '@/client/auth/sign-in-button';
 
 const inter = Inter({ subsets: ['latin'] })
 

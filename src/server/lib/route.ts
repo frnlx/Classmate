@@ -1,8 +1,8 @@
-import { RouteParams } from "@/client/lib/client-helper";
 import { Res, ResponseGenerator } from "@/server/lib/responses";
 import { Awaitable } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 import { RouteResponse } from "@/api/utils";
+import { RouteParams } from "@/client/lib/client-helper";
 
 export type RouteHandler = (request: NextRequest, response: ResponseGenerator, params: string[], body?: any) => Awaitable<NextResponse>
 export type RouteHandlerParam = Parameters<RouteHandler>;
