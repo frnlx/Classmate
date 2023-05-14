@@ -1,6 +1,6 @@
 'use client'
 
-import { Routes } from "@/component/lib/route-helper";
+import { Routes } from "@/client/lib/route-helper";
 import { CategoryData } from "@/server/types/fetchmodels";
 import { Alert, AlertDescription, AlertIcon, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, ModalFooter, Textarea } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

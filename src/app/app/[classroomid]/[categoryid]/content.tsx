@@ -1,6 +1,6 @@
 'use client'
 
-import { Routes } from "@/component/lib/route-helper";
+import { Routes } from "@/client/lib/route-helper";
 import { CategoryData } from "@/server/types/fetchmodels";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

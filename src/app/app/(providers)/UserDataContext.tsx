@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { Routes } from "@/component/lib/route-helper"
+import { Routes } from "@/client/lib/route-helper"
 import { UserData } from "@/server/types/fetchmodels"
 import axios from "axios"
 import { Session } from "next-auth"

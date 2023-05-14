@@ -1,6 +1,6 @@
 'use client'
 
-import { Routes } from "@/component/lib/route-helper";
+import { Routes } from "@/client/lib/route-helper";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { useSession } from "next-auth/react";

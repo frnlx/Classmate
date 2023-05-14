@@ -1,4 +1,4 @@
-import Button from '@/component/atomic/button';
+import Button from '@/client/static/button';
 import Image from 'next/image'
 
 // Server Component

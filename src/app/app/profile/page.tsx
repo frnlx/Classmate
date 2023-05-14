@@ -1,5 +1,5 @@
-import UpdateProfileForm from "@/component/client/testing/profileForm";
-import Card from "@/component/ui/card";
+import UpdateProfileForm from "@/client/testing/profileForm";
+import Card from "@/client/static/card";
 import Link from "next/link";
 
 const ProfilePage = () => {

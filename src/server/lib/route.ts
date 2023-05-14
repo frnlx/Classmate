@@ -1,4 +1,4 @@
-import { RouteParams } from "@/component/lib/client-helper";
+import { RouteParams } from "@/client/lib/client-helper";
 import { Res, ResponseGenerator } from "@/server/lib/responses";
 import { Awaitable } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import RoomHomePageClientHandler from "./client";
-import ClassMemberList from "@/component/app/class/ClassMemberList";
-import ClassInviteList from "@/component/app/class/ClassInviteList";
+import ClassMemberList from "@/client/testing/class/ClassMemberList";
+import ClassInviteList from "@/client/testing/class/ClassInviteList";
 
 const RoomHomePage = (p: { params: any }) => {
   return (

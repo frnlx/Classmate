@@ -5,7 +5,7 @@ import NavbarItem from "./NavbarItem";
 import NavbarItemAddButton from "./NavbarItemAddButton";
 import { useRouter } from "next/navigation";
 import { useUpdateUserData, useUserData } from "../(providers)/UserDataContext";
-import { Routes } from "@/component/lib/route-helper";
+import { Routes } from "@/client/lib/route-helper";
 import { useRoom } from "./RoomContext";
 
 const Navbar = () => {
@@ -46,7 +46,9 @@ const Navbar = () => {
               <NavbarItem
                 key={i}
                 onClick={() => onClassRoomItemClick(classroom.id)}
-                selected={i === (room.current.index - 1)} />)
+                selected={i === (room.current.index - 1)}
+              />
+            )
         }
         <NavbarItemAddButton onClick={onClassRoomCreateClick} />
       </ul>

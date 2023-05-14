@@ -2,7 +2,7 @@
 
 import { useRoom } from "@/app/app/(navbar)/RoomContext";
 import { useUpdateUserData } from "@/app/app/(providers)/UserDataContext";
-import { Routes } from "@/component/lib/route-helper";
+import { Routes } from "@/client/lib/route-helper";
 import { Plus } from "@phosphor-icons/react";
 import axios from "axios";
 
