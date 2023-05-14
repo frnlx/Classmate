@@ -1,10 +1,10 @@
 import PageContextProvider from "@/app/app/[classroomid]/PageContext";
 import { ReactNode } from "react";
 import ClassPageClientHandler from "./client";
-import SidebarItem from "./(sidebar)/SidebarItem";
-import CategoryList from "./(sidebar)/CategoryList";
-import CategoryAddButton from "./(sidebar)/CategoryAddButton";
-import Sidebar from "./(sidebar)/Sidebar";
+import SidebarItem from "./(Sidebar)/SidebarItem";
+import CategoryList from "./(Sidebar)/CategoryList";
+import CategoryAddButton from "./(Sidebar)/CategoryAddButton";
+import Sidebar from "./(Sidebar)/Sidebar";
 import ScrollArea from "@/client/ui/scrollarea";
 
 const ClassroomLayout = (p: { children: ReactNode, params: any }) => {

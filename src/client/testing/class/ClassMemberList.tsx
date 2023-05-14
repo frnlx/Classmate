@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ClassroomData } from "@/server/types/fetchmodels";
-import { useRoom } from "../../../app/app/(navbar)/RoomContext";
+import { useRoom } from "../../../app/app/(Navbar)/RoomContext";
 import { Routes } from "@/client/lib/route-helper";
 
 // This is one of the example of a component

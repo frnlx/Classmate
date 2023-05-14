@@ -4,14 +4,15 @@ import axios from "axios";
 import NavbarItem from "./NavbarItem";
 import NavbarItemAddButton from "./NavbarItemAddButton";
 import { useRouter } from "next/navigation";
-import { useUpdateUserData, useUserData } from "../(providers)/UserDataContext";
 import { useRoom } from "./RoomContext";
 import { Routes } from "@/client/lib/route-helper";
+import { Classroom } from "@prisma/client";
+import { useInvalidateUserData, useUserData } from "@/api/client/user";
 
 const Navbar = () => {
   const router = useRouter()
-  const updateUserData = useUpdateUserData();
-  const user = useUserData();
+  const { data: user } = useUserData();
+  const invalidateUserData = useInvalidateUserData()
   const room = useRoom()
 
   const onMeRoomItemClick = () => {
@@ -25,7 +26,7 @@ const Navbar = () => {
   const onClassRoomCreateClick = () => {
     axios.post(Routes.ClassCreate)
       .then((res) => {
-        if (res.status === 200) updateUserData();
+        if (res.status === 200) invalidateUserData();
       });
   }
 
@@ -47,6 +48,7 @@ const Navbar = () => {
                 key={i}
                 onClick={() => onClassRoomItemClick(classroom.id)}
                 selected={i === (room.current.index - 1)}
+                classroom={classroom as Classroom}
               />
             )
         }

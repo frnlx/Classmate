@@ -1,6 +1,6 @@
 'use client'
 
-import { useRoom } from "../../../app/app/(navbar)/RoomContext";
+import { useRoom } from "../../../app/app/(Navbar)/RoomContext";
 
 const ClassInviteList = () => {
 

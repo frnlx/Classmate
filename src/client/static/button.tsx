@@ -18,7 +18,7 @@ const Button = (prop: prop) => {
   if (prop.nextjs) return (
     <Link
       href={prop.href!}
-      className={`
+      className={`block
       ${padding}
       ${prop.plain ?
           'font-medium bg-none text-slate-300' + ' ' + 'hover:bg-slate-400/10 hover:text-slate-100'

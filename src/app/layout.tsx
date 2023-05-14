@@ -22,8 +22,8 @@ export default function PageLayout(p: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
-      <body className={`bg-zinc-950 font-sans m-0 p-0 box-border`}>
+    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`} suppressHydrationWarning={true} >
+      <body className='bg-zinc-950 font-sans m-0 p-0 box-border' suppressHydrationWarning={true} >
         {/* <ClientLayout /> */}
         {p.children}
       </body>

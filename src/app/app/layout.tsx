@@ -1,8 +1,8 @@
-import LoadUserDataContext from '@/app/app/(providers)/UserDataContext'
-import Providers from '@/app/app/(providers)/providers'
+import LoadUserDataContext from '@/app/app/(Providers)/UserDataContext'
+import Providers from '@/app/app/(Providers)/providers'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import NavbarRoot from './(navbar)/NavbarRoot'
+import NavbarRoot from './(Navbar)/NavbarRoot'
 import LoadingScreen from './loading'
 import { authOptions } from '@/server/config/authConfig'
 

@@ -1,7 +1,7 @@
 'use client'
 
-import { useRoom } from "@/app/app/(navbar)/RoomContext";
-import { useUpdateUserData } from "@/app/app/(providers)/UserDataContext";
+import { useInvalidateUserData } from "@/api/client/user";
+import { useRoom } from "@/app/app/(Navbar)/RoomContext";
 import { Routes } from "@/client/lib/route-helper";
 import { Plus } from "@phosphor-icons/react";
 import axios from "axios";
@@ -9,7 +9,7 @@ import axios from "axios";
 const CategoryAddButton = () => {
 
   const room = useRoom()
-  const updateUserData = useUpdateUserData();
+  const updateUserData = useInvalidateUserData();
 
   return (
     <button

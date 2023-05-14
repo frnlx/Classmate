@@ -2,9 +2,9 @@
 
 import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { useUserData } from "../(providers)/UserDataContext";
 import { UserData } from "@/server/types/fetchmodels";
-import { AppRoom, useRoom } from "../(navbar)/RoomContext";
+import { AppRoom, useRoom } from "../(Navbar)/RoomContext";
+import { useUserData } from "@/api/client/user";
 
 export type AppPage = {
   index: number,
@@ -42,7 +42,7 @@ export const usePage = () => useContext(PageContext)
 
 const PageContextProvider = (p: { children: ReactNode }) => {
 
-  const userData: UserData = useUserData()!;
+  const { data: userData } = useUserData();
   const { current: room } = useRoom()
 
   const [pageList, setPageList] = useState<AppPage[]>([]);
@@ -60,7 +60,7 @@ const PageContextProvider = (p: { children: ReactNode }) => {
     const selectedClassroom = room.data
     if (selectedClassroom) {
       console.log("Initializing pages")
-      const categories = userData.classes.filter(c => c.id === selectedClassroom.id)[0].categories;
+      const categories = userData!.classes.filter(c => c.id === selectedClassroom.id)[0].categories;
       const list = categories.map<AppPage>((c, i) => (
         {
           index: i + 2,

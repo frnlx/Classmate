@@ -4,10 +4,10 @@ import { CategoryData } from "@/server/types/fetchmodels";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ReactNode } from "react";
-import Section from "./(section)/Section";
-import AddSectionButton from "./(section)/SectionAddButton";
-import ResourceItem from "./(section)/(resources)/ResourceItem";
-import AddPostButton from "./(section)/(resources)/ResourceAddButton";
+import Section from "./(Section)/Section";
+import AddSectionButton from "./(Section)/SectionAddButton";
+import ResourceItem from "./(Section)/(Resources)/ResourceItem";
+import AddPostButton from "./(Section)/(Resources)/ResourceAddButton";
 import { Routes } from "@/client/lib/route-helper";
 
 
@@ -21,11 +21,7 @@ const DisplayCategoryPage = (p: { children: ReactNode, categoryid: string }) => 
     return await res.data
   }
 
-  const { isLoading, error, data, isFetching, refetch } = useQuery<CategoryData>({
-    queryKey: [`category`, p.categoryid],
-    queryFn: fetchCategoryData,
-
-  })
+  const { isLoading, error, data, isFetching, refetch } = useQuery<CategoryData>([`category`, p.categoryid], fetchCategoryData)
 
   // Write some skeleton here 👇
   if (isLoading) return <>Loading</>

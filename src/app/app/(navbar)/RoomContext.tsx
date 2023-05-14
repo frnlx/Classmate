@@ -1,9 +1,8 @@
 'use client'
 
+import { useUserData } from "@/api/client/user"
 import { Classroom } from "@prisma/client"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
-import { useUserData } from "../(providers)/UserDataContext"
-import { UserData } from "@/server/types/fetchmodels"
 
 export type AppRoom = {
   index: number,
@@ -39,14 +38,14 @@ export const useRoom = () => useContext(RoomContext)
 // Context Component
 // -----------------
 const RoomContextProvider = (p: { children: ReactNode}) => {
-  const userData: UserData = useUserData()!;
+  const { data: userData } = useUserData();
 
   const [roomList, setRoomList] = useState<AppRoom[]>([MeRoom])
   const [selectedRoom, setSelectedRoom] = useState<AppRoom>(MeRoom)
 
   useEffect(() => {
     // for every update of userData, set Class List.
-    const list = userData.classes.map<AppRoom>(
+    const list = userData!.classes.map<AppRoom>(
       (classroom, idx) => ({
         index: idx + 1,
         id: classroom.id,

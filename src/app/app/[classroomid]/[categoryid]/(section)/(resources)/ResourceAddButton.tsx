@@ -1,10 +1,8 @@
 'use client'
 
-import { Dialog } from "@headlessui/react"
-import { Plus, X } from "@phosphor-icons/react"
-import { useState } from "react"
+import { Plus } from "@phosphor-icons/react"
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
 import ResourceAddForm from "./ResourceAddForm"
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
 
 const AddPostButton = ({ sectionid, categoryid, onAdd }: { sectionid: string, categoryid: string, onAdd: () => void }) => {
   // const [isOpen, setIsOpen] = useState(false)

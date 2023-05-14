@@ -1,7 +1,6 @@
 'use client'
 import ClientComponentProvider from '@/client/ClientComponentProvider'
 import ColorModeScriptClient from '@/client/ColorModeScript'
-import { ColorModeScript, DarkMode } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
