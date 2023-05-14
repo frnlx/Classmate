@@ -4,7 +4,7 @@ import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useUserData } from "../(providers)/UserDataContext";
 import { UserData } from "@/server/types/fetchmodels";
-import { AppRoom, useRoom } from "../(providers)/RoomContext";
+import { AppRoom, useRoom } from "../(navbar)/RoomContext";
 
 export type AppPage = {
   index: number,

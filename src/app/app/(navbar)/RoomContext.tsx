@@ -2,7 +2,7 @@
 
 import { Classroom } from "@prisma/client"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
-import { useUserData } from "./UserDataContext"
+import { useUserData } from "../(providers)/UserDataContext"
 import { UserData } from "@/server/types/fetchmodels"
 
 export type AppRoom = {
@@ -38,7 +38,7 @@ export const useRoom = () => useContext(RoomContext)
 
 // Context Component
 // -----------------
-const RoomContextProvider = (p: { children: ReactNode, url?: string }) => {
+const RoomContextProvider = (p: { children: ReactNode}) => {
   const userData: UserData = useUserData()!;
 
   const [roomList, setRoomList] = useState<AppRoom[]>([MeRoom])
@@ -67,7 +67,6 @@ const RoomContextProvider = (p: { children: ReactNode, url?: string }) => {
       return true;
     }
   }
-
   goToMeRoom = () => {
     setSelectedRoom(roomList[0])
   }

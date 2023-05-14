@@ -1,6 +1,6 @@
 'use client'
 
-import { useRoom } from "@/app/app/(providers)/RoomContext";
+import { useRoom } from "@/app/app/(navbar)/RoomContext";
 import { ReactNode, useEffect } from "react";
 
 const MeClientHandler = (p: { children: ReactNode }) => {

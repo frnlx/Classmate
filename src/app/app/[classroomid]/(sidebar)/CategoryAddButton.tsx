@@ -1,6 +1,6 @@
 'use client'
 
-import { useRoom } from "@/app/app/(providers)/RoomContext";
+import { useRoom } from "@/app/app/(navbar)/RoomContext";
 import { useUpdateUserData } from "@/app/app/(providers)/UserDataContext";
 import { Routes } from "@/component/lib/route-helper";
 import { Plus } from "@phosphor-icons/react";

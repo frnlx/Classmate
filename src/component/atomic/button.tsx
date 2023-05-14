@@ -25,7 +25,7 @@ const Button = (prop: prop) => {
           :
           'bg-slate-100 text-slate-950' + ' ' + 'hover:shadow-slate-200/20 hover:bg-slate-50 hover:shadow-lg hover:text-slate-600'
         } rounded-md
-      ${fontSize} font-semibold
+      ${fontSize} font-semibold no-underline
       flex flex-row items-center
       transition-all duration-75`
       }

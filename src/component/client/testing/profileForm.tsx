@@ -1,11 +1,10 @@
 'use client'
 
 import { Routes } from "@/component/lib/route-helper";
-import { User } from "@/server/routes/user";
+import { User } from "@prisma/client";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type Inputs = {
@@ -40,7 +39,7 @@ const UpdateProfileForm = () => {
       const data = (await axios(Routes.UserInfo(session!.user.id))).data as User
       return {
         required_name: data.name,
-        bio: data.bio
+        bio: data.bio ? data.bio : ''
       }
     } catch (error) {
       console.log('Something Went Wrong')

@@ -12,7 +12,7 @@ const authProviders:Provider[] = [
   })
 ]
 
-export const auth: AuthOptions = {
+export const authOptions: AuthOptions = {
   // General Configuration
   providers: authProviders,
 

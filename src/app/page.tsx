@@ -1,7 +1,7 @@
 import Button from '@/component/atomic/button';
 import Image from 'next/image'
-import Link from 'next/link'
 
+// Server Component
 export default function LandingPage() {
   const emojis = ['⚡', '⚡', '⚡', '🚀', '🚀', '🚀', '🙀', '🎯','🎯','🎯',];
   const emoji =  emojis[Math.floor(Math.random() * emojis.length)];
@@ -9,7 +9,7 @@ export default function LandingPage() {
 
   return (
     <main className='wrapper homepage bg-zinc-900 text-zinc-50 '>
-      <header className='px-4 py-3 sticky top-0 z-50 bg-zinc-900/80 backdrop-blur-sm border-b-zinc-800 border-b'>
+      <header className='px-4 py-3 sticky top-0 z-50 bg-zinc-900/80 backdrop-blur-sm border-x-0 border-y-0 border-b-zinc-800 border-b border-solid'>
         <div className='container m-auto flex justify-between items-center'>
           <a href='/'>
             <Image

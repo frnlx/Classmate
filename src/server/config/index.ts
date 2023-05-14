@@ -1,7 +1,7 @@
-import { auth } from "./authConfig";
+import { authOptions } from "./authConfig";
 
 const config = {
-  auth
+  auth: authOptions
 }
 
 export default config

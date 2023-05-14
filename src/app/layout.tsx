@@ -1,6 +1,5 @@
 import './globals.css'
 import { Inter, Roboto_Mono  } from 'next/font/google'
-import ClientLayout from './client';
 
 export const metadata = {
 
@@ -18,13 +17,13 @@ const roboto_mono = Roboto_Mono({
   variable: '--font-roboto-mono',
 });
 
-
+// Server Component
 export default function PageLayout(p: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
-      <body className={`bg-zinc-950 font-sans`}>
+      <body className={`bg-zinc-950 font-sans m-0 p-0 box-border`}>
         {/* <ClientLayout /> */}
         {p.children}
       </body>

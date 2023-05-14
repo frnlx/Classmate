@@ -15,14 +15,14 @@ const AddPostButton = ({ sectionid, categoryid, onAdd }: { sectionid: string, ca
     <>
       <button type='button' onClick={onOpen}
         className="p-2 flex flex-row items-center gap-2 hover:bg-slate-700/25 text-slate-500  hover:text-slate-300 w-full rounded-md"
-      >
+      > {/** todo: convert to Chakra-ui */}
       {/* <button type='button' onClick={() => setIsOpen(true)}
         className="p-2 flex flex-row items-center gap-2 hover:bg-slate-700/25 text-slate-500  hover:text-slate-300 w-full rounded-md"
       > */}
-        <span className="p-1 bg-slate-700 rounded-md">
+        <span className="p-1 bg-slate-700 rounded-md"> {/** todo: convert to Chakra-ui */}
           <Plus weight="bold" />
         </span>
-        <span className="text-sm font-semibold">
+        <span className="text-sm font-semibold"> {/** todo: convert to Chakra-ui */}
           Add a thing
         </span>
       </button>

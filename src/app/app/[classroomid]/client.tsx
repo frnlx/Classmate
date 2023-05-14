@@ -1,10 +1,10 @@
 'use client'
 
 import { usePage } from "@/app/app/[classroomid]/PageContext";
-import { useRoom } from "@/app/app/(providers)/RoomContext";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
+import { useRoom } from "../(navbar)/RoomContext";
 
 const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
   

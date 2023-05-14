@@ -2,7 +2,7 @@ import { Account, Profile, Session, User, getServerSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { prisma, supabase } from "../config/dbConfig";
 import { log } from "./logger";
-import { auth } from "../config/authConfig";
+import { authOptions } from "../config/authConfig";
 import { NextResponse } from "next/server";
 
 export async function checkIfAllowedToSignIn() {
@@ -63,7 +63,7 @@ export async function afterLogOut() {
 
 export async function isAuth() {
   try {
-    const session = await getServerSession(auth)
+    const session = await getServerSession(authOptions)
     if (!session || !session.user.id)
       return false;
     return session;

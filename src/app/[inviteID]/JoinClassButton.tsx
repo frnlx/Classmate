@@ -3,7 +3,7 @@
 import { Routes } from "@/component/lib/route-helper";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type prop = {
   userId: string
@@ -11,9 +11,7 @@ type prop = {
 }
 
 const JoinClassButton = (p: prop) => {
-
   const router = useRouter()
-
   return (
     <Button onClick={() => {
       axios.post(Routes.UserJoinClass(p.userId), {classId: p.classId}).then(

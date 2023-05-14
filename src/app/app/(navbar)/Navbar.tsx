@@ -1,25 +1,18 @@
 'use client'
 
-import { useRoom } from "../(providers)/RoomContext";
-import { useUpdateUserData, useUserData } from "../(providers)/UserDataContext";
 import axios from "axios";
-import { Routes } from "../../../component/lib/route-helper";
-import { useRouter } from "next/navigation";
 import NavbarItem from "./NavbarItem";
 import NavbarItemAddButton from "./NavbarItemAddButton";
+import { useRouter } from "next/navigation";
+import { useUpdateUserData, useUserData } from "../(providers)/UserDataContext";
+import { Routes } from "@/component/lib/route-helper";
+import { useRoom } from "./RoomContext";
 
-type props = {
-  // children: ReactNode
-  // data: UserClassData;
-}
-
-const Navbar = ({ }: props) => {
-
-  const user = useUserData();
-  const updateUserData = useUpdateUserData();
-
-  const room = useRoom()
+const Navbar = () => {
   const router = useRouter()
+  const updateUserData = useUpdateUserData();
+  const user = useUserData();
+  const room = useRoom()
 
   const onMeRoomItemClick = () => {
     router.push(`/app/me`)
@@ -35,6 +28,7 @@ const Navbar = ({ }: props) => {
         if (res.status === 200) updateUserData();
       });
   }
+
 
   return (
     <div className="bg-zinc-950 w-24 h-screen p-5 flex flex-col gap-4">

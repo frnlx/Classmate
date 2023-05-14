@@ -34,7 +34,7 @@ const DisplayCategoryPage = (p: { children: ReactNode, categoryid: string }) => 
 
   if (data) {
     return (
-      <div className="m-8 flex flex-col gap-4 max-w-2xl h-max">
+      <div className="m-8 flex flex-col gap-4 max-w-2xl h-max"> 
         <div className="flex flex-col gap-2 p-4 w-full max-w-2xl">
           <div className="text-slate-400 text-lg">{data.name}</div>
           <div className="text-slate-100 text-3xl font-bold ">{data.title}</div>
