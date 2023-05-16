@@ -4,7 +4,7 @@ import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { UserData } from "@/server/types/fetchmodels";
 import { AppRoom, useRoom } from "../(Navbar)/RoomContext";
-import { useUserData } from "@/api/client/user";
+import { useUser } from "@/api/client/user";
 
 export type AppPage = {
   index: number,
@@ -42,7 +42,7 @@ export const usePage = () => useContext(PageContext)
 
 const PageContextProvider = (p: { children: ReactNode }) => {
 
-  const { data: userData } = useUserData();
+  const { data: userData } = useUser();
   const { current: room } = useRoom()
 
   const [pageList, setPageList] = useState<AppPage[]>([]);

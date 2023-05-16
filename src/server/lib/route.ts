@@ -13,6 +13,12 @@ export const route = (cb: RouteHandler) => cb
 
 /**
  * Handles the routes to nextjs. One need to call this and export it on a route file (in app folder).
+ * This is run everytime nextjs calls the method in the dynamic route
+ * It will match requested URLs with the route lookup object passed into the parameters
+ * 
+ * Todo: support query string
+ * Todo: fragment 
+ * 
  * @param request 
  * @param params 
  * @returns 

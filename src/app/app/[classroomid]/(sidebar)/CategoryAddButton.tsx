@@ -2,30 +2,21 @@
 
 import { useInvalidateUserData } from "@/api/client/user";
 import { useRoom } from "@/app/app/(Navbar)/RoomContext";
-import { Routes } from "@/client/lib/route-helper";
+import { Routes } from "@/api/route-helper";
 import { Plus } from "@phosphor-icons/react";
 import axios from "axios";
+import { useCreateCategory } from "@/api/client/classroom";
 
 const CategoryAddButton = () => {
 
   const room = useRoom()
-  const updateUserData = useInvalidateUserData();
+  const createCategory = useCreateCategory(room.current.id);
 
   return (
     <button
       className="flex flex-row w-full p-2 bg-transparent text-left 
     text-slate-700 hover:text-slate-400 data-[state='active']:text-slate-300"
-      onClick={() => {
-        axios.post(Routes.ClassCategoryCreate(room.current.id))
-          .then(
-            (res) => {
-              if (res.status === 200) {
-                console.log("Category Created!")
-                updateUserData();
-              }
-            }
-          )
-      }}
+      onClick={() => { createCategory.mutate() }}
     >
       <span className="w-8">
         <Plus weight="bold" />

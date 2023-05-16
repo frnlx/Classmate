@@ -1,6 +1,6 @@
 'use client'
 
-import { useUserData } from "@/api/client/user"
+import { useUser } from "@/api/client/user"
 import { Classroom } from "@prisma/client"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 
@@ -38,7 +38,7 @@ export const useRoom = () => useContext(RoomContext)
 // Context Component
 // -----------------
 const RoomContextProvider = (p: { children: ReactNode}) => {
-  const { data: userData } = useUserData();
+  const { data: userData } = useUser();
 
   const [roomList, setRoomList] = useState<AppRoom[]>([MeRoom])
   const [selectedRoom, setSelectedRoom] = useState<AppRoom>(MeRoom)

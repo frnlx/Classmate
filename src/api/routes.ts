@@ -12,7 +12,6 @@ const hello = route((_, res) => res.json({ok: 'ok'}))
 export const routes: RouteLookupType = {
   'GET:/test': (_, res) => {
     throw 0;
-    return res.unauth()
   },
   ...userRoutes,
   ...classroomRoutes,

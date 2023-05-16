@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
-import { useUserData } from "@/api/client/user"
+import { useUser } from "@/api/client/user"
 import { Session } from "next-auth"
 import { ReactNode } from "react"
 
@@ -17,10 +17,13 @@ import { ReactNode } from "react"
 // -----------------
 const LoadUserDataContext = (p: { children: ReactNode, session: Session, loading: ReactNode }) => {
 
-  const { isLoading, isError, data, error } = useUserData()
+  const { isLoading, isError, data, error } = useUser()
 
-  if (isLoading) return <>{p.loading}</>
-  if (isError) return <span>Error: {(error as any).message}</span>
+  if (isLoading)
+    return <>{p.loading}</>
+  if (isError)
+    return <span>Error: {(error as any).message}</span>
+  
   return <>{p.children}</>
 
   // return (

@@ -1,10 +1,10 @@
-import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
-import { User } from "../routes/user";
+import NextAuth, { DefaultSession, DefaultUser, User } from "next-auth";
 
 declare module 'next-auth' {
   interface Session {
-    test: string
-    user: User
+    user: User & {
+      id: string
+    }
   }
 
   // interface User{
@@ -21,5 +21,9 @@ declare module 'next-auth' {
 
   interface Profile {
     
+  }
+
+  interface JWT {
+    sub: string
   }
 }

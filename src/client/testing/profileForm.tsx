@@ -5,7 +5,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Routes } from "../lib/route-helper";
+import { Routes } from "../../api/route-helper";
 
 type Inputs = {
   required_name: string

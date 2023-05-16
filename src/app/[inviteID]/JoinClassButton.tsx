@@ -1,6 +1,6 @@
 'use client'
 
-import { Routes } from "@/client/lib/route-helper";
+import { Routes } from "@/api/route-helper";
 import { Button } from "@chakra-ui/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";

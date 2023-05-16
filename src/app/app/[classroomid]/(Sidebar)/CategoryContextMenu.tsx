@@ -1,4 +1,4 @@
-import { Routes } from "@/client/lib/route-helper";
+import { Routes } from "@/api/route-helper";
 import useAppToast from "@/client/lib/toasts";
 import ContextMenuTemplate from "@/client/ui/context-menu-template";
 import Item from "@/client/ui/context-menu-template-item";

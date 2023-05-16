@@ -37,6 +37,12 @@ export const Res = {
   error:
     () => new NextResponse(undefined, { status: 500 }),
   /**
+   * Gives Internal Server Error Response
+   * @returns NextResponse of status 500
+   */
+  notYetImplemented:
+    () => new NextResponse(undefined, { status: 501 }),
+  /**
    * Gives Not Found Response
    * @returns NextResponse of status 404
    */

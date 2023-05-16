@@ -4,7 +4,10 @@ import { prisma } from "@/server/config/dbConfig";
 import { nanoid } from "nanoid";
 
 export const classroomRoutes: RouteLookupType = {
-  'GET:/classroom/[classid]':
+
+  // Get Class
+  // https://www.notion.so/skripsiadekelas/Get-Class-5c9abfbdf06948728a6127e6d5327954?pvs=4
+  'GET:/classrooms/[classid]':
     async (req, res, [id]) => {
       await MustBeAuthenticated()
       const classData = await prisma.classroom.findUnique({
@@ -15,53 +18,15 @@ export const classroomRoutes: RouteLookupType = {
       })
       return res.json(classData)
     },
+  
+  // Get Class Invites
+  // https://www.notion.so/skripsiadekelas/Get-Class-Invites-3e2e953194d0482daa188994bba654b3?pvs=4
+  'GET:/classrooms/[classid]/invites': async (req, res) => { return res.notYetImplemented() },
 
-  'POST:/classroom/[classid]/createCategory':
-    async (req, res, [id]) => {
-      await MustBeAuthenticated()
-      await prisma.category.create({
-        data: {
-          name: 'New Category',
-          title: 'Untitled Category',
-          classroom: {
-            connect: { id }
-          },
-          sections: {
-            create: {
-              name: 'Overview',
-              order: 0
-            }
-          }
-        }
-      })
-      return res.ok()
-    },
-  // The dynamid route must come first.
-  'POST:/classroom/create':
-    async (req, res, params, data) => {
-      const session = await MustBeAuthenticated()
-      await prisma.classroom.create({
-        data: {
-          name: `${session.user.name}'s Classroom`,
-          members: { connect: { id: `${session.user.id}` } },
-          owner: { connect: { id: `${session.user.id}` } },
-          inviteID: nanoid(6),
-          categories: {
-            create: [
-              {
-                name: 'Week 1',
-                title: 'Untitled Category',
-                sections: {
-                  create: {
-                    name: 'Overview',
-                    order: 0
-                  }
-                }
-              },
-            ]
-          },
-        }
-      });
-      return res.ok()
-    },
+  // Create Class Invite
+  // https://www.notion.so/skripsiadekelas/Create-Class-Invite-61d9d1c320f14f6596532fcdbe815aa2?pvs=4
+  'POST:/classrooms/[classid]/invites': async (req, res) => { return res.notYetImplemented() },
+
+
+
 }

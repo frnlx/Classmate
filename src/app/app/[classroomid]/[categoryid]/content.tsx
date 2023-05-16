@@ -8,20 +8,14 @@ import Section from "./(Section)/Section";
 import AddSectionButton from "./(Section)/SectionAddButton";
 import ResourceItem from "./(Section)/(Resources)/ResourceItem";
 import AddPostButton from "./(Section)/(Resources)/ResourceAddButton";
-import { Routes } from "@/client/lib/route-helper";
+import { Routes } from "@/api/route-helper";
+import { useCategoryData } from "@/api/client/category";
 
 
 
 const DisplayCategoryPage = (p: { children: ReactNode, categoryid: string }) => {
   
-
-  const fetchCategoryData = async () => {
-    const res = await axios.get(Routes.CategoryInfo(p.categoryid));
-    console.log(await res.data)
-    return await res.data
-  }
-
-  const { isLoading, error, data, isFetching, refetch } = useQuery<CategoryData>([`category`, p.categoryid], fetchCategoryData)
+  const { isLoading, error, data, isFetching, refetch } = useCategoryData(p.categoryid)
 
   // Write some skeleton here 👇
   if (isLoading) return <>Loading</>

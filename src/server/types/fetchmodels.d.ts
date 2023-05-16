@@ -6,8 +6,12 @@ export type UserData = User & {
   })[];
 }
 
+export type UserClassroomData = Classroom & {
+  categories: Category[]
+}
+
 export type ClassroomData = Classroom & {
-  members: User[];
+  categories: Category[]
 }
 
 export type CategoryData = (Category & {
@@ -15,3 +19,7 @@ export type CategoryData = (Category & {
     post: Resource[];
   })[];
 })
+
+export type SectionData = Section & {
+  post: Resource[];
+}

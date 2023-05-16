@@ -5,13 +5,13 @@ import NavbarItem from "./NavbarItem";
 import NavbarItemAddButton from "./NavbarItemAddButton";
 import { useRouter } from "next/navigation";
 import { useRoom } from "./RoomContext";
-import { Routes } from "@/client/lib/route-helper";
+import { Routes } from "@/api/route-helper";
 import { Classroom } from "@prisma/client";
-import { useInvalidateUserData, useUserData } from "@/api/client/user";
+import { useInvalidateUserData, useUser } from "@/api/client/user";
 
 const Navbar = () => {
   const router = useRouter()
-  const { data: user } = useUserData();
+  const { data: user } = useUser();
   const invalidateUserData = useInvalidateUserData()
   const room = useRoom()
 
