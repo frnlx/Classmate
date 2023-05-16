@@ -7,11 +7,11 @@ import { useRouter } from "next/navigation";
 import { useRoom } from "./RoomContext";
 import { Routes } from "@/api/route-helper";
 import { Classroom } from "@prisma/client";
-import { useInvalidateUserData, useUser } from "@/api/client/user";
+import { useInvalidateUserData, useUser, useUserClassList } from "@/api/client/user";
 
 const Navbar = () => {
   const router = useRouter()
-  const { data: user } = useUser();
+  const { data: user, isLoading } = useUser();
   const invalidateUserData = useInvalidateUserData()
   const room = useRoom()
 
@@ -29,6 +29,8 @@ const Navbar = () => {
         if (res.status === 200) invalidateUserData();
       });
   }
+
+  if (isLoading) return <>Loading...</>
 
 
   return (

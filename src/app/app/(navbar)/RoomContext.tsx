@@ -1,6 +1,6 @@
 'use client'
 
-import { useUser } from "@/api/client/user"
+import { useUser, useUserClassList } from "@/api/client/user"
 import { Classroom } from "@prisma/client"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 
@@ -38,14 +38,15 @@ export const useRoom = () => useContext(RoomContext)
 // Context Component
 // -----------------
 const RoomContextProvider = (p: { children: ReactNode}) => {
-  const { data: userData } = useUser();
+  const { data: userClassList } = useUserClassList()
 
   const [roomList, setRoomList] = useState<AppRoom[]>([MeRoom])
   const [selectedRoom, setSelectedRoom] = useState<AppRoom>(MeRoom)
 
   useEffect(() => {
-    // for every update of userData, set Class List.
-    const list = userData!.classes.map<AppRoom>(
+    if( userClassList === undefined ) return
+    
+    const list = userClassList.map<AppRoom>(
       (classroom, idx) => ({
         index: idx + 1,
         id: classroom.id,
@@ -55,7 +56,7 @@ const RoomContextProvider = (p: { children: ReactNode}) => {
     )
     setRoomList(prev => [...prev, ...list])
 
-  },[userData])
+  },[userClassList])
 
   switchRoom = (id: string) => {
     const room = roomList.find(r => r.id === id);

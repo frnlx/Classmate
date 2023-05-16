@@ -27,7 +27,7 @@ const ClassroomLayout = (p: { children: ReactNode, params: any }) => {
             {p.children}
           </div>
         </ScrollArea>
-
+w
       </ClassPageClientHandler>
     </PageContextProvider>
   );
