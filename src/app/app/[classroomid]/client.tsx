@@ -6,24 +6,25 @@ import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 import { useRoom } from "../(Navbar)/RoomContext";
 
+// This component sets the state of the Navbar from the given url parameter.
 const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
   
+  // Required to get the selected room id and to get the id of the selected page later.
   const room = useRoom()
   const page = usePage()
-  const [loading, setLoading] = useState<boolean>(true)
 
   const router = useRouter()
   const classid = p.params['classroomid']
 
+  // This is required to set the state of the Navbar, which belong to the parent Layout
+  //  parent layout doesn't have access to classroomid params hence it must be done in context.
   useEffect(() => {
     if (room.list.length > 1) {
-      if (classid === 'me') {
-        return router.push('/app/me')
-      }
       const res = room.switch(classid);
       if (res) {
-        setLoading(false)
+        // If class is found... do nothing
       } else {
+        // If class not found, redirect to /me room
         return router.push('/app/me')
       }
     }
@@ -31,20 +32,20 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
   // The dependencies are required if User acecss directly via link.
 
   return (
-    !loading ?
-      <Tab.Group
-        manual
-        vertical
-        defaultIndex={0}
-        as={'div'}
-        className="flex flex-grow-1 w-full"
-        selectedIndex={page.current.index}
-        onChange={(index) => {
-          router.push(`/app/${room.current.id}/${page.list[index].id}`)
-        }}
-      >
-        {p.children}
-      </Tab.Group> : null
+    <Tab.Group
+      manual
+      vertical
+      defaultIndex={0}
+      as={'div'}
+      className="flex flex-grow-1 w-full"
+      selectedIndex={page.current.index}
+      onChange={(index) => {
+        page.switch(page.list[index].id)
+        router.push(`/app/${room.current.id}/${page.list[index].id}`)
+      }}
+    >
+      {p.children}
+    </Tab.Group>
   );
 }
  

@@ -2,15 +2,15 @@
 
 import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { UserData } from "@/server/types/fetchmodels";
 import { AppRoom, useRoom } from "../(Navbar)/RoomContext";
 import { useUser } from "@/api/client/user";
+import { useClassroomQuery } from "@/api/client/classroom";
+import { useClassCategories } from "@/api/client/category";
 
 export type AppPage = {
   index: number,
   id: string,
   isCategory: boolean,
-  data?: Category
 }
 
 export type PageContextType = {
@@ -42,8 +42,10 @@ export const usePage = () => useContext(PageContext)
 
 const PageContextProvider = (p: { children: ReactNode }) => {
 
-  const { data: userData } = useUser();
+  const { data: userData, isLoading } = useUser();
   const { current: room } = useRoom()
+
+  const { data: categoryList } = useClassCategories(room.id);
 
   const [pageList, setPageList] = useState<AppPage[]>([]);
   const [selectedPage, setSelectedPage] = useState<AppPage>(HomePage)
@@ -57,20 +59,20 @@ const PageContextProvider = (p: { children: ReactNode }) => {
 
   useEffect(() => {
     // for every update of selectedClass, set Category List.
-    const selectedClassroom = room.data
-    if (selectedClassroom) {
-      console.log("Initializing pages")
-      const categories = userData!.classes.filter(c => c.id === selectedClassroom.id)[0].categories;
-      const list = categories.map<AppPage>((c, i) => (
+    if (!userData) return;
+
+    if (categoryList) {
+      // const categories = userData.classes.filter(c => c.id === room.id )[0].categories;
+      const list = categoryList.map<AppPage>((c, i) => (
         {
           index: i + 2,
           isCategory: true,
           id: c.id,
-          data: c
         }))
       setPageList([...defaultPages,...list])
-      }
-  }, [userData, room.data])
+    }
+    
+  }, [userData, categoryList ])
   // UserData Deps is required so that when the user data is updated, it will also refresh the list.
 
   return (

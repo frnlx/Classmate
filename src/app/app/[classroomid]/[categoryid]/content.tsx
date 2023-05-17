@@ -1,21 +1,19 @@
 'use client'
 
-import { CategoryData } from "@/server/types/fetchmodels";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { ReactNode } from "react";
 import Section from "./(Section)/Section";
 import AddSectionButton from "./(Section)/SectionAddButton";
 import ResourceItem from "./(Section)/(Resources)/ResourceItem";
 import AddPostButton from "./(Section)/(Resources)/ResourceAddButton";
-import { Routes } from "@/api/route-helper";
 import { useCategoryData } from "@/api/client/category";
+import { useRoom } from "../../(Navbar)/RoomContext";
 
 
 
 const DisplayCategoryPage = (p: { children: ReactNode, categoryid: string }) => {
   
-  const { isLoading, error, data, isFetching, refetch } = useCategoryData(p.categoryid)
+  const room = useRoom()
+  const { isLoading, error, data, isFetching, refetch } = useCategoryData(room.current.id, p.categoryid)
 
   // Write some skeleton here 👇
   if (isLoading) return <>Loading</>

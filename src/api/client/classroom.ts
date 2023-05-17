@@ -1,27 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import axios from "axios"
-import { Routes } from "../route-helper"
-import { UserData } from "@/server/types/fetchmodels"
-import { Category } from "@prisma/client"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { ClassAPI } from "../route-helper"
+import { CategoryData } from "@/server/types/fetchmodels"
 
-export const useCreateCategory = (classid: string) => {
-  const queryClient = useQueryClient()
+// Get Class -- 'GET:/classrooms/[classid]' -- https://notion.so/skripsiadekelas/5c9abfbdf06948728a6127e6d5327954
+export const useClassroomQuery = (classroomid: string) => {
+  return useQuery({
+    queryKey:
+      ['classroom', classroomid],
 
-  return useMutation({
-    mutationFn: () =>
-      axios
-        .post(Routes.ClassCategoryCreate(classid))
-        .then((response) => response.data as Category),
-    // 💡 response of the mutation is passed to onSuccess
-    onSuccess: (newCategory) => {
-      // ✅ update detail view directly
-      queryClient.setQueryData(['user'], (userdata?: UserData) => {
-        let newUserData: UserData = JSON.parse(JSON.stringify(userdata))
-        let classroom = newUserData?.classes!.filter(c => c.id === classid)[0]!
-        classroom.categories.push(newCategory);
-        return newUserData
-      })
-      // queryClient.invalidateQueries(['user'])
-    },
-  })  
+    queryFn: async () =>
+      ClassAPI
+        .GetClassData(classroomid).then(res => res.data)
+  })
 }

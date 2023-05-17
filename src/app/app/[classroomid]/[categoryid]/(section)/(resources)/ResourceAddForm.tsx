@@ -1,10 +1,10 @@
 'use client'
 
-import { Routes } from "@/api/route-helper";
-import { CategoryData } from "@/server/types/fetchmodels";
+import { ClassAPI } from "@/api/route-helper";
+import { useRoom } from "@/app/app/(Navbar)/RoomContext";
 import { Alert, AlertDescription, AlertIcon, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, ModalFooter, Textarea } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -19,10 +19,13 @@ const ResourceAddForm = (p: {sectionid: string, categoryid: string, onAdd: ()=>v
   const [serverError, setServerError] = useState<string>('')
 
   const queryClient = useQueryClient()
-  const addPostMutation = useMutation<CategoryData, unknown, Inputs>({
-    mutationFn: async (data) => {
-      return axios.post(Routes.ResourceCreate(p.sectionid), data).then(res => res.data)
-    },
+
+  const room = useRoom()
+  const addPostMutation = useMutation({
+    mutationFn: async (data: Inputs) => 
+      ClassAPI
+        .CreateResource(room.current.id, p.categoryid, p.sectionid).then(res => res.data),
+    
     onSuccess(data, error) {
       queryClient.invalidateQueries(['category', p.categoryid]);
       p.onAdd()

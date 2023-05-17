@@ -2,25 +2,6 @@ import { CategoryData, ClassroomData, SectionData, UserData } from "@/server/typ
 import { Resource, Section, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 
-export const Routes = {
-  UserInfo: (userid: string) => `/api/users/${userid}`, // done
-  UserUpdate: (userid: string) => `/api/users/${userid}/update`, // done
-  UserJoinClass: (id: string) => `/api/users/${id}/joinClass`, // done
-
-  ClassCreate: `/api/classroom/create`,  // done
-  ClassInfo: (id: string) => `/api/classroom/${id}`, // done
-  ClassInvites: (id: string) => `/api/classroom/${id}/invites`, // done
-  ClassInviteCreate: (id: string) => `/api/classroom/${id}/invites/create`,
-  ClassCategoryCreate: (id: string) => `/api/classroom/${id}/createCategory`,
-
-  CategoryInfo: (id: string) => `/api/category/${id}`,
-  CategoryDelete: (id: string) => `/api/cateogry/${id}`,
-
-  SectionCreate: (id: string) => `/api/category/${id}/createSection`,
-
-  ResourceCreate: (id: string) => `/api/section/${id}/createResource`,
-}
-
 type str = string
 type APILookupTypeHelper = { [key: string]: (...param: any[]) => Promise<AxiosResponse> }; 
 
@@ -33,7 +14,7 @@ export const UserAPI = {
   CreateClassroom:(userid: str) =>                        POST<ClassroomData>(`/api/users/${userid}/classrooms`),
 }
 
-export const ClassAPI: APILookupTypeHelper = {
+export const ClassAPI = {
   GetClassData: (classid: str) => GET<ClassroomData>(`/api/classrooms/${classid}`),
 
   // Invites

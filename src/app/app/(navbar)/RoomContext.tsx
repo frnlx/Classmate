@@ -1,23 +1,22 @@
 'use client'
 
-import { useUser, useUserClassList } from "@/api/client/user"
-import { Classroom } from "@prisma/client"
+import { useUserClassList } from "@/api/client/user"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
+import Navbar from "./Navbar"
 
 export type AppRoom = {
   index: number,
   id: string,
   isMeRoom: boolean,
-  data?: Classroom
 }
 export type RoomContextType = {
-  list: AppRoom[],
+  list: AppRoom[],  
   current: AppRoom,
   switch: (id: string) => boolean,
   switchToMe: () => void,
 }
 
-const MeRoom: AppRoom = {
+export const MeRoom: AppRoom = {
   index: 0,
   id: "me",
   isMeRoom: true,
@@ -38,19 +37,19 @@ export const useRoom = () => useContext(RoomContext)
 // Context Component
 // -----------------
 const RoomContextProvider = (p: { children: ReactNode}) => {
-  const { data: userClassList } = useUserClassList()
+  const { data: userClassList, isLoading } = useUserClassList()
 
   const [roomList, setRoomList] = useState<AppRoom[]>([MeRoom])
   const [selectedRoom, setSelectedRoom] = useState<AppRoom>(MeRoom)
-
+  
   useEffect(() => {
     if( userClassList === undefined ) return
     
+    console.log('Someting Changed')
     const list = userClassList.map<AppRoom>(
       (classroom, idx) => ({
         index: idx + 1,
         id: classroom.id,
-        data: classroom,
         isMeRoom: false,
       })
     )
@@ -67,12 +66,16 @@ const RoomContextProvider = (p: { children: ReactNode}) => {
       return true;
     }
   }
+
   goToMeRoom = () => {
     setSelectedRoom(roomList[0])
   }
 
   return (
     <RoomContext.Provider value={{
+      // This provides List of app rooms, only contains data for UI
+      //  so this doesn't have actual classroom data.
+      // The function is also exposed to be able to switch room
       list: roomList,
       current: selectedRoom,
       switch: switchRoom,

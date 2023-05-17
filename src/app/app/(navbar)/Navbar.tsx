@@ -1,50 +1,42 @@
 'use client'
 
-import axios from "axios";
 import NavbarItem from "./NavbarItem";
 import NavbarItemAddButton from "./NavbarItemAddButton";
 import { useRouter } from "next/navigation";
-import { useRoom } from "./RoomContext";
-import { Routes } from "@/api/route-helper";
+import { AppRoom, useRoom } from "./RoomContext";
 import { Classroom } from "@prisma/client";
-import { useInvalidateUserData, useUser, useUserClassList } from "@/api/client/user";
+import { useCreateClass, useUser, useUserClassList } from "@/api/client/user";
+import { SkeletonCircle } from "@chakra-ui/react";
 
 const Navbar = () => {
   const router = useRouter()
-  const { data: user, isLoading } = useUser();
-  const invalidateUserData = useInvalidateUserData()
-  const room = useRoom()
+  const { data: user } = useUser();
+  const { data: classList } = useUserClassList();
+  const room = useRoom();
 
   const onMeRoomItemClick = () => {
     router.push(`/app/me`)
   }
 
   const onClassRoomItemClick = (classroomid: string) => {
+    room.switch(classroomid)
     router.push(`/app/${classroomid}`)
   }
-
-  const onClassRoomCreateClick = () => {
-    axios.post(Routes.ClassCreate)
-      .then((res) => {
-        if (res.status === 200) invalidateUserData();
-      });
-  }
-
-  if (isLoading) return <>Loading...</>
-
 
   return (
     <div className="bg-zinc-950 w-24 h-screen p-5 flex flex-col gap-4">
       <ul>
-        <NavbarItem
-          selected={room.current.index === 0 ? true : false}
-          onClick={onMeRoomItemClick}
-          image={user?.pfp} />
+        {
+          user ? <NavbarItem
+            selected={room.current.index === 0 ? true : false}
+            onClick={onMeRoomItemClick}
+            image={user?.pfp} /> : <SkeletonCircle size='14'/>
+        }
       </ul>
       <hr className="border-slate-700 border-1" />
       <ul className="flex flex-col gap-4">
         {
-          user!.classes.map(
+          classList ? classList.map(
             (classroom, i) =>
               <NavbarItem
                 key={i}
@@ -52,9 +44,11 @@ const Navbar = () => {
                 selected={i === (room.current.index - 1)}
                 classroom={classroom as Classroom}
               />
-            )
+            ) : <></>
         }
-        <NavbarItemAddButton onClick={onClassRoomCreateClick} />
+        {
+          user ?  <NavbarItemAddButton userid={user.id} /> : <> </>
+        }
       </ul>
     </div>
   );

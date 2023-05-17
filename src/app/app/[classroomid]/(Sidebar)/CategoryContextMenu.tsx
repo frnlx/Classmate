@@ -1,4 +1,4 @@
-import { Routes } from "@/api/route-helper";
+import { ClassAPI } from "@/api/route-helper";
 import useAppToast from "@/client/lib/toasts";
 import ContextMenuTemplate from "@/client/ui/context-menu-template";
 import Item from "@/client/ui/context-menu-template-item";
@@ -6,10 +6,12 @@ import { Hash, Link, Trash } from "@phosphor-icons/react";
 import { Category } from "@prisma/client";
 import axios from "axios";
 import { ReactNode } from "react";
+import { useRoom } from "../../(Navbar)/RoomContext";
 
 const CategoryItemContextMenu = (p: { children: ReactNode, category?: Category }) => {
   const toast = useAppToast()
-  if (p.category === undefined) return <>{p.children}</>
+  const room = useRoom()
+  if (!p.category) return <>{p.children}</>
   const link = `${window.location.origin}/app/${p.category.id}`
   const id = p.category.id
   const name = p.category.name
@@ -33,7 +35,7 @@ const CategoryItemContextMenu = (p: { children: ReactNode, category?: Category }
       </Item>
       <Item icon={<Trash/>}
         onClick={() => {
-          axios.delete(Routes.CategoryDelete(id)).then(
+          ClassAPI.DeleteCategory(room.current.id, p.category!.id).then(
             () => {
               
               toast(`Category ${name} deleted.`, 'success', 'gray')

@@ -1,8 +1,4 @@
-import { redirect } from "next/navigation";
+import { RedirectRouteToMePage } from "@/api/client/_redirects";
 
 // Server Component
-const AppPage = () => {
-  redirect('/app/me')
-}
- 
-export default AppPage;
+export default RedirectRouteToMePage;

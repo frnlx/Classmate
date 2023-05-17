@@ -1,4 +1,5 @@
-import { Routes } from "@/api/route-helper";
+import { useCreateSection } from "@/api/client/section";
+import { useRoom } from "@/app/app/(Navbar)/RoomContext";
 import { CategoryData } from "@/server/types/fetchmodels";
 import { Plus } from "@phosphor-icons/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -12,15 +13,8 @@ type param = {
 
 const AddSectionButton = ({ categoryid }: param) => {
   
-  const queryClient = useQueryClient()
-  const addSectionMutation = useMutation<CategoryData>({
-    mutationFn: () => {
-      return axios.post(Routes.SectionCreate(categoryid)).then(res => res.data)
-    },
-    onSuccess(data, error) {
-      queryClient.invalidateQueries(['category', categoryid])
-    },
-  })
+  const room = useRoom()
+  const addSectionMutation = useCreateSection(room.current.id, categoryid)
 
 
 

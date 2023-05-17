@@ -1,8 +1,3 @@
-import { redirect } from "next/navigation";
+import { RedirectRouteToClassHomePage } from "@/api/client/_redirects";
 
-const ClassroomPage = (p: { params: any }) => {
-  
-  redirect(`/app/${p.params['classroomid']}/home`)
-}
-
-export default ClassroomPage;
+export default RedirectRouteToClassHomePage;

@@ -1,11 +1,10 @@
 'use client'
 
 import { User } from "@prisma/client";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Routes } from "../../api/route-helper";
+import { UserAPI } from "../../api/route-helper";
 
 type Inputs = {
   required_name: string
@@ -36,7 +35,8 @@ const UpdateProfileForm = () => {
 
   const getDefaultValues = async () => {
     try {
-      const data = (await axios(Routes.UserInfo(session!.user.id))).data as User
+      // const data = (await axios(Routes.UserInfo(session!.user.id))).data as User
+      const data = (await UserAPI.GetUserData(session!.user.id)).data as User
       return {
         required_name: data.name,
         bio: data.bio ? data.bio : ''
@@ -55,7 +55,8 @@ const UpdateProfileForm = () => {
     async (data) => {
       try {
         console.log(data)
-        await axios.post(Routes.UserUpdate(session!.user.id), data)
+        // await axios.post(Routes.UserUpdate(session!.user.id), data)
+        await UserAPI.UpdateUserInfo(session!.user.id, data)
 
         const val = await getDefaultValues();
         reset(val);

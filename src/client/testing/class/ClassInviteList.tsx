@@ -1,15 +1,21 @@
 'use client'
 
+import { useClassroomQuery } from "@/api/client/classroom";
 import { useRoom } from "../../../app/app/(Navbar)/RoomContext";
 
 const ClassInviteList = () => {
 
   const room = useRoom()
 
+  const { data: classData } = useClassroomQuery(room.current.id)
+
   return (
-    <div>
-      <a href={`/app/join/${room.current.data!.inviteID}`}>{room.current.data!.inviteID}</a>
-    </div>
+    classData ?
+      <div>
+        <a href={`/app/join/${classData.inviteID}`}>{classData.inviteID}</a>
+      </div>
+      :
+      <>Loading...</>
   );
 }
  
