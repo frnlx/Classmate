@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import AddPostButton from "./(Resources)/ResourceAddButton";
-import ResourceItem from "./(Resources)/ResourceItem";
+import AddPostButton from "./(resourceItem)/ResourceAddButton";
+import ResourceItem from "./(resourceItem)/ResourceItem";
 import { Resource } from "@prisma/client";
 
 const Section = (p: {

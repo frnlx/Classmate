@@ -8,13 +8,9 @@ export default function RoomCategoryPage (p: { params: any }) {
   const categoryid = p.params['categoryid'] as string;
 
   return (
-    <RoomCategoryPageClientHandler classroomid={classroomid} categoryid={categoryid} >
-      <DisplayCategoryPage categoryid={categoryid}>
-        <div>
-          Category Yessir!!
-        </div>
-      </DisplayCategoryPage>
-    </RoomCategoryPageClientHandler>
+    <div>
+      Category Yessir!!
+    </div>
   );
 }
  
