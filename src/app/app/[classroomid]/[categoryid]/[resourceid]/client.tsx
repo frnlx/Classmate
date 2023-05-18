@@ -12,9 +12,8 @@ const ResourcePageClient = (p:{children: ReactNode}) => {
       isOpen={isOpen}
       placement='right'
       onClose={onClose}
-      
     >
-
+      
     </Drawer>
   );
 }

@@ -3,8 +3,8 @@
 import { ReactNode } from "react";
 import Section from "./(Section)/Section";
 import AddSectionButton from "./(Section)/SectionAddButton";
-import ResourceItem from "./(section)/(resourceItem)/ResourceItem";
-import AddPostButton from "./(section)/(resourceItem)/ResourceAddButton";
+import ResourceItem from "./(Section)/(resourceItem)/ResourceItem";
+import AddPostButton from "./(Section)/(resourceItem)/ResourceAddButton";
 import { useCategoryData } from "@/api/client/category";
 import { useRoom } from "../../(Navbar)/RoomContext";
 
