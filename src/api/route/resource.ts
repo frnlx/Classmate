@@ -19,6 +19,7 @@ export const resourceRoutes: RouteLookupType = {
   'POST:/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]/resources':
     async (req, res,[classid, categoryid, sectionid], data) => {
       await MustBeAuthenticated()
+      console.log('Hello')
       const newResource = await prisma.resource.create({
         data: {
           title: data.title,

@@ -35,7 +35,7 @@ export const ClassAPI = {
 
   // Resources
   GetSectionResources: (classid: str, categoryid: str, sectionid: str) =>             GET<Resource[]>(`/api/classrooms/${classid}/categories/${categoryid}/sections/${sectionid}/resources`),
-  CreateResource: (classid: str, categoryid: str, sectionid: str) =>                  POST<Resource>(`/api/classrooms/${classid}/categories/${categoryid}/sections/${sectionid}/resources`),
+  CreateResource: (classid: str, categoryid: str, sectionid: str, data: any) =>       POST<Resource>(`/api/classrooms/${classid}/categories/${categoryid}/sections/${sectionid}/resources`, data),
   GetResource: (classid: str, categoryid: str, sectionid: str, resourceid: str) =>    GET<Resource>(`/api/classrooms/${classid}/categories/${categoryid}/sections/${sectionid}/resources/${resourceid}`),
   DeleteResource: (classid: str, categoryid: str, sectionid: str, resourceid: str) => DELETE<Resource>(`/api/classrooms/${classid}/categories/${categoryid}/sections/${sectionid}/resources/${resourceid}`),
 }

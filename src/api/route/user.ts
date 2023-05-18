@@ -62,7 +62,7 @@ export const userRoutes: RouteLookupType = {
     async (req, res, [userid]) => {
       const session = await MustBeAuthenticated()
       if (userid !== session.user.id) return res.error()
-      await prisma.classroom.create({
+      const newClassroom = await prisma.classroom.create({
         data: {
           name: `${session.user.name}'s Classroom`,
           members: { connect: { id: `${session.user.id}` } },
@@ -84,7 +84,7 @@ export const userRoutes: RouteLookupType = {
           },
         }
       });
-      return res.ok()
+      return res.json(newClassroom)
     }
 
 }

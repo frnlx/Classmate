@@ -2,7 +2,7 @@
 
 import { usePage } from "@/app/app/[classroomid]/PageContext"
 import { useRoom } from "@/app/app/(Navbar)/RoomContext"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { ReactNode, useEffect, useState } from "react"
 
 const RoomHomePageClientHandler = (p: { children: ReactNode, params: any }) => {
@@ -17,6 +17,8 @@ const RoomHomePageClientHandler = (p: { children: ReactNode, params: any }) => {
     const res = page.switch('home');
     if (res) {
       setLoading(false)
+    } else {
+      redirect('/app/me')
     }
 
   },[])

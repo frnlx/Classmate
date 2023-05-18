@@ -21,10 +21,13 @@ const ResourceAddForm = (p: {sectionid: string, categoryid: string, onAdd: ()=>v
   const queryClient = useQueryClient()
 
   const room = useRoom()
+
+  console.log([room.current.id, p.categoryid, p.sectionid])
+
   const addPostMutation = useMutation({
     mutationFn: async (data: Inputs) => 
       ClassAPI
-        .CreateResource(room.current.id, p.categoryid, p.sectionid).then(res => res.data),
+        .CreateResource(room.current.id, p.categoryid, p.sectionid, data).then(res => res.data),
     
     onSuccess(data, error) {
       queryClient.invalidateQueries(['category', p.categoryid]);
@@ -41,11 +44,8 @@ const ResourceAddForm = (p: {sectionid: string, categoryid: string, onAdd: ()=>v
     setLoading(true)
     try {
       addPostMutation.mutate(data)
-      // await axios.post(Routes.ResourceCreate(p.sectionid), data)
-      // queryClient.invalidateQueries(['category', p.categoryid])
-      // p.closeForm()
     } catch (error) {
-      // setServerError((error as AxiosError).message)
+      setServerError((error as AxiosError).message)
     } finally {
       setLoading(false)
     }

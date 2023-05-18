@@ -3,6 +3,7 @@ import { sectionRoutes } from "./route/section";
 import { userRoutes } from "./route/user";
 import { classroomRoutes } from "./route/classroom";
 import { categoryRoutes } from "./route/category";
+import { resourceRoutes } from "./route/resource";
 
 // callback wrapped in route() so that you can have autocomplete in the parameters.
 const hello = route((_, res) => res.json({ok: 'ok'}))
@@ -17,6 +18,7 @@ export const routes: RouteLookupType = {
   ...classroomRoutes,
   ...categoryRoutes,
   ...sectionRoutes,
+  ...resourceRoutes,
 }
 
 

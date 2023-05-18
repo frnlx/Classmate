@@ -1,11 +1,9 @@
 'use client'
 import ContextMenuTemplate from "@/client/ui/context-menu-template";
 import Item from "@/client/ui/context-menu-template-item";
-import { Copy, Hash, Link, Trash } from "@phosphor-icons/react";
+import { Hash, Link } from "@phosphor-icons/react";
 import { ReactNode } from "react";
-import { usePathname } from 'next/navigation';
 import { Classroom } from "@prisma/client";
-import { useToast } from "@chakra-ui/react";
 import useAppToast from "@/client/lib/toasts";
 
 const NavbarItemContextMenu = (p: { children: ReactNode, classroom?: Classroom }) => {
