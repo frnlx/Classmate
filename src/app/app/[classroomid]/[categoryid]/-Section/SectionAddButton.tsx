@@ -1,9 +1,7 @@
 import { useCreateSection } from "@/api/client/section";
-import { useRoom } from "@/app/app/(Navbar)/RoomContext";
-import { CategoryData } from "@/server/types/fetchmodels";
+import { useRoom } from "@/app/app/-Navbar/RoomContext";
+import { CategoryData } from "@/types/fetchmodels";
 import { Plus } from "@phosphor-icons/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 
 type param = {
   categoryid: string,

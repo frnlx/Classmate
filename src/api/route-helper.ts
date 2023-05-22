@@ -1,4 +1,4 @@
-import { CategoryData, ClassroomData, SectionData, UserData } from "@/server/types/fetchmodels";
+import { CategoryData, ClassroomData, SectionData, UserData } from "@/types/fetchmodels";
 import { Resource, Section, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 

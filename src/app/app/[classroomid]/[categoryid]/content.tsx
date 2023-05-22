@@ -1,12 +1,12 @@
 'use client'
 
 import { ReactNode } from "react";
-import Section from "./(Section)/Section";
-import AddSectionButton from "./(Section)/SectionAddButton";
-import ResourceItem from "./(Section)/(resourceItem)/ResourceItem";
-import AddPostButton from "./(Section)/(resourceItem)/ResourceAddButton";
 import { useCategoryData } from "@/api/client/category";
-import { useRoom } from "../../(Navbar)/RoomContext";
+import { useRoom } from "../../-Navbar/RoomContext";
+import Section from "./-Section/Section";
+import ResourceItem from "./-Section/(resourceItem)/ResourceItem";
+import AddPostButton from "./-Section/(resourceItem)/ResourceAddButton";
+import AddSectionButton from "./-Section/SectionAddButton";
 
 
 

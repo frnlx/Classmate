@@ -6,7 +6,7 @@ import { Hash, Link, Trash } from "@phosphor-icons/react";
 import { Category } from "@prisma/client";
 import axios from "axios";
 import { ReactNode } from "react";
-import { useRoom } from "../../(Navbar)/RoomContext";
+import { useRoom } from "../../-Navbar/RoomContext";
 
 const CategoryItemContextMenu = (p: { children: ReactNode, category?: Category }) => {
   const toast = useAppToast()

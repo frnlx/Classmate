@@ -1,7 +1,7 @@
 'use client'
 
 import { useClassroomQuery } from "@/api/client/classroom";
-import { useRoom } from "@/app/app/(Navbar)/RoomContext";
+import { useRoom } from "@/app/app/-Navbar/RoomContext";
 import { Tab } from "@headlessui/react";
 import { IconContext } from "@phosphor-icons/react";
 import { ReactNode } from "react";

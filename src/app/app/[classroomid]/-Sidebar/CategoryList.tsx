@@ -3,7 +3,7 @@
 import { usePage } from "@/app/app/[classroomid]/PageContext";
 import SidebarItem from "./SidebarItem";
 import { useClassCategories } from "@/api/client/category";
-import { useRoom } from "../../(Navbar)/RoomContext";
+import { useRoom } from "../../-Navbar/RoomContext";
 
 const CategoryList = () => {
 

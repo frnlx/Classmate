@@ -1,7 +1,7 @@
 'use client'
 
 import { ClassAPI } from "@/api/route-helper";
-import { useRoom } from "@/app/app/(Navbar)/RoomContext";
+import { useRoom } from "@/app/app/-Navbar/RoomContext";
 import { Alert, AlertDescription, AlertIcon, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, ModalFooter, Textarea } from "@chakra-ui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";

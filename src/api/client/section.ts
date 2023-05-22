@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { SectionData } from "@/server/types/fetchmodels";
+import { SectionData } from "@/types/fetchmodels";
 import { ClassAPI } from "../route-helper";
 
 // Get Category Sections -- 'GET:/classrooms/[classid]/categories/[categoryid]/sections' -- https://notion.so/skripsiadekelas/4deb71d64df8435bb817d72db0809bd9
