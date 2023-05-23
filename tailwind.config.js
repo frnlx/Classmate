@@ -4,6 +4,7 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx}',
     './src/client/**/*.{js,ts,jsx,tsx}',
   ],
+
   theme: {
     extend: {
       backgroundImage: {
@@ -18,12 +19,14 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-inter)'],
         mono: ['var(--font-roboto-mono)'],
-      }
+      },
     },
   },
+
   corePlugins: {
     preflight: false,
   },
+  
   plugins: [],
 }
 

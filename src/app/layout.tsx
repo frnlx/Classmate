@@ -1,9 +1,8 @@
 import './globals.css'
 import { Inter, Roboto_Mono  } from 'next/font/google'
+import { rootMetadata } from './metadata';
 
-export const metadata = {
-
-}
+export { rootMetadata as metadata }
 
 const inter = Inter({
   subsets: ['latin'],
@@ -24,7 +23,6 @@ export default function PageLayout(p: {
   return (
     <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`} suppressHydrationWarning={true} >
       <body className='bg-zinc-950 font-sans m-0 p-0 box-border' suppressHydrationWarning={true} >
-        {/* <ClientLayout /> */}
         {p.children}
       </body>
     </html>

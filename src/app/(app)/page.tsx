@@ -1,5 +1,10 @@
 import Button from '@/client/static/button';
 import Image from 'next/image'
+import { rootMetadata } from '../metadata';
+
+export const metadata = {
+  title: 'Hello'
+}
 
 // Server Component
 export default function LandingPage() {
