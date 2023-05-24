@@ -6,13 +6,13 @@ import CategoryItemContextMenu from "./CategoryContextMenu";
 import { Category } from "@prisma/client";
 
 
-const SidebarItem = (p: {value: string, category?: Category}) => {
-  
+const SidebarItem = (p: { value: string, category?: Category }) => {
+
   const getIcon = () => {
-    if(p.value === 'Home') return <House />
-    if(p.value === 'Assignment') return <ClipboardText />
+    if (p.value === 'Home') return <House />
+    if (p.value === 'Assignment') return <ClipboardText />
     if (p.value === 'Chat') return <ChatDots />
-    return <Hash weight="bold"/>
+    return <Hash weight="bold" />
   }
 
   return (
@@ -22,7 +22,7 @@ const SidebarItem = (p: {value: string, category?: Category}) => {
         text-slate-500 bg-transparent 
         hover:text-slate-400 hover:bg-slate-800/25
         data-[headlessui-state='selected']:text-slate-300 data-[headlessui-state='selected']:bg-slate-800/50
-        focus-visible:outline-0 focus:shadow-outline`}>
+        focus-visible:outline-0`}>
         <span className="w-8 leading-5">
           {getIcon()}
         </span>
@@ -33,5 +33,5 @@ const SidebarItem = (p: {value: string, category?: Category}) => {
     </CategoryItemContextMenu>
   );
 }
- 
+
 export default SidebarItem;
