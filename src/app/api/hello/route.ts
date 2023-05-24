@@ -1,4 +1,4 @@
-import { log } from "@/lib/logger"
+import { log } from "@/lib/logger/chalk"
 
 export async function GET(request: Request) {
 
