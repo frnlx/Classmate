@@ -1,5 +1,5 @@
 import { UserAPI } from "@/api/route-helper";
-import { ClassroomData, UserData } from "@/server/types/fetchmodels";
+import { ClassroomData, UserData } from "@/types/fetchmodels";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";

@@ -14,13 +14,13 @@ export const useSectionResources = (classid: string, categoryid: string, section
 }
 
 // Create Resource -- 'POST:/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]/resources' -- https://notion.so/skripsiadekelas/a8f870526a074612b4f96e812bb3a67b
-export const useCreateResource = (classid: string, categoryid: string, sectionid: string) => { 
+export const useCreateResource = (classid: string, categoryid: string, sectionid: string, data: any) => { 
   const qc = useQueryClient()
   return useMutation({
 
     mutationFn: async () =>
       ClassAPI 
-        .CreateResource(classid, categoryid, sectionid).then(res => res.data),
+        .CreateResource(classid, categoryid, sectionid, data).then(res => res.data),
     
     onSuccess: async (newResource) => {
       qc.invalidateQueries(['section', sectionid, 'resources'])

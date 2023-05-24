@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ClassAPI } from "../route-helper";
-import { CategoryData } from "@/server/types/fetchmodels";
+import { CategoryData } from "@/types/fetchmodels";
 
 // Get Class Categories -- 'GET:/classrooms/[classid]/categories' -- https://notion.so/skripsiadekelas/df2bc14815614458b6875a695237f5eb
 export const useClassCategories = (classroomid: string) => {

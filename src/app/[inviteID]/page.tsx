@@ -1,7 +1,7 @@
-import { prisma } from "@/server/config/dbConfig";
+import { prisma } from "@/lib/db";
 import JoinClassButton from "./JoinClassButton";
 import AppBackground from "../../client/static/background";
-import { useServerSession } from "@/server/lib/auth";
+import { useServerSession } from "@/lib/auth-helper";
 
 const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
 

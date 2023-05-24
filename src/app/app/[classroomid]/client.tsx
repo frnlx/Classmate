@@ -4,7 +4,7 @@ import { usePage } from "@/app/app/[classroomid]/PageContext";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-import { useRoom } from "../(Navbar)/RoomContext";
+import { useRoom } from "../-Navbar/RoomContext";
 
 // This component sets the state of the Navbar from the given url parameter.
 const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {

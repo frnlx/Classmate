@@ -1,6 +1,6 @@
 import Providers from '@/app/app/providers'
-import NavbarRoot from './(Navbar)/NavbarRoot'
-import { useServerSession } from '@/server/lib/auth'
+import NavbarRoot from './-Navbar/NavbarRoot'
+import { useServerSession } from '@/lib/auth-helper'
 
 export const metadata = {
 }

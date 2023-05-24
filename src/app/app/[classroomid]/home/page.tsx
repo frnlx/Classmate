@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import RoomHomePageClientHandler from "./client";
-import ClassInviteList from "@/client/testing/class/ClassInviteList";
 
 const RoomHomePage = (p: { params: any }) => {
   return (
@@ -10,7 +9,6 @@ const RoomHomePage = (p: { params: any }) => {
       <div>This is server side-rendering</div>
       <h3>Member List</h3>
       <h3>Invite Link</h3>
-      <ClassInviteList />
         Home page Yessir!!
       </div>
     </RoomHomePageClientHandler>

@@ -2,7 +2,7 @@
 
 import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { AppRoom, useRoom } from "../(Navbar)/RoomContext";
+import { AppRoom, useRoom } from "../-Navbar/RoomContext";
 import { useUser } from "@/api/client/user";
 import { useClassroomQuery } from "@/api/client/classroom";
 import { useClassCategories } from "@/api/client/category";

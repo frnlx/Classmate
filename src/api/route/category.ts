@@ -1,6 +1,6 @@
-import { RouteLookupType } from "@/server/lib/route";
+import { RouteLookupType } from "@/lib/route";
 import { MustBeAuthenticated } from "../utils";
-import { prisma } from "@/server/config/dbConfig";
+import { prisma } from "@/lib/db";
 
 export const categoryRoutes: RouteLookupType = {
   

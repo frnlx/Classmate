@@ -2,11 +2,11 @@ import { Drawer } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import ResourcePageClient from "./client";
 
-const ResourcePage = (P: { children: ReactNode }) => {
+const ResourcePage = () => {
 
   return (
     <ResourcePageClient>
-      
+      Test
     </ResourcePageClient>
   );
 }
