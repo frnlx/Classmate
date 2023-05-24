@@ -1,16 +1,10 @@
 import Button from '@/client/static/button';
 import Image from 'next/image'
-import { rootMetadata } from '../metadata';
-
-export const metadata = {
-  title: 'Hello'
-}
 
 // Server Component
 export default function LandingPage() {
   const emojis = ['⚡', '⚡', '⚡', '🚀', '🚀', '🚀', '🙀', '🎯','🎯','🎯',];
-  const emoji =  emojis[Math.floor(Math.random() * emojis.length)];
-
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 
   return (
     <main className='wrapper homepage bg-zinc-900 text-zinc-50 '>
@@ -63,4 +57,5 @@ export default function LandingPage() {
       </footer>
     </main>
   );
+
 }

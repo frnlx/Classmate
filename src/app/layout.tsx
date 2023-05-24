@@ -1,8 +1,34 @@
-import './globals.css'
+import '@/client/globals.css'
 import { Inter, Roboto_Mono  } from 'next/font/google'
-import { rootMetadata } from './metadata';
+import { rootMetadata } from '@/configs/metadata'
 
-export { rootMetadata as metadata }
+export const metadata = rootMetadata
+
+// Server Component
+export default function PageLayout(p: {
+  children: React.ReactNode
+}) {
+
+  return (
+    <html
+      lang="en"
+      className={`${inter.variable} ${roboto_mono.variable}`}
+      suppressHydrationWarning={true}
+    >
+      <body
+        className='bg-zinc-950 font-sans m-0 p-0 box-border'
+        suppressHydrationWarning={true}
+      >
+        {p.children}
+      </body>
+    </html>
+  )
+
+}
+
+
+
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,16 +41,3 @@ const roboto_mono = Roboto_Mono({
   display: 'swap',
   variable: '--font-roboto-mono',
 });
-
-// Server Component
-export default function PageLayout(p: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`} suppressHydrationWarning={true} >
-      <body className='bg-zinc-950 font-sans m-0 p-0 box-border' suppressHydrationWarning={true} >
-        {p.children}
-      </body>
-    </html>
-  )
-}

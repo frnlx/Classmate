@@ -38,7 +38,7 @@
     "body": [
       "import { PageProps } from \"@/types/next\"",
       "",
-      "export default function ${1:New}Page({ params, searchParams }: PageProps)",
+      "export default function ${1:New}Page({ params, searchParams }: PageProps) {",
       "  return (",
       "    <></>",
       "  )",
@@ -56,7 +56,7 @@
       "'use client'; // Error components must be Client Components",
       "import { ErrorProps } from \"@/types/next\"",
       "",
-      "export default function ${1:New}Page({ params, searchParams }: PageProps)",
+      "export default function ${1:New}Page({ params, searchParams }: PageProps) {",
       "  useEffect(() => {",
       "    console.error(error);",
       "  }, [error]);",
