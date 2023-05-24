@@ -1,4 +1,4 @@
-import { RouteLookupType, route } from "@/server/lib/route";
+import { RouteLookupType, route } from "@/lib/route";
 import { sectionRoutes } from "./route/section";
 import { userRoutes } from "./route/user";
 import { classroomRoutes } from "./route/classroom";

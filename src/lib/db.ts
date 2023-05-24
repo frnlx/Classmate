@@ -1,15 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 import { PrismaClient } from "@prisma/client";
 
-// Unused
+// # Unused
 export const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
-// Unused
+// # Unused
 
 
 // Singleton Pattern
+// like a static variable
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient | undefined
 }

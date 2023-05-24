@@ -1,4 +1,4 @@
-import { Res, ResponseGenerator } from "@/server/lib/responses";
+import { Res, ResponseGenerator } from "@/lib/responses";
 import { Awaitable } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 import { RouteResponse } from "@/api/utils";

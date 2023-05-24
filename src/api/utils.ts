@@ -1,6 +1,6 @@
-import { isAuth } from "@/server/lib/auth";
-import { ResponseTypes } from "@/server/lib/responses";
-import { RouteHandlerParam } from "@/server/lib/route";
+import { isAuth } from "@/lib/auth-helper";
+import { ResponseTypes } from "@/lib/responses";
+import { RouteHandlerParam } from "@/lib/route";
 import { redirect } from 'next/navigation'
 
 export class RouteResponse extends Error {

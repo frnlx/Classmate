@@ -1,6 +1,6 @@
 import { Account, DefaultUser, Profile, Session } from "next-auth";
 import { DefaultJWT, JWT } from "next-auth/jwt";
-import { prisma } from "./dbConfig";
+import { prisma } from "../../lib/db";
 
 export async function udpateJWTfromOAuth(
   defaultToken: DefaultJWT,

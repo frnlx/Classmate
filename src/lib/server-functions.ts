@@ -1,7 +1,7 @@
 import 'server-only';
 import { headers } from 'next/headers';
 import { HeaderFullPathKey } from '@/middleware';
-import { log } from '@/server/lib/logger';
+import { log } from '@/lib/logger';
 
 export function __devconsoleLog(obj?: any) {
   if (process.env.NODE_ENV === 'development') {

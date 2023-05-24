@@ -1,6 +1,6 @@
 'use client'
 
-import { supabase } from "@/server/config/dbConfig";
+import { supabase } from "@/lib/db";
 import { useEffect, useState } from "react";
 
 const CountriesInfo = () => {

@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../config/authConfig";
+import { authOptions } from "../configs/auth";
 import { redirect } from 'next/navigation'
 
 export async function useServerSession() {

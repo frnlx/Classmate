@@ -1,4 +1,4 @@
-import { supabase } from "@/server/config/dbConfig";
+import { supabase } from "@/lib/db";
 
 const ServerFetchFromSupabase = async () => {
 
