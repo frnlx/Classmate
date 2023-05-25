@@ -1,7 +1,7 @@
 import { AuthOptions, JWT } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import env from "../../lib/env";
-import { log } from "../../lib/logger";
+import { log } from "../../lib/logger/chalk";
 import { checkJWT, udpateJWTfromOAuth, updateJWTfromSessionUpdate } from "./callbacks";
 
 export const authOptions: AuthOptions = {

@@ -8,7 +8,6 @@ export const metadata = rootMetadata
 export default function PageLayout(p: {
   children: React.ReactNode
 }) {
-
   return (
     <html
       lang="en"
@@ -23,7 +22,6 @@ export default function PageLayout(p: {
       </body>
     </html>
   )
-
 }
 
 
