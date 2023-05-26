@@ -19,7 +19,7 @@ const SignInButton = () => {
       onClick={() => {
         setLoading(true)
         signIn("google", {
-          callbackUrl: '/app'
+          callbackUrl: '/'
         })
       }}
       colorScheme="gray"

@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { useCategoryData } from "@/api/client/category";
-import { useRoom } from "../../-Navbar/RoomContext";
+import { useRoom } from "../../../(member)/-Navbar/Navbar";
 import Section from "./-Section/Section";
 import ResourceItem from "./-Section/(resourceItem)/ResourceItem";
 import AddPostButton from "./-Section/(resourceItem)/ResourceAddButton";

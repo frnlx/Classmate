@@ -13,7 +13,6 @@ type Props = {
 const queryClient = new QueryClient()
 
 const Providers = (props: Props) => {
-
   return (
     <SessionProvider session={props.session} >
       <QueryClientProvider client={queryClient}>

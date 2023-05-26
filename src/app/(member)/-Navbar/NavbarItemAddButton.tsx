@@ -3,12 +3,11 @@
 import { useCreateClass, useUser } from "@/api/client/user";
 
 interface prop extends React.HTMLAttributes<HTMLButtonElement>{
-  userid: string
 }
 
-const NavbarItemAddButton = ({ className, userid, ...rest }: prop) => {
+const NavbarItemAddButton = ({ className, ...rest }: prop) => {
 
-  const createClassroomMutation = useCreateClass(userid)
+  const createClassroomMutation = useCreateClass()
 
   return (
     <button {...rest} className={`
@@ -26,7 +25,7 @@ const NavbarItemAddButton = ({ className, userid, ...rest }: prop) => {
         <path d="M11 19v-6H5v-2h6V5h2v6h6v2h-6v6h-2Z" />
       </svg>
     </button>
-  );
+  )
 }
  
 export default NavbarItemAddButton;

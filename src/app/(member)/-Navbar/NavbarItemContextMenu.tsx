@@ -3,17 +3,21 @@ import ContextMenuTemplate from "@/client/ui/context-menu-template";
 import Item from "@/client/ui/context-menu-template-item";
 import { Hash, Link } from "@phosphor-icons/react";
 import { ReactNode } from "react";
-import { Classroom } from "@prisma/client";
 import useAppToast from "@/client/lib/toasts";
 
-const NavbarItemContextMenu = (p: { children: ReactNode, classroom?: Classroom }) => {
+const NavbarItemContextMenu = (p: {
+  children: ReactNode,
+  id: string,
+  inviteID?: string,
+}) => {
+
   const toast = useAppToast()
 
-  if (p.classroom === undefined) return <>{p.children}</>;
+  if (p.inviteID === undefined) return <>{p.children}</>;
   
-  const link = `${window.location.origin}/app/${p.classroom.id}`
-  const invitelink = `${window.location.origin}/${p.classroom.inviteID}`
-  const id = p.classroom.id
+  const link = `${window.location.origin}/app/${p.id}`
+  const invitelink = `${window.location.origin}/${p.inviteID}`
+  const id = p.id
   
   return (
     <ContextMenuTemplate trigger={p.children}>

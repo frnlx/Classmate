@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../configs/auth";
 import { redirect } from 'next/navigation'
+import { color } from "./logger/chalk";
 
-export async function useServerSession() {
+export async function getLoggedInSession() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/auth')
   return session
