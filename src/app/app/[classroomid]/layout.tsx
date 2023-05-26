@@ -4,23 +4,23 @@ import ClassPageClientHandler from "./client";
 import SidebarItem from "./-Sidebar/SidebarItem";
 import CategoryList from "./-Sidebar/CategoryList";
 import CategoryAddButton from "./-Sidebar/CategoryAddButton";
-import Sidebar from "./-Sidebar/Sidebar";
+import Pages from "../../(member)/[classid]/-Sidebar/Pages";
 import ScrollArea from "@/client/ui/scrollarea";
 
 const ClassroomLayout = (p: { children: ReactNode, params: any }) => {
 
   return (
-    <PageContextProvider>
+    // <PageContextProvider>
       <ClassPageClientHandler params={p.params}>
 
-        <Sidebar>
+        <Pages>
           <div>
             <SidebarItem value='Home' />
             <SidebarItem value='Assignment' />
           </div>
           <CategoryList />
           <CategoryAddButton />
-        </Sidebar>
+        </Pages>
         
         <ScrollArea>
           <div className="flex flex-col gap-4 flex-grow-1 w-full">
@@ -29,7 +29,7 @@ const ClassroomLayout = (p: { children: ReactNode, params: any }) => {
         </ScrollArea>
 
       </ClassPageClientHandler>
-    </PageContextProvider>
+    // </PageContextProvider>
   );
 }
  

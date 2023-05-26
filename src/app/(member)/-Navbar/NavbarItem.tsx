@@ -4,7 +4,7 @@ import NavbarItemContextMenu from "./NavbarItemContextMenu";
 import { useSelectedLayoutSegment } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { ForwardRefExoticComponent, ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { VisuallyHidden } from "@chakra-ui/react";
 import { Icon } from "@phosphor-icons/react";
@@ -14,10 +14,10 @@ interface prop {
   label?: string
   routeid: string
   inviteID?: string
-  icon?: Icon
+  icon?: ReactNode
 }
 
-const NavbarItem = ({ image, label, routeid, inviteID, icon: ItemIcon }: prop) => {
+const NavbarItem = ({ image, label, routeid, inviteID, icon }: prop) => {
   
   const childSegmentRoute = useSelectedLayoutSegment()
   const router = useRouter()
@@ -52,9 +52,7 @@ const NavbarItem = ({ image, label, routeid, inviteID, icon: ItemIcon }: prop) =
           {
             image ? <Image src={image} alt={label + "'s Server Picture"} width={60} height={60} /> : null
           }
-          {
-            ItemIcon ? <ItemIcon weight="bold" size={28}/> : null
-          }
+          { icon }
         </Link>
       </li>
     </NavbarItemContextMenu>
