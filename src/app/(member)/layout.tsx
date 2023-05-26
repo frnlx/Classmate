@@ -2,8 +2,7 @@ import { color } from "@/lib/logger/chalk"
 import { LayoutProps } from "@/types/next"
 import Providers from "./providers"
 import { getLoggedInSession } from "@/lib/auth-helper"
-import Navbar, { AppRoom } from "./-Navbar/Navbar"
-import { Cards, ChartLine, Clipboard, HouseSimple } from "@phosphor-icons/react"
+import Navbar from "./-Navbar/Navbar"
 
 export default async function AppRouteGroupLayout({ children, params }: LayoutProps) {
   
@@ -14,17 +13,10 @@ export default async function AppRouteGroupLayout({ children, params }: LayoutPr
 
   return (
     <main className="bg-zinc-900 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-slate-200 flex-grow-1">
-      <Providers session={session}
-      // Loads Sessions
-      // Loads React Query
-      // Loads ChakraUI Library
-      >
-        <Navbar
-        // Consumes useUserClassList()
-        // Provides Current Room Info
-        >
+      <Providers session={session}> {/** Loads sessions, state, and chakraUI context */}
+        <Navbar> { /** Loads current navbar selected id */}
           {children}
-        </Navbar>
+        </Navbar> 
       </Providers>
     </main>
   )

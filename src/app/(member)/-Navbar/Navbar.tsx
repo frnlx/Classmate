@@ -4,16 +4,15 @@ import { useUserClassList } from "@/api/client/user"
 import { ReactElement, ReactNode, createContext, useContext, useEffect, useState } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
-import { useSelectedLayoutSegment } from "next/navigation"
+import { useRouter, useSelectedLayoutSegment } from "next/navigation"
 import { Cards, ChartLine, Clipboard, HouseSimple, Icon } from "@phosphor-icons/react"
-
+import { color } from "@/lib/logger/chalk"
 
 
 // CreateContext & UseContext
 // --------------------------
 const RoomContext = createContext<RoomContextType>({
   currentId: '',
-  static: 'dashboard'
 })
 export const useRoom = () => useContext(RoomContext)
 
@@ -25,6 +24,19 @@ export default function Navbar (p: {
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList()
   const selectedPage = useSelectedLayoutSegment()
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (userClassList) {
+      if (userClassList.some((c) => c.id !== selectedPage)) {
+        router.push('/dashboard')
+      }
+    }
+  }, [userClassList]),
+
+
+  color.yellow("Selected Layout at Navbar: "+selectedPage)
 
   return (
     <RoomContext.Provider value={{
@@ -67,8 +79,7 @@ export default function Navbar (p: {
 }
 
 export type RoomContextType = {
-  currentId: string,
-  static?: staticPageNames,
+  currentId?: string,
 }
 export type AppRoom = {
   label: string,
@@ -76,8 +87,6 @@ export type AppRoom = {
   id: string,
   icon?: Icon
 }
-
-
 
 
 
