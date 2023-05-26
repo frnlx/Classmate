@@ -1,11 +1,11 @@
 import 'server-only';
 import { headers } from 'next/headers';
 import { HeaderFullPathKey } from '@/middleware';
-import { log } from '@/lib/logger/chalk';
+import { color } from './logger/chalk';
 
 export function __devconsoleLog(obj?: any) {
   if (process.env.NODE_ENV === 'development') {
-    log(obj);
+    color.yellow(obj);
   }
 }
 

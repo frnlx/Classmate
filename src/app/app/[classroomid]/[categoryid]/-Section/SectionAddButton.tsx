@@ -1,5 +1,5 @@
 import { useCreateSection } from "@/api/client/section";
-import { useRoom } from "@/app/app/-Navbar/RoomContext";
+import { useRoom } from "@/app/(member)/-Navbar/Navbar";
 import { CategoryData } from "@/types/fetchmodels";
 import { Plus } from "@phosphor-icons/react";
 

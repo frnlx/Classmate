@@ -4,7 +4,7 @@ import { usePage } from "@/app/app/[classroomid]/PageContext";
 import { Tab } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-import { useRoom } from "../-Navbar/RoomContext";
+import { useRoom } from "../../(member)/-Navbar/Navbar";
 
 // This component sets the state of the Navbar from the given url parameter.
 const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
@@ -19,8 +19,8 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
   // This is required to set the state of the Navbar, which belong to the parent Layout
   //  parent layout doesn't have access to classroomid params hence it must be done in context.
   useEffect(() => {
-    if (room.list.length > 1) {
-      const res = room.switch(classid);
+    if (room.roomList.length > 1) {
+      const res = room.switchRoom(classid);
       if (res) {
         // If class is found... do nothing
       } else {
@@ -28,7 +28,7 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
         return router.push('/app/me')
       }
     }
-  },[room.list])
+  },[room.roomList])
   // The dependencies are required if User acecss directly via link.
 
   return (

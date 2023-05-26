@@ -1,10 +1,8 @@
 'use client'
 
-import { Category } from "@prisma/client";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { AppRoom, useRoom } from "../-Navbar/RoomContext";
+import { AppRoom, useRoom } from "../../(member)/-Navbar/Navbar";
 import { useUser } from "@/api/client/user";
-import { useClassroomQuery } from "@/api/client/classroom";
 import { useClassCategories } from "@/api/client/category";
 
 export type AppPage = {
@@ -12,7 +10,6 @@ export type AppPage = {
   id: string,
   isCategory: boolean,
 }
-
 export type PageContextType = {
   list: AppPage[],
   current: AppPage,

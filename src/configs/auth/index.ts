@@ -1,8 +1,8 @@
 import { AuthOptions, JWT } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import env from "../../lib/env";
-import { log } from "../../lib/logger/chalk";
 import { checkJWT, udpateJWTfromOAuth, updateJWTfromSessionUpdate } from "./callbacks";
+import { color } from "@/lib/logger/chalk";
 
 export const authOptions: AuthOptions = {
   // General Configuration
@@ -41,7 +41,7 @@ export const authOptions: AuthOptions = {
       //  [profile] - from OAuth
       //  [email] - if using Email Provider
       //  [credentials] - if using Email Password Credential
-      log('Begin Authentication Flow --------------')
+      color.yellow('Begin Authentication Flow --------------')
       // return true to allow all sign ins.
       return true; // default
       // Return false to display a default error message

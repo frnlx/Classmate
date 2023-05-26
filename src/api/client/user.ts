@@ -85,7 +85,8 @@ export const useJoinClass = (userid: string, classid: string) => {
 }
 
 // Create Classroom -- 'POST:/users/[userid]/classrooms' -- https://notion.so/skripsiadekelas/090d86a5d6644de196a2f896406ae69d
-export const useCreateClass = (userid: string) => {
+export const useCreateClass = () => {
+  const userid = useUserID()
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: () =>

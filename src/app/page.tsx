@@ -1,8 +1,21 @@
 import Button from '@/client/static/button';
+import { authOptions } from '@/configs/auth';
+import { color } from '@/lib/logger/chalk';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image'
+import { redirect } from 'next/navigation';
 
 // Server Component
-export default function LandingPage() {
+export default async function LandingPage() {
+  color.yellow('  ,- Landing Page')
+
+
+  const session = await getServerSession(authOptions)
+  if (session) {
+    color.blue('  redirect to /dashboard')
+    redirect('/dashboard')
+  }
+
   const emojis = ['⚡', '⚡', '⚡', '🚀', '🚀', '🚀', '🙀', '🎯','🎯','🎯',];
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 

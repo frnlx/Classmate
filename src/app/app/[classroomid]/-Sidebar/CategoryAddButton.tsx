@@ -1,7 +1,7 @@
 'use client'
 
 import { useCreateCategory } from "@/api/client/category";
-import { useRoom } from "@/app/app/-Navbar/RoomContext";
+import { useRoom } from "@/app/(member)/-Navbar/Navbar";
 import { Plus } from "@phosphor-icons/react";
 
 const CategoryAddButton = () => {
