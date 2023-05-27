@@ -6,7 +6,7 @@ import Navbar from "./-Navbar/Navbar"
 import NavbarItem from "./-Navbar/NavbarItem"
 import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
 
-export default async function AppRouteGroupLayout({ children, params }: LayoutProps) {
+export default async function AppLayout({ children, params }: LayoutProps) {
   
   color.yellow('  |-(app) Layout Rendered')
 
