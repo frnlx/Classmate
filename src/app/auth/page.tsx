@@ -1,13 +1,15 @@
 import { Inter } from 'next/font/google'
-import AppBackground from '../../client/static/background'
-import SignInButton from '@/client/auth/sign-in-button';
+import AppBackground from '../../component/static/background'
 import { color } from '@/lib/logger/chalk';
+import { SignInButton } from '@/component/use-client/Auth';
+import { ClientComponentProvider } from '@/component/Chakra';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function AuthPage() {
   color.yellow('  ,- Auth Page')
   return (
+    <ClientComponentProvider>
     <AppBackground>
       <div className='p-8 rounded-lg bg-zinc-900 max-w-xl flex flex-col items-center gap-6'>
         <div className='flex flex-col items-center'>
@@ -18,6 +20,8 @@ export default function AuthPage() {
         <SignInButton />
 
       </div>
-    </AppBackground>
+      </AppBackground>
+    </ClientComponentProvider>
+      
   );
 }

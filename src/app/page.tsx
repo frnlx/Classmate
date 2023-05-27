@@ -1,4 +1,4 @@
-import Button from '@/client/static/button';
+import Button from '@/component/static/button';
 import { authOptions } from '@/configs/auth';
 import { color } from '@/lib/logger/chalk';
 import { getServerSession } from 'next-auth';

@@ -1,5 +1,5 @@
+import { SignOutButton } from "@/component/use-client/Auth";
 import { color } from "@/lib/logger/chalk";
-import SignOutButton from "@/client/auth/sign-out-button";
 import { PageProps } from "@/types/next";
 
 export default async function DashboardPage ({ params, searchParams }: PageProps) {

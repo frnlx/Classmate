@@ -1,11 +1,11 @@
 'use client'
 
 import { useUserClassList } from "@/api/client/user"
-import { ReactElement, ReactNode, createContext, useContext, useEffect, useState } from "react"
+import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
 import { useRouter, useSelectedLayoutSegment } from "next/navigation"
-import { Cards, ChartLine, Clipboard, HouseSimple, Icon } from "@phosphor-icons/react"
+import { Icon } from "@phosphor-icons/react"
 import { color } from "@/lib/logger/chalk"
 
 
@@ -23,6 +23,7 @@ export default function Navbar (p: {
   defaultRoom: ReactNode,
   staticRooms?: ReactNode,
 }) {
+  color.cyan('  `-(app) Navbar')
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList()
   const selectedPage = useSelectedLayoutSegment()
@@ -36,9 +37,6 @@ export default function Navbar (p: {
       }
     }
   }, [userClassList])
-
-
-  color.yellow("Selected Layout at Navbar: "+selectedPage)
 
   return (
     <RoomContext.Provider value={{
@@ -83,7 +81,7 @@ export default function Navbar (p: {
 }
 
 export type RoomContextType = {
-  currentId?: string,
+  currentId: string,
 }
 export type AppRoom = {
   label: string,

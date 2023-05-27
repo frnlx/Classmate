@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     './src/app/**/*.{js,ts,jsx,tsx}',
-    './src/client/**/*.{js,ts,jsx,tsx}',
+    './src/component/**/*.{js,ts,jsx,tsx}',
   ],
 
   theme: {
@@ -20,6 +20,12 @@ module.exports = {
         sans: ['var(--font-inter)'],
         mono: ['var(--font-roboto-mono)'],
       },
+      keyframes: {
+        contextMenuAnimation: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        }
+      }
     },
   },
 

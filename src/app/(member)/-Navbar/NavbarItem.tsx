@@ -8,6 +8,7 @@ import { ForwardRefExoticComponent, ReactNode, useEffect, useState } from "react
 import { useRouter } from "next/navigation";
 import { VisuallyHidden } from "@chakra-ui/react";
 import { Icon } from "@phosphor-icons/react";
+import { color } from "@/lib/logger/chalk";
 
 interface prop {
   image?: string
@@ -17,16 +18,18 @@ interface prop {
   icon?: ReactNode
 }
 
-const NavbarItem = ({ image, label, routeid, inviteID, icon }: prop) => {
+export default function NavbarItem({ image, label, routeid, inviteID, icon }: prop) {
   
+  color.cyan('    `- Item')
+
   const childSegmentRoute = useSelectedLayoutSegment()
   const router = useRouter()
 
   const [selected, setSelected] = useState(childSegmentRoute === routeid)
 
   useEffect(() => {
-    if(childSegmentRoute !== routeid) setSelected(false);
-  },[childSegmentRoute])
+    if (childSegmentRoute !== routeid) setSelected(false);
+  }, [childSegmentRoute])
   
   return (
     <NavbarItemContextMenu
@@ -38,26 +41,27 @@ const NavbarItem = ({ image, label, routeid, inviteID, icon }: prop) => {
         (selected ? "bg-[#008E5A]" : "bg-zinc-600"),
         "hover:bg-[#008E5A] hover:rounded-xl")}
       >
-        <Link href={`/${routeid}`} onClick={() => setSelected(true)} className="w-full h-full flex justify-center items-center" onContextMenu={(e) => {
-          if (!inviteID)
-          {
-            // Disable right click if its a static page (no invite id)
-            //  and if right click -> instantly click it normally without popping up context menu
-            e.preventDefault()
-            setSelected(true)
-            router.push(`/${routeid}`)
-          }
-        }}>
+        <Link
+          href={`/${routeid}`}
+          onClick={() => setSelected(true)}
+          className="w-full h-full flex justify-center items-center"
+          onContextMenu={(e) => {
+            if (!inviteID) {
+              // Disable right click if its a static page (no invite id)
+              //  and if right click -> instantly click it normally without popping up context menu
+              e.preventDefault()
+              setSelected(true)
+              router.push(`/${routeid}`)
+            }
+          }}>
           <VisuallyHidden>{label}</VisuallyHidden> {/** For good accessibility and a tag semantic*/}
           {
             image ? <Image src={image} alt={label + "'s Server Picture"} width={60} height={60} /> : null
           }
-          { icon }
+          {icon}
         </Link>
       </li>
     </NavbarItemContextMenu>
   );
   
 }
- 
-export default NavbarItem;

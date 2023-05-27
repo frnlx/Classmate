@@ -1,4 +1,4 @@
-import '@/client/globals.css'
+import '@/component/globals.css'
 import { Inter, Roboto_Mono  } from 'next/font/google'
 import { rootMetadata } from '@/configs/metadata'
 import { color } from '@/lib/logger/chalk'
