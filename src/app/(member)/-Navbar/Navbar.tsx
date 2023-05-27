@@ -20,6 +20,8 @@ export const useRoom = () => useContext(RoomContext)
 // -----------------
 export default function Navbar (p: {
   children?: ReactNode,
+  defaultRoom: ReactNode,
+  staticRooms?: ReactNode,
 }) {
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList()
@@ -33,7 +35,7 @@ export default function Navbar (p: {
         router.push('/dashboard')
       }
     }
-  }, [userClassList]),
+  }, [userClassList])
 
 
   color.yellow("Selected Layout at Navbar: "+selectedPage)
@@ -47,7 +49,9 @@ export default function Navbar (p: {
     }}>
       <div className="bg-zinc-950 w-24 h-screen p-5 flex flex-col gap-4">
         <ul>
-          {
+          { p.defaultRoom }
+          { p.staticRooms }
+          {/* {
             staticRooms.map((pages, i) => 
               <NavbarItem
                 key={i}
@@ -56,7 +60,7 @@ export default function Navbar (p: {
                 icon={pages.icon}
               />
             )
-          }
+          } */}
         </ul>
         <hr className="border-slate-700 border-1" />
         <ul className="flex flex-col gap-4">
@@ -83,7 +87,6 @@ export type RoomContextType = {
 }
 export type AppRoom = {
   label: string,
-  index: number,
   id: string,
   icon?: Icon
 }
@@ -93,29 +96,25 @@ export type AppRoom = {
 // Default Rooms
 
 export type staticPageNames = "dashboard" | "statistics" | "classlist" | "tasks"
-const staticRooms: AppRoom[] = [
-  {
-    label: 'My Dashboard',
-    id: 'dashboard',
-    index: 0,
-    icon: HouseSimple
-  },
-  {
-    label: 'My Statistics',
-    id: 'stats',
-    index: 1,
-    icon: ChartLine
-  },
-  {
-    label: 'My Tasks',
-    id: 'tasks',
-    index: 2,
-    icon: Clipboard
-  },
-  {
-    label: 'My Classrooms',
-    id: 'classlist',
-    index: 3,
-    icon: Cards
-  }
-]
+// const staticRooms: AppRoom[] = [
+//   {
+//     label: 'My Dashboard',
+//     id: 'dashboard',
+//     icon: HouseSimple
+//   },
+//   {
+//     label: 'My Statistics',
+//     id: 'stats',
+//     icon: ChartLine
+//   },
+//   {
+//     label: 'My Tasks',
+//     id: 'tasks',
+//     icon: Clipboard
+//   },
+//   {
+//     label: 'My Classrooms',
+//     id: 'classlist',
+//     icon: Cards
+//   }
+// ]

@@ -39,10 +39,10 @@ const ClassPageClientHandler = (p: { children: ReactNode, params: any }) => {
       as={'div'}
       className="flex flex-grow-1 w-full"
       selectedIndex={page.current.index}
-      onChange={(index) => {
-        page.switch(page.list[index].id)
-        router.push(`/app/${room.current.id}/${page.list[index].id}`)
-      }}
+      // onChange={(index) => {
+      //   page.switch(page.list[index].id)
+      //   router.push(`/app/${room.current.id}/${page.list[index].id}`)
+      // }}
     >
       {p.children}
     </Tab.Group>

@@ -3,6 +3,8 @@ import { LayoutProps } from "@/types/next"
 import Providers from "./providers"
 import { getLoggedInSession } from "@/lib/auth-helper"
 import Navbar from "./-Navbar/Navbar"
+import NavbarItem from "./-Navbar/NavbarItem"
+import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
 
 export default async function AppRouteGroupLayout({ children, params }: LayoutProps) {
   
@@ -14,7 +16,18 @@ export default async function AppRouteGroupLayout({ children, params }: LayoutPr
   return (
     <main className="bg-zinc-900 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-slate-200 flex-grow-1">
       <Providers session={session}> {/** Loads sessions, state, and chakraUI context */}
-        <Navbar> { /** Loads current navbar selected id */}
+        <Navbar
+          defaultRoom={
+            <NavbarItem label="My Dashboard" routeid="dashboard" icon={<NavbarDashboardIcon />}/>
+          }
+          staticRooms={
+            <>
+              <NavbarItem label="My Tasks" routeid="tasks" icon={<NavbarTasksIcon />} />
+              <NavbarItem label="My Statistics" routeid="stats" icon={<NavbarStatisticsIcon />} />
+              <NavbarItem label="My Classrooms" routeid="classlist" icon={<NavbarClassListIcon />} />
+            </>
+          }
+        > { /** Loads current navbar selected id */}
           {children}
         </Navbar> 
       </Providers>
