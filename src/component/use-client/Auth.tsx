@@ -23,7 +23,7 @@ export function SignInButton() {
         })
       }}
       colorScheme="gray"
-      paddingInline={12}
+      paddingInline={14}  
       paddingBlock={6}
       isLoading={isLoading}
     >Sign in with Google</Button>
