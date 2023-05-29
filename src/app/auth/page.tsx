@@ -1,9 +1,9 @@
 import { Inter } from 'next/font/google'
-import AppBackground from '../../component/static/background'
+import AppBackground from '../../components/static/background'
 import { color } from '@/lib/logger/chalk';
-import { SignInButton } from '@/component/use-client/Auth';
-import { ClientComponentProvider } from '@/component/Chakra';
-import BrandLogo from '@/component/static/brand/Logo';
+import { SignInButton } from '@/components/use-client/Auth'
+import { ClientComponentProvider } from '@/components/Chakra'
+import BrandLogo from '@/components/static/brand/Logo'
 import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] })

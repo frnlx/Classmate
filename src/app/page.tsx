@@ -1,5 +1,5 @@
-import BrandLogo from '@/component/static/brand/Logo';
-import Button from '@/component/static/button';
+import BrandLogo from '@/components/static/brand/Logo'
+import Button from '@/components/static/button'
 import { authOptions } from '@/configs/auth';
 import { color } from '@/lib/logger/chalk';
 import { getServerSession } from 'next-auth';

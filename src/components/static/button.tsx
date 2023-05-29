@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 import Link from 'next/link'
 
 
@@ -11,14 +11,15 @@ type prop = {
 }
 
 const Button = (prop: prop) => {
-  
+
   const padding = `${prop.xs ? 'px-3' : 'px-4'} py-[0.4rem]`
   const fontSize = `${prop.xs ? 'text-xs' : 'text-sm'}`
 
   if (prop.nextjs) return (
     <Link
-      href={prop.href!}
-      className={`block
+      // @ts-ignore
+      href={ prop.href! }
+      className={ `block
       ${padding}
       ${prop.plain ?
           'font-medium bg-none text-slate-300' + ' ' + 'hover:bg-slate-400/10 hover:text-slate-100'
@@ -30,14 +31,14 @@ const Button = (prop: prop) => {
       transition-all duration-75`
       }
     >
-      {prop.children}
+      { prop.children }
     </Link>
   )
   else return (
     <button type="button" className="">
-      {prop.children}
+      { prop.children }
     </button>
-  );
+  )
 }
- 
-export default Button;
+
+export default Button

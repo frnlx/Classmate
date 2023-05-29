@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/db";
 import { getLoggedInSession } from "@/lib/auth-helper";
-import AppBackground from "@/component/static/background";
+import AppBackground from "@/components/static/background"
 import JoinClassButton from "./JoinClassButton";
 import { redirect } from "next/navigation";
-import { SignInButton } from "@/component/use-client/Auth";
+import { SignInButton } from "@/components/use-client/Auth";
 
 const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
 

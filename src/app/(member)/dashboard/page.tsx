@@ -1,4 +1,4 @@
-import { SignOutButton } from "@/component/use-client/Auth";
+import { SignOutButton } from "@/components/use-client/Auth"
 import { color } from "@/lib/logger/chalk";
 import { PageProps } from "@/types/next";
 

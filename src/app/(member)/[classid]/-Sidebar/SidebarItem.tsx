@@ -1,9 +1,9 @@
 'use client'
-import useAppToast from "@/component/lib/toasts"
+import useAppToast from "@/components/lib/toasts"
 import { Trigger } from "@radix-ui/react-tabs"
 import { ReactNode } from "react"
 import { useRoom } from "../../-Navbar/Navbar"
-import { ContextMenuBase, ContextMenuItem } from "@/component/use-client/ContextMenu"
+import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { Hash, Link, Trash } from "@phosphor-icons/react"
 import { ClassAPI } from "@/api/route-helper"
 

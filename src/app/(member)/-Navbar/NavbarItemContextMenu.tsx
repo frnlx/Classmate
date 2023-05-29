@@ -1,8 +1,8 @@
 'use client'
 import { Hash, Link } from "@phosphor-icons/react";
 import { ReactNode } from "react";
-import useAppToast from "@/component/lib/toasts";
-import { ContextMenuBase, ContextMenuItem } from "@/component/use-client/ContextMenu";
+import useAppToast from "@/components/lib/toasts"
+import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { color } from "@/lib/logger/chalk";
 
 export default function NavbarItemContextMenu (p: {
