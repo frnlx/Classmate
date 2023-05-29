@@ -9,17 +9,15 @@ import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarT
 export default async function AppLayout({ children, params }: LayoutProps) {
   
   color.yellow('  |-(app) Layout Rendered')
-
   color.magenta('    - getting session server-side')
   const session = await getLoggedInSession()
 
   return (
-    <main className="bg-zinc-900 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-slate-200 flex-grow-1">
+    <main className="bg-dark0 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-white flex-grow-1">
       <Providers session={session}> {/** Loads sessions, state, and chakraUI context */}
+        
         <Navbar
-          defaultRoom={
-            <NavbarItem label="My Dashboard" routeid="dashboard" icon={<NavbarDashboardIcon />}/>
-          }
+          defaultRoom={ <NavbarItem label="My Dashboard" routeid="dashboard" icon={<NavbarDashboardIcon />}/> }
           staticRooms={
             <>
               <NavbarItem label="My Tasks" routeid="tasks" icon={<NavbarTasksIcon />} />
@@ -30,6 +28,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
         > { /** Loads current navbar selected id */}
           {children}
         </Navbar> 
+
       </Providers>
     </main>
   )

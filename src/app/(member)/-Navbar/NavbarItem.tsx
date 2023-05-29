@@ -25,6 +25,7 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
   const childSegmentRoute = useSelectedLayoutSegment()
   const router = useRouter()
 
+  const active = childSegmentRoute === routeid
   const [selected, setSelected] = useState(childSegmentRoute === routeid)
 
   useEffect(() => {
@@ -37,14 +38,25 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
       id={routeid}
     >
       <li className={clsx(
-        "overflow-hidden transition-all duration-200 w-14 h-14 rounded-3xl cursor-pointer ",
+        "w-12 h-12", // Navbar Item Size
+        "transition-all duration-200 rounded-3xl cursor-pointer list-none",
         (selected ? "bg-[#008E5A]" : "bg-zinc-600"),
-        "hover:bg-[#008E5A] hover:rounded-xl")}
+
+        // Little white bar thing
+        "before:w-2 before:h-6 before:-left-4 before:top-3 before:bg-white before:rounded-md", // what it look like
+        "before:opacity-0 before:transition-all before:block before:absolute before:content-['']", // what it takes to make it appear
+        (active ? "translate-x-3 before:opacity-100" : null), // transition when active
+        
+        "hover:bg-[#008E5A] hover:rounded-xl"
+      )}
       >
         <Link
           href={`/${routeid}`}
           onClick={() => setSelected(true)}
-          className="w-full h-full flex justify-center items-center"
+          className={clsx(
+            "w-full h-full flex justify-center items-center",
+            // (active ? "translate-x-3" : null)
+          )}
           onContextMenu={(e) => {
             if (!inviteID) {
               // Disable right click if its a static page (no invite id)

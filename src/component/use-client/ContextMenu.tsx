@@ -24,7 +24,8 @@ export function ContextMenuBase(p: {
           'p-1.5',
           'shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]',
           'origin-top-left',
-          'animate-[contextMenuAnimation_150ms_ease-out]'
+          'animate-[contextMenuAnimation_150ms_ease-out]',
+          'relative'
         )}>
           {p.children}
         </Content>

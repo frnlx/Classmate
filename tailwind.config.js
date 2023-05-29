@@ -13,8 +13,8 @@ module.exports = {
         'outline-section': '0 0 1px 1px #4B5563'
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-roboto-mono)'],
+        sans: ['var(--font-inter)', 'ui-sans-serif'],
+        mono: ['var(--font-roboto-mono)', 'ui-monospace'],
       },
       keyframes: {
         contextMenuAnimation: {

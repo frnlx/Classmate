@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono  } from 'next/font/google'
 import { rootMetadata } from '@/configs/metadata'
 import { color } from '@/lib/logger/chalk'
 
+
 export const metadata = rootMetadata
 
 // Server Component
@@ -18,7 +19,7 @@ export default async function RootLayout(p: {
       suppressHydrationWarning={true}
     >
       <body
-        className='bg-zinc-950 font-sans m-0 p-0 box-border text-slate-200'
+        className='bg-black font-sans m-0 p-0 box-border text-whiter'
         suppressHydrationWarning={true}
       >
         {p.children}
@@ -33,12 +34,12 @@ export default async function RootLayout(p: {
 
 const inter = Inter({
   subsets: ['latin'],
-  display: 'swap',
+  display: 'block',
   variable: '--font-inter',
 })
  
 const roboto_mono = Roboto_Mono({
   subsets: ['latin'],
-  display: 'swap',
+  display: 'block',
   variable: '--font-roboto-mono',
 });
