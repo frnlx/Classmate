@@ -11,6 +11,9 @@
     "migrate": "prisma migrate dev --name init",
     "reset": "prisma migrate reset"
   },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  },
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.3",
     "@chakra-ui/react": "^2.6.1",
