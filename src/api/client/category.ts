@@ -3,14 +3,16 @@ import { ClassAPI } from "../route-helper";
 import { CategoryData } from "@/types/fetchmodels";
 
 // Get Class Categories -- 'GET:/classrooms/[classid]/categories' -- https://notion.so/skripsiadekelas/df2bc14815614458b6875a695237f5eb
-export const useClassCategories = (classroomid: string) => {
+export const useClassCategories = (classroomid: string | undefined) => {
   return useQuery({
     queryKey:
       ['classroom', classroomid, 'categories'],
+    
+    enabled: !!classroomid,
 
-    queryFn: async () =>
+    queryFn: async () => classroomid ? 
       ClassAPI
-        .GetClassCategories(classroomid).then(res => res.data)
+        .GetClassCategories(classroomid).then(res => res.data) : null
   })
 }
 

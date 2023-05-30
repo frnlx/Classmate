@@ -1,12 +1,13 @@
 'use client'
 
 import { useUserClassList } from "@/api/client/user"
-import { ReactElement, ReactNode, createContext, useContext, useEffect, useState } from "react"
+import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
 import { useRouter, useSelectedLayoutSegment } from "next/navigation"
-import { Cards, ChartLine, Clipboard, HouseSimple, Icon } from "@phosphor-icons/react"
+import { Icon } from "@phosphor-icons/react"
 import { color } from "@/lib/logger/chalk"
+import clsx from "clsx"
 
 
 // CreateContext & UseContext
@@ -23,6 +24,7 @@ export default function Navbar (p: {
   defaultRoom: ReactNode,
   staticRooms?: ReactNode,
 }) {
+  color.cyan('  `-(app) Navbar')
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList()
   const selectedPage = useSelectedLayoutSegment()
@@ -37,33 +39,22 @@ export default function Navbar (p: {
     }
   }, [userClassList])
 
-
-  color.yellow("Selected Layout at Navbar: "+selectedPage)
-
   return (
     <RoomContext.Provider value={{
-      // This provides List of app rooms, only contains data for UI
-      //  so this doesn't have actual classroom data.
-      // The function is also exposed to be able to switch room
       currentId: selectedPage ?? 'dashboard',
     }}>
-      <div className="bg-zinc-950 w-24 h-screen p-5 flex flex-col gap-4">
-        <ul>
+      <div className={clsx(
+        "bg-dark1",                               // Navbar color
+        "w-20",                                     // Navbar width
+        "h-screen flex flex-col gap-4"
+      )}>
+
+        <ul className="flex flex-col gap-2 p-4">
           { p.defaultRoom }
           { p.staticRooms }
-          {/* {
-            staticRooms.map((pages, i) => 
-              <NavbarItem
-                key={i}
-                routeid={pages.id}
-                label={pages.id}
-                icon={pages.icon}
-              />
-            )
-          } */}
         </ul>
-        <hr className="border-slate-700 border-1" />
-        <ul className="flex flex-col gap-4">
+
+        <ul className="flex flex-col gap-4 p-4">
           {
             userClassList?.map((classroom, i) =>
               <NavbarItem
@@ -76,6 +67,7 @@ export default function Navbar (p: {
           }
           <NavbarItemAddButton />
         </ul>
+        
       </div>
       {p.children}
     </RoomContext.Provider>
@@ -83,7 +75,7 @@ export default function Navbar (p: {
 }
 
 export type RoomContextType = {
-  currentId?: string,
+  currentId: string,
 }
 export type AppRoom = {
   label: string,

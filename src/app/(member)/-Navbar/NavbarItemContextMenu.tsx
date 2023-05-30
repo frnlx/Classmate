@@ -1,15 +1,16 @@
 'use client'
-import ContextMenuTemplate from "@/client/ui/context-menu-template";
-import Item from "@/client/ui/context-menu-template-item";
 import { Hash, Link } from "@phosphor-icons/react";
 import { ReactNode } from "react";
-import useAppToast from "@/client/lib/toasts";
+import useAppToast from "@/components/lib/toasts"
+import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
+import { color } from "@/lib/logger/chalk";
 
-const NavbarItemContextMenu = (p: {
+export default function NavbarItemContextMenu (p: {
   children: ReactNode,
   id: string,
   inviteID?: string,
-}) => {
+}) {
+  color.cyan('      `- Context Menu')
 
   const toast = useAppToast()
 
@@ -20,8 +21,8 @@ const NavbarItemContextMenu = (p: {
   const id = p.id
   
   return (
-    <ContextMenuTemplate trigger={p.children}>
-      <Item
+    <ContextMenuBase trigger={p.children}>
+      <ContextMenuItem
         icon={<Link weight="bold" />}
         onClick={() => {
           navigator.clipboard.writeText(link)
@@ -29,8 +30,8 @@ const NavbarItemContextMenu = (p: {
         }}
       >
         Copy Link
-      </Item>
-      <Item
+      </ContextMenuItem>
+      <ContextMenuItem
         icon={<Link weight='bold' />}
         onClick={() => {
           navigator.clipboard.writeText(invitelink)
@@ -38,8 +39,8 @@ const NavbarItemContextMenu = (p: {
         }}
       >
         Copy Invite Link
-      </Item>
-      <Item
+      </ContextMenuItem>
+      <ContextMenuItem
         icon={<Hash weight='bold' />}
         onClick={() => {
           navigator.clipboard.writeText(id)
@@ -47,9 +48,7 @@ const NavbarItemContextMenu = (p: {
         }}
       >
         Copy ID
-      </Item>
-    </ContextMenuTemplate>
+      </ContextMenuItem>
+    </ContextMenuBase>
   );
 }
- 
-export default NavbarItemContextMenu;

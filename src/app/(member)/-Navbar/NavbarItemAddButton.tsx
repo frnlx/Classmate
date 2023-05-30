@@ -1,11 +1,13 @@
 'use client'
 
 import { useCreateClass, useUser } from "@/api/client/user";
+import { color } from "@/lib/logger/chalk";
 
 interface prop extends React.HTMLAttributes<HTMLButtonElement>{
 }
 
 const NavbarItemAddButton = ({ className, ...rest }: prop) => {
+  color.cyan('    `- Add Button')
 
   const createClassroomMutation = useCreateClass()
 
