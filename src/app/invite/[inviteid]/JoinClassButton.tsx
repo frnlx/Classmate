@@ -10,7 +10,7 @@ type prop = {
   classId: string
 }
 
-const JoinClassButton = (p: prop) => {
+export default function JoinClassButton(p: prop) {
   const router = useRouter()
   return (
     <Button onClick={() => {
@@ -26,5 +26,3 @@ const JoinClassButton = (p: prop) => {
     }}>Join Class</Button>
   );
 }
- 
-export default JoinClassButton;

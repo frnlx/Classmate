@@ -6,7 +6,7 @@ import { color } from "@/lib/logger/chalk";
 interface prop extends React.HTMLAttributes<HTMLButtonElement>{
 }
 
-const NavbarItemAddButton = ({ className, ...rest }: prop) => {
+export default function NavbarItemAddButton({ className, ...rest }: prop) {
   color.cyan('    `- Add Button')
 
   const createClassroomMutation = useCreateClass()
@@ -29,5 +29,3 @@ const NavbarItemAddButton = ({ className, ...rest }: prop) => {
     </button>
   )
 }
- 
-export default NavbarItemAddButton;

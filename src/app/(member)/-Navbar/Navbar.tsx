@@ -4,7 +4,7 @@ import { useUserClassList } from "@/api/client/user"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
-import { useRouter, useSelectedLayoutSegment } from "next/navigation"
+import { useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import { Icon } from "@phosphor-icons/react"
 import { color } from "@/lib/logger/chalk"
 import clsx from "clsx"
@@ -27,17 +27,14 @@ export default function Navbar (p: {
   color.cyan('  `-(app) Navbar')
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList()
-  const selectedPage = useSelectedLayoutSegment()
+
+  const childSegment = useSelectedLayoutSegment()
+  const childChildSegment = useSelectedLayoutSegments()[1]
+  const selectedPage = childSegment === '(static)' ? childChildSegment : childSegment
+
+  console.log('---Selected Page: ' + selectedPage)
 
   const router = useRouter()
-
-  useEffect(() => {
-    if (userClassList) {
-      if (userClassList.some((c) => c.id !== selectedPage)) {
-        router.push('/dashboard')
-      }
-    }
-  }, [userClassList])
 
   return (
     <RoomContext.Provider value={{

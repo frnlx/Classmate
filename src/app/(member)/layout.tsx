@@ -1,16 +1,20 @@
 import { color } from "@/lib/logger/chalk"
 import { LayoutProps } from "@/types/next"
 import Providers from "./providers"
-import { getLoggedInSession } from "@/lib/auth-helper"
+import { getLoggedInSession_redirectIfNotAuth } from "@/lib/auth-helper"
 import Navbar from "./-Navbar/Navbar"
 import NavbarItem from "./-Navbar/NavbarItem"
 import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
+import { sleepInDev } from "@/lib/util"
+import { prisma } from "@/lib/db"
 
 export default async function AppLayout({ children, params }: LayoutProps) {
-  
+
+  await sleepInDev(2)
+
   color.yellow('  |-(app) Layout Rendered')
   color.magenta('    - getting session server-side')
-  const session = await getLoggedInSession()
+  const session = await getLoggedInSession_redirectIfNotAuth()
 
   return (
     <main className="bg-dark0 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-white flex-grow-1">

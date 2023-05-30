@@ -12,7 +12,7 @@ type Props = {
 
 const queryClient = new QueryClient()
 
-const Providers = (props: Props) => {
+export default function Providers(props: Props) {
   color.cyan('  |-(app) Provider')
   return (
     <SessionProvider session={props.session} >
@@ -25,5 +25,3 @@ const Providers = (props: Props) => {
     </SessionProvider>
   );
 }
-
-export default Providers
