@@ -6,6 +6,7 @@ import { PageProps } from "@/types/next";
 export default async function DashboardPage ({ params, searchParams }: PageProps) {
   color.yellow('  ,- Dasboard Page')
   await sleepInDev(2)
+  const rand = Math.random()
 
   return (
     <div>
@@ -13,9 +14,12 @@ export default async function DashboardPage ({ params, searchParams }: PageProps
       <p>This is Me Screen, for debug only.</p>
       <hr className="border-slate-600 my-4" />
       <h3>Search for Class</h3>
+      <p>{ rand }</p>
       <SignOutButton />
     </div>
   );
 }
 
 export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+export const revalidate = 0
