@@ -10,7 +10,7 @@ type props = {
   children: React.ReactNode
 }
 
-const Card = ({ children }:props) => {
+function Card({ children }: props) {
   return (
     <div className='asdf' style={style}>
       {children}

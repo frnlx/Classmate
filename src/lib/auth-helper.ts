@@ -3,7 +3,7 @@ import { authOptions } from "../configs/auth";
 import { redirect } from 'next/navigation'
 import { color } from "./logger/chalk";
 
-export async function getLoggedInSession() {
+export async function getLoggedInSession_redirectIfNotAuth() {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/auth')
   return session

@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import NavbarItemContextMenu from "./NavbarItemContextMenu";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import clsx from "clsx";
 import Link from "next/link";
 import { ForwardRefExoticComponent, ReactNode, useEffect, useState } from "react";
@@ -22,14 +22,18 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
   
   color.cyan('    `- Item')
 
-  const childSegmentRoute = useSelectedLayoutSegment()
   const router = useRouter()
+
+  const childSegment = useSelectedLayoutSegment()
+  const childChildSegment = useSelectedLayoutSegments()[1]
+  const childSegmentRoute = childSegment === '(static)' ? childChildSegment : childSegment
 
   const active = childSegmentRoute === routeid
   const [selected, setSelected] = useState(childSegmentRoute === routeid)
 
   useEffect(() => {
-    if (childSegmentRoute !== routeid) setSelected(false);
+    if (childSegmentRoute !== routeid) setSelected(false)
+    else setSelected(true);
   }, [childSegmentRoute])
   
   return (
@@ -51,6 +55,7 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
       )}
       >
         <Link
+          // @ts-ignore
           href={`/${routeid}`}
           onClick={() => setSelected(true)}
           className={clsx(
@@ -63,6 +68,7 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
               //  and if right click -> instantly click it normally without popping up context menu
               e.preventDefault()
               setSelected(true)
+              // @ts-ignore
               router.push(`/${routeid}`)
             }
           }}>

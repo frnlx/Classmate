@@ -10,7 +10,7 @@ type prop = {
   plain?: boolean
 }
 
-const Button = (prop: prop) => {
+function Button(prop: prop) {
 
   const padding = `${prop.xs ? 'px-3' : 'px-4'} py-[0.4rem]`
   const fontSize = `${prop.xs ? 'text-xs' : 'text-sm'}`

@@ -17,6 +17,7 @@ export default function ResourceItem(p: {
   )
 
   return (
+    // @ts-ignore
     <Link href={`./${p.id}`}>
       <div className={clsx(
         "px-2 py-3 flex flex-row items-center gap-2 rounded-md",

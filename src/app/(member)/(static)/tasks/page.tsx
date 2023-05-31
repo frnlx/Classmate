@@ -1,8 +1,11 @@
 import { color } from "@/lib/logger/chalk"
+import { sleepInDev } from "@/lib/util"
 import { PageProps } from "@/types/next"
 
-export default function TasksPage({ params, searchParams }: PageProps) {
+export default async function TasksPage({ params, searchParams }: PageProps) {
   color.yellow('  ,- Tasks Page')
+  await sleepInDev(2)
+
   return (
     <>Task</>
   )

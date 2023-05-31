@@ -1,5 +1,6 @@
 import { UserAPI } from "@/api/route-helper";
 import { ClassroomData, UserData } from "@/types/fetchmodels";
+import { Classroom } from "@prisma/client"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -34,7 +35,7 @@ export const useUser = () => {
 }
 
 // Get Joined Classrooms -- 'GET:/users/[userid]/classrooms' -- https://notion.so/skripsiadekelas/bf08bd8c8a0a43e4a9f0f0036c2bdf37
-export const useUserClassList = () => {
+export const useUserClassList = (classlist?: Classroom[]) => {
   const userid = useUserID();
   const queryCilent = useQueryClient()
   return useQuery({
@@ -50,7 +51,7 @@ export const useUserClassList = () => {
     
     initialData: () =>
       queryCilent
-        .getQueryData<UserData>(['user', userid])?.classes
+        .getQueryData<UserData>(['user', userid])?.classes ?? classlist ?? console.log('No Initial Data')
   })
 }
 

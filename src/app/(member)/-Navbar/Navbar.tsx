@@ -4,10 +4,11 @@ import { useUserClassList } from "@/api/client/user"
 import { ReactNode, createContext, useContext, useEffect, useState } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
-import { useRouter, useSelectedLayoutSegment } from "next/navigation"
+import { useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import { Icon } from "@phosphor-icons/react"
 import { color } from "@/lib/logger/chalk"
 import clsx from "clsx"
+import { Classroom } from "@prisma/client"
 
 
 // CreateContext & UseContext
@@ -23,21 +24,16 @@ export default function Navbar (p: {
   children?: ReactNode,
   defaultRoom: ReactNode,
   staticRooms?: ReactNode,
+  prefetchedClasslist?: Classroom[]
 }) {
   color.cyan('  `-(app) Navbar')
   //  Fetch initial User Class List
-  const { data: userClassList, isLoading } = useUserClassList()
-  const selectedPage = useSelectedLayoutSegment()
+  const { data: userClassList, isLoading } = useUserClassList(p.prefetchedClasslist)
 
-  const router = useRouter()
-
-  useEffect(() => {
-    if (userClassList) {
-      if (userClassList.some((c) => c.id !== selectedPage)) {
-        router.push('/dashboard')
-      }
-    }
-  }, [userClassList])
+  // Getting context from route segment
+  const childSegment = useSelectedLayoutSegment()
+  const childChildSegment = useSelectedLayoutSegments()[1]
+  const selectedPage = childSegment === '(static)' ? childChildSegment : childSegment
 
   return (
     <RoomContext.Provider value={{
@@ -88,25 +84,3 @@ export type AppRoom = {
 // Default Rooms
 
 export type staticPageNames = "dashboard" | "statistics" | "classlist" | "tasks"
-// const staticRooms: AppRoom[] = [
-//   {
-//     label: 'My Dashboard',
-//     id: 'dashboard',
-//     icon: HouseSimple
-//   },
-//   {
-//     label: 'My Statistics',
-//     id: 'stats',
-//     icon: ChartLine
-//   },
-//   {
-//     label: 'My Tasks',
-//     id: 'tasks',
-//     icon: Clipboard
-//   },
-//   {
-//     label: 'My Classrooms',
-//     id: 'classlist',
-//     icon: Cards
-//   }
-// ]

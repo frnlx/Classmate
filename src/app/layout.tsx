@@ -6,12 +6,10 @@ import { color } from '@/lib/logger/chalk'
 
 export const metadata = rootMetadata
 
-// Server Component
-export default async function RootLayout(p: {
+export default function RootLayout(p: {
   children: React.ReactNode,
 }) {
   color.yellow('- Root Layout')
-
   return (
     <html
       lang="en"

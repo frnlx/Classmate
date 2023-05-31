@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { getLoggedInSession } from "@/lib/auth-helper";
+import { getLoggedInSession_redirectIfNotAuth } from "@/lib/auth-helper"
 import AppBackground from "@/components/static/background"
 import JoinClassButton from "./JoinClassButton";
 import { redirect } from "next/navigation";
@@ -7,7 +7,7 @@ import { SignInButton } from "@/components/use-client/Auth";
 
 const InviteToClassRoomPage = async (p: { params: {inviteID: string} }) => {
 
-  const session = await getLoggedInSession()
+  const session = await getLoggedInSession_redirectIfNotAuth()
 
   // Fetch the appropriate classroom from the invite link.
   const classroom = await prisma.classroom.findFirst({

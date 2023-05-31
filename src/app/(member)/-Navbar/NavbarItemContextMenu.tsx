@@ -5,6 +5,8 @@ import useAppToast from "@/components/lib/toasts"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { color } from "@/lib/logger/chalk";
 
+const _window = global.window ? global.window : undefined;
+
 export default function NavbarItemContextMenu (p: {
   children: ReactNode,
   id: string,
@@ -16,8 +18,8 @@ export default function NavbarItemContextMenu (p: {
 
   if (p.inviteID === undefined) return <>{p.children}</>;
   
-  const link = `${window.location.origin}/app/${p.id}`
-  const invitelink = `${window.location.origin}/${p.inviteID}`
+  const link = `${global.window?.location.origin}/app/${p.id}`
+  const invitelink = `${global.window?.location.origin}/${p.inviteID}`
   const id = p.id
   
   return (
