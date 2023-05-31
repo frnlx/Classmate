@@ -23,7 +23,8 @@ module.exports = {
         }
       },
       backgroundImage: {
-        radialGreenGradient: 'radial-gradient(circle, rgba(0,65,41,1) 0%, rgba(24,24,27,1) 60%)'
+        radialGreenGradient: 'radial-gradient(circle, rgba(0,65,41,1) 0%, rgba(24,24,27,1) 60%)',
+        radialGreenGradientTransparent: 'radial-gradient(circle, rgba(0,65,60,0.6) 0%, rgba(0,65,60,0) 60%)'
       },
       colors: {
   
