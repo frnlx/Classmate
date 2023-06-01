@@ -19,8 +19,7 @@ interface prop {
 }
 
 export default function NavbarItem({ image, label, routeid, inviteID, icon }: prop) {
-  
-  color.cyan('    `- Item')
+  // color.cyan('    `- Item')
 
   const router = useRouter()
 

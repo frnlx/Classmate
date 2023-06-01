@@ -26,25 +26,25 @@ export default function Navbar (p: {
   staticRooms?: ReactNode,
   prefetchedClasslist?: Classroom[]
 }) {
-  color.cyan('  `-(app) Navbar')
+  // color.cyan('  `-(app) Navbar')
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList(p.prefetchedClasslist)
 
-  // Getting context from route segment
+  // Get context from route segment
   const childSegment = useSelectedLayoutSegment()
   const childChildSegment = useSelectedLayoutSegments()[1]
   const selectedPage = childSegment === '(static)' ? childChildSegment : childSegment
 
   return (
-    <RoomContext.Provider value={{
+    <RoomContext.Provider value={ {
+      // Provide context of current selected classroom id to child component
       currentId: selectedPage ?? 'dashboard',
     }}>
       <div className={clsx(
         "bg-dark1",                               // Navbar color
         "w-20",                                     // Navbar width
         "h-screen flex flex-col gap-4"
-      )}>
-
+      ) }>
         <ul className="flex flex-col gap-2 p-4">
           { p.defaultRoom }
           { p.staticRooms }

@@ -25,7 +25,6 @@ export default function LandingPage() {
       <main className='wrapper homepage text-zinc-50'>
 
         <LandingPageRedirectIfLoggedIn>
-
           <header className='px-4 py-3 sticky top-0 z-50 bg-zinc-900/8  0 backdrop-blur-sm border-x-0 border-y-0 border-b-zinc-800 border-b border-solid'>
             <div className='container m-auto flex justify-between items-center'>
               <a href='/'>

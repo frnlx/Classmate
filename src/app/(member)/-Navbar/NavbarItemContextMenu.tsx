@@ -3,23 +3,22 @@ import { Hash, Link } from "@phosphor-icons/react";
 import { ReactNode } from "react";
 import useAppToast from "@/components/lib/toasts"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
-import { color } from "@/lib/logger/chalk";
 
-const _window = global.window ? global.window : undefined;
+const _window = globalThis.window ? global.window : undefined;
 
 export default function NavbarItemContextMenu (p: {
   children: ReactNode,
   id: string,
   inviteID?: string,
 }) {
-  color.cyan('      `- Context Menu')
+  // color.cyan('      `- Context Menu')
 
   const toast = useAppToast()
 
   if (p.inviteID === undefined) return <>{p.children}</>;
   
-  const link = `${global.window?.location.origin}/app/${p.id}`
-  const invitelink = `${global.window?.location.origin}/${p.inviteID}`
+  const link = `${globalThis.window?.location.origin}/app/${p.id}`
+  const invitelink = `${globalThis.window?.location.origin}/${p.inviteID}`
   const id = p.id
   
   return (

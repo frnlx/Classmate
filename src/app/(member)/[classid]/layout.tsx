@@ -3,8 +3,23 @@ import Pages from "./-Sidebar/Pages"
 import Sidebar from "./-Sidebar/Sidebar"
 import { SidebarItem } from "./-Sidebar/SidebarItem"
 import { SidebarHomeIcon, SidebarRewardShopIcon, SidebarTasksIcon } from "./-Sidebar/SidebarIcons"
+import { prisma } from "@/lib/db"
+import { notFound } from "next/navigation"
+import { getUser } from "@/api/caching/prefetch"
 
-export default function ClassroomLayout({ children, params }: LayoutProps) {
+export default async function ClassroomLayout({ children, params }: LayoutProps) {
+
+  const classid = params?.['classid'] as string
+  if (!classid) notFound()
+
+
+  const classdata = await prisma.classroom.findUnique({
+    where: {
+      id: classid
+    }
+  })
+  if (!classdata) notFound()
+
   return (
     <Pages defaultTab="home"> {/** Provides context of current sidebar route */}
       <Sidebar> { /** Displays the sidebar. Show static pages  */}

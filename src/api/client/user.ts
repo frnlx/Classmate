@@ -7,6 +7,9 @@ import { useSession } from "next-auth/react";
 import { redirect } from 'next/navigation'
 
 export const useUserID = () => {
+  // Fetches user id from client session
+  // will redirect to ('auth') if not authenticated
+  // will return userid
   const { data: session } = useSession({
     required: true,
     onUnauthenticated: () => {
@@ -19,39 +22,32 @@ export const useUserID = () => {
 
 
 // Get User -- 'GET:/users/[userid]' -- https://notion.so/skripsiadekelas/0fde89a6f40d486282ad9c190c167ce7
-export const useUser = () => {
+export const useUser = (prefetchedData?: UserData) => {
+  // Fetch necessary information
   const userid = useUserID();
-  return useQuery({
-    enabled: !!userid,
-
-    queryKey:
-      ['user', userid],
-    
-    queryFn: async () =>
-      UserAPI
-        .GetUserData(userid).then(res => res.data),
-    
-  })
+  return useQuery<UserData>(
+    ['user', userid],
+    async () => UserAPI.GetUserData(userid),
+    {
+      enabled: !!userid,
+      initialData: prefetchedData,
+    }
+  )
 }
 
 // Get Joined Classrooms -- 'GET:/users/[userid]/classrooms' -- https://notion.so/skripsiadekelas/bf08bd8c8a0a43e4a9f0f0036c2bdf37
 export const useUserClassList = (classlist?: Classroom[]) => {
   const userid = useUserID();
   const queryCilent = useQueryClient()
-  return useQuery({
-    enabled: !!userid,
-
-    queryKey:
-      ['user', userid, 'classrooms'],
-    
-    queryFn: async () =>
-      UserAPI
-        .GetUserJoinedClassrooms(userid)
-        .then(res => res.data),
-    
+  return useQuery(
+    ['user', userid, 'classrooms'],
+    async () => UserAPI.GetUserJoinedClassrooms(userid),
+    {
+      enabled: !!userid,
     initialData: () =>
-      queryCilent
-        .getQueryData<UserData>(['user', userid])?.classes ?? classlist ?? console.log('No Initial Data')
+      queryCilent.getQueryData<UserData>(['user', userid])?.classes
+      ?? classlist
+      ?? console.log('No Initial Data')
   })
 }
 
@@ -89,11 +85,10 @@ export const useJoinClass = (userid: string, classid: string) => {
 export const useCreateClass = () => {
   const userid = useUserID()
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn: () =>
-      UserAPI
-        .CreateClassroom(userid)
-        .then(res => res.data),
+      UserAPI.CreateClassroom(userid),
 
     onSuccess: (newClassroom) => 
       queryClient

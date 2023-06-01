@@ -6,12 +6,12 @@ type str = string
 type APILookupTypeHelper = { [key: string]: (...param: any[]) => Promise<AxiosResponse> }; 
 
 export const UserAPI = {
-  GetUserData: (userid: str) =>                           GET<UserData>(`/api/users/${userid}`),
+  GetUserData: (userid: str) => GET<UserData>(`/api/users/${userid}`).then(res => res.data),
   UpdateUserInfo: (userid: str, data: Partial<User>) =>   PATCH(`/api/users/${userid}`, data),
   JoinClass: (userid: str, data: { classid: string }) =>  PATCH<ClassroomData>(`/api/users/${userid}/joinClass`, data),
-  GetUserJoinedClassrooms: (userid: str) =>               GET<ClassroomData[]>(`/api/users/${userid}/classrooms`),
+  GetUserJoinedClassrooms: (userid: str) => GET<ClassroomData[]>(`/api/users/${userid}/classrooms`).then(res => res.data),
   GetUserOwnedClassrooms:(userid: str) =>                 GET<ClassroomData[]>(`/api/users/${userid}/owned-classrooms`),
-  CreateClassroom:(userid: str) =>                        POST<ClassroomData>(`/api/users/${userid}/classrooms`),
+  CreateClassroom: (userid: str) => POST<ClassroomData>(`/api/users/${userid}/classrooms`).then(res => res.data),
 }
 
 export const ClassAPI = {
