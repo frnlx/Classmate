@@ -41,10 +41,10 @@ export default function Navbar (p: {
       currentId: selectedPage ?? 'dashboard',
     }}>
       <div className={clsx(
-        "bg-dark1",                               // Navbar color
-        "w-20",                                     // Navbar width
+        "bg-dark1 w-20",                      
         "h-screen flex flex-col gap-4"
       ) }>
+
         <ul className="flex flex-col gap-2 p-4">
           { p.defaultRoom }
           { p.staticRooms }

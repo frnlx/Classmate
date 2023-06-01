@@ -1,32 +1,43 @@
-import { UserAPI } from "@/api/route-helper";
+import { ClientAPI, GET, UserAPI } from "@/api/route-helper"
 import { ClassroomData, UserData } from "@/types/fetchmodels";
 import { Classroom } from "@prisma/client"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { InitialDataFunction, QueryFunction, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from 'next/navigation'
+import { useSessionRequired, useUserQuery } from "./auth"
 
-export const useUserID = () => {
-  // Fetches user id from client session
-  // will redirect to ('auth') if not authenticated
-  // will return userid
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated: () => {
-      redirect('/auth')
-    }
+export function useNavbarData(prefetched?: Classroom[]) {
+
+  const { data } = useSessionRequired()
+  const queryKey = ['user', data?.user.id, 'classroom']
+
+  return useQuery({
+    enabled: !!data, queryKey: key,
+    initialData:
+      () => prefetched,
+    queryFn:
+      () => UserAPI.GetUserJoinedClassrooms(data!.user.id)
   })
-  if(!session) redirect('/auth')
-  return session.user.id
+
+
 }
+
 
 
 // Get User -- 'GET:/users/[userid]' -- https://notion.so/skripsiadekelas/0fde89a6f40d486282ad9c190c167ce7
 export const useUser = (prefetchedData?: UserData) => {
   // Fetch necessary information
-  const userid = useUserID();
-  return useQuery<UserData>(
+  return useUserQuery<UserData>({
+    key: ['user', userid],
+    init: prefetchedData,
+    fn: ClientAPI.user.getData(userid)
+  })
+
+
+  return useUserQuery<UserData>(
     ['user', userid],
+
     async () => UserAPI.GetUserData(userid),
     {
       enabled: !!userid,

@@ -1,6 +1,6 @@
 import AppBackground from "@/components/static/background"
 
-export default function NewLoadingPage() {
+export default function AppLoadingPage() {
 
   return (
     <AppBackground>

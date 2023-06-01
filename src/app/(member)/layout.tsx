@@ -17,6 +17,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
   color.magenta('    - getting session server-side')
 
   // On await, display the loading.tsx
+  // @see AppLoadingPage
 
   // Get Logged in session first
   const session = await getLoggedInSession_redirectIfNotAuth()
