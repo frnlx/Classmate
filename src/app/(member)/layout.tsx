@@ -6,9 +6,8 @@ import Navbar from "./-Navbar/Navbar"
 import NavbarItem from "./-Navbar/NavbarItem"
 import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
 import { sleepInDev } from "@/lib/util"
-import { prisma } from "@/lib/db"
-import { getUser, getUserClassroomList } from "@/api/caching/prefetch"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { prefetch } from "@/api/caching/prefetch"
 
 export default async function AppLayout({ children, params }: LayoutProps) {
 
@@ -23,7 +22,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
   const session = await getLoggedInSession_redirectIfNotAuth()
 
   // PreFetch user data including the classlist.
-  const classlist = await getUserClassroomList()
+  const classlist = await prefetch.user.joinedclassrooms()
 
   // Render after finished fetching classlist and session.
   return (
@@ -38,9 +37,8 @@ export default async function AppLayout({ children, params }: LayoutProps) {
             <NavbarItem label="My Statistics" routeid="stats" icon={ <NavbarStatisticsIcon /> } />
             <NavbarItem label="My Classrooms" routeid="classlist" icon={ <NavbarClassListIcon /> } />
           </> }
-          prefetchedClasslist={ classlist }
+          prefetchedClasslist={ Array.from(classlist.values()) }
         >
-
           {children}
         </Navbar> 
         <ReactQueryDevtools initialIsOpen={ false } />

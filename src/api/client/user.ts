@@ -39,15 +39,14 @@ export const useUser = (prefetchedData?: UserData) => {
 export const useUserClassList = (classlist?: Classroom[]) => {
   const userid = useUserID();
   const queryCilent = useQueryClient()
-  return useQuery(
-    ['user', userid, 'classrooms'],
+  return useQuery(['user', userid, 'classrooms'],
     async () => UserAPI.GetUserJoinedClassrooms(userid),
     {
       enabled: !!userid,
-    initialData: () =>
-      queryCilent.getQueryData<UserData>(['user', userid])?.classes
-      ?? classlist
-      ?? console.log('No Initial Data')
+      initialData: () =>
+        queryCilent.getQueryData<UserData>(['user', userid])?.classes
+        ?? classlist
+        ?? console.log('No Initial Data')
   })
 }
 

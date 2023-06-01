@@ -3,6 +3,7 @@ import { MustBeAuthenticated } from "../utils";
 import { prisma } from "@/lib/db";
 import { ClassroomData } from "@/types/fetchmodels";
 import { nanoid } from "nanoid";
+import { db } from "../db"
 
 export const userRoutes: RouteLookupType = {
 
@@ -11,12 +12,7 @@ export const userRoutes: RouteLookupType = {
   'GET:/users/[userid]':
     async (req, res, [id]) => {
       await MustBeAuthenticated()
-      const data = await prisma.user.findUnique({
-        where: { id },
-        include: {
-          classes: { include: { categories: true } }
-        }
-      })
+      const data = await db.getUser(id)
       return res.json(data)
     },
   
