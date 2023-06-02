@@ -1,4 +1,4 @@
-import { ClientAPI, GET, UserAPI } from "@/api/route-helper"
+import { ClientAPI, GET, UserAPI } from "@/api/client/route-helper"
 import { ClassroomData, UserData } from "@/types/fetchmodels";
 import { Classroom } from "@prisma/client"
 import { InitialDataFunction, QueryFunction, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"

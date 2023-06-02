@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { ClassAPI } from "../route-helper"
+import { ClassAPI } from "./route-helper"
 
 // Get Section Resources -- 'GET:/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]/resources' -- https://notion.so/skripsiadekelas/63010a1242af4058898dce5b067f5da0
 export const useSectionResources = (classid: string, categoryid: string, sectionid: string) => {
