@@ -2,90 +2,173 @@ import { CategoryData, ClassroomData, SectionData, UserData } from "@/types/fetc
 import { Category, Classroom, Resource, Section, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 
+
+/**
+ * 
+ */
+
 type s = string
 type p<T> = Partial<T>
 
 type modelMethod = {
   get?(...params: string[]): Promise<any>
   getAll?(...params: string[]): Promise<any[]>
-  update?(data: any, ...params: string[]): Promise<any>
   join?(...params: string[]): Promise<any>
-  create?(data: any, ...params: string[]): Promise<any>
   delete?(...params: string[]): Promise<any>
-  [model: string | symbol]: (...params: string[]) => modelMethod
+  update?(data: any, ...params: string[]): Promise<any>
+  create?(data: any, ...params: string[]): Promise<any>
+  [model: string]:
+  | ((...params: any[]) => Promise<any>)
+  | ((...params: string[]) => any)
+  | modelMethod
+  | undefined
 }
 
 type ClientAPILookup = {
-  [model: symbol]: (...params: string[]) => modelMethod
+  [model: string]: (params: string) => modelMethod
 }
+
+type ClientAPISimple = {
+  [model: string]:
+  | ((...params: string[]) => any)
+  | undefined
+}
+
+
+export const ClientAP2 = {
+
+    getUser                       : (userid)                      => fetch(`/api/users/${userid}`)
+  , getClassroomList              : (userid)                      => fetch(`/api/user/${userid}/classrooms`)
+  , getClassroom                  : (userid, classid)             => fetch(`/api/user/${userid}/classroom/${classid}`)
+  , getCategoryList               : (userid, classid)             => fetch(`/api/user/${userid}/classroom/${classid}/categories`)
+  , getCategory                   : (userid, classid, categoryid) => fetch(`/api/user/${userid}/classroom/${classid}/categories/${categoryid}`)
+  , getSectionList                : (userid, classid, categoryid) => fetch(`/api/user/${userid}/ classroom/${classid}/categories/${categoryid}/sections`)
+  , getSectionListIncludeResources: (userid, classid, categoryid) => fetch(`/api/user/${userid}/ classroom/${classid}/categories/${categoryid}/sections/resources`)
+
+  , updateUser: (userid) => update(`/api/users/$P{}`)
+
+
+  , updateUser: (userid) => update(`/api/users/${userid}`),
+
+
+} satisfies ClientAPISimple
+
+
 
 export const ClientAPI = {
 
+  getuser: (userid) => fetch(``),
+
+
   // Parameters are string by default
   user: (userid) => {
-    const userroute = `/api/users/${userid}`
+    const route_user = `/api/users/${userid}`
+    const route_classrooms = `/api/users/${userid}/classrooms`
     return {
       get() {
-        return fetch(userroute) as Promise<User>
+        return fetch(route_user) as Promise<User>
       },
       update(data: p<User>) {
-        return update(userroute, data) as Promise<User>
+        return update(route_user, data) as Promise<User>
       },
-    }
-  },
+      classrooms: {
+        get() {
+          return fetch(route_classrooms) as Promise<Classroom[]>
+        },
+        create() {
+          return create(route_classrooms) as Promise<Classroom>
+        },
+      },
+      classroom(classid: string) {
+        const route_classroom = route_classrooms + `/${classid}`
+        const route_categories = route_classroom + `/${classid}/categories`
+        return {
+          get() {
+            return fetch(route_classroom) as Promise<Classroom>
+          },
+          join() {
+            return join(route_classroom) as Promise<Classroom>
+          },
+          categories: {
+            get() {
+              return fetch(route_categories) as Promise<Category[]>
+            },
+            create() {
+              return create(route_categories) as Promise<Category>
+            }
+          },
+          category(categoryid: string) {
+            const route_category = route_categories + `/${categoryid}`
+            return {
+              get() {
+                return fetch(route_category) as Promise<Category>
+              },
+              delete() {
+                return remove(route_category) as Promise<Category[]>
+              }
 
-  userclassrooms: {
-    getAll(userid) {
-      return fetch(`/api/users/${userid}/classrooms`) as Promise<Classroom[]>
-    },
-    create(data, userid) {
-      return create(`/api/users/${userid}/classrooms`, data) as Promise<Classroom>
-    },
-    join(userid, classid) {
-      // CHANGE TO  -> `PUT/join /api/users/${userid}/classrooms/${classid}`
-      return join(`/api/users/${userid}/classrooms/${classid}}`) as Promise<Classroom>
-    },
-  },
-
-  classroom: {
-    get(classid) {
-      return fetch(`/api/classrooms/${classid}`) as Promise<Classroom>
-    },
-    use(classid) {
-      const prefix = `/api/classrooms/${classid}`
-      return {
-        category: {
-          getAll() {
-            return fetch(`${prefix}/categories`) as Promise<Category[]>
-          },
-          create(data) {
-            return create(`${prefix}/categories`) as Promise<Category>
-          },
-          get(categoryid) {
-            return fetch(`${prefix}/categories/${categoryid}`) as Promise<Category>
-          },
-          delete(categoryid) {
-            return remove(`${prefix}/categories/${categoryid}`) as Promise<Category>
+            } satisfies modelMethod
           }
-        }
-      }
+
+        } satisfies modelMethod
+      },
+
+
     }
   },
 
-  classroomcategories: {
-    getAll(classid) {
-      return fetch(`/api/classrooms/${classid}/categories`) as Promise<Category[]>
-    },
-    create(data, classid) {
-      return create(`/api/classrooms/${classid}/categories`) as Promise<Category>
-    },
-    get(classid, categoryid) {
-      return fetch(`/api/classrooms/${classid}/categories/${categoryid}`) as Promise<Category>
-    },
-    delete(classid, categoryid, sectionid) {
-      return remove(`/api/classrooms/${classid}/categories/${categoryid}`) as Promise<Category>
-    }
-  },
+  // userclassrooms: {
+  // getAll(userid) {
+  //   return fetch(`/api/users/${userid}/classrooms`) as Promise<Classroom[]>
+  // },
+  // create(data, userid) {
+  //   return create(`/api/users/${userid}/classrooms`, data) as Promise<Classroom>
+  // },
+  // join(userid, classid) {
+  //   // CHANGE TO  -> `PUT/join /api/users/${userid}/classrooms/${classid}`
+  //   return join(`/api/users/${userid}/classrooms/${classid}}`) as Promise<Classroom>
+  // },
+  // },
+
+  // classroom: {
+  // get(classid) {
+  //   return fetch(`/api/classrooms/${classid}`) as Promise<Classroom>
+  // },
+  // use(classid) {
+  // const prefix = `/api/classrooms/${classid}`
+  // return {
+  // category: {
+  // getAll() {
+  //   return fetch(`${prefix}/categories`) as Promise<Category[]>
+  // },
+  // create(data) {
+  //   return create(`${prefix}/categories`) as Promise<Category>
+  // },
+  // get(categoryid) {
+  //   return fetch(`${prefix}/categories/${categoryid}`) as Promise<Category>
+  // },
+  // delete(categoryid) {
+  //   return remove(`${prefix}/categories/${categoryid}`) as Promise<Category>
+  // }
+  // }
+  // }
+  // }
+  // },
+
+  // classroomcategories: {
+  //   getAll(classid) {
+  //     return fetch(`/api/classrooms/${classid}/categories`) as Promise<Category[]>
+  //   },
+  //   create(data, classid) {
+  //     return create(`/api/classrooms/${classid}/categories`) as Promise<Category>
+  //   },
+  //   get(classid, categoryid) {
+  //     return fetch(`/api/classrooms/${classid}/categories/${categoryid}`) as Promise<Category>
+  //   },
+  //   delete(classid, categoryid, sectionid) {
+  //     return remove(`/api/classrooms/${classid}/categories/${categoryid}`) as Promise<Category>
+  //   }
+  // },
 
   classroomcategorysections: {
     getAll(classid, categoryid) {
@@ -102,7 +185,9 @@ export const ClientAPI = {
     }
   }
 
-} satisfies ClientAPILookup
+}
+
+ClientAPI.user('').classroom('').category('').get
 
 export const UserAPI = {
   GetUserOwnedClassrooms: (userid: s) => GET<ClassroomData[]>(`/api/users/${userid}/owned-classrooms`),
@@ -125,39 +210,57 @@ export const ClassAPI = {
   DeleteResource: (classid: s, categoryid: s, sectionid: s, resourceid: s) => DELETE<Resource>(`/api/classrooms/${classid}/categories/${categoryid}/sections/${sectionid}/resources/${resourceid}`),
 }
 
-// Fetch -> must always return a data.
-// Update -> may expect a data or nothing -> takes partial input type -> return empty object if no data
-// Replace -> must contain all data type -> takes partial input type -> return empty object if no data
-//
 
-function mustReturnData<ReturnType>(p: AxiosResponse<ReturnType, any>): AxiosResponse<ReturnType, any>['data'] {
+function mustReturnData<ReturnType>(p: AxiosResponse<ReturnType, any>) {
   if (p.data === undefined) throw new Error('Client Fetch Method must return a data!')
-  return p.data
+  return p.data as ReturnType
 }
+
 
 async function fetch<ReturnType>(url: string) {
   return mustReturnData(await axios.get<ReturnType>(url))
 }
-
-async function update<InputType, ReturnType = true>(url: string, data: p<InputType>) {
-  return mustReturnData(await axios.put<ReturnType>(url, data))
-}
-
-async function replace<InputType, ReturnType>(url: string, data: InputType) {
-  return mustReturnData(await axios.put<ReturnType>(url, data))
-}
-
-async function create<InputType, ReturnType>(url: string, data?: InputType) {
-  return mustReturnData(await axios.post<ReturnType>(url, data))
-}
-
 async function remove<ReturnType>(url: string) {
   return mustReturnData(await axios.delete<ReturnType>(url))
 }
-
 async function join<ReturnType>(url: string) {
   return mustReturnData(await axios.put<ReturnType>(url))
 }
+
+// with data
+type withData<T> = {
+  with(data: object): Promise<T>
+}
+
+
+function update<ReturnType>(url: string) {
+  return {
+    async with(data: object) {
+      return mustReturnData(await axios.patch<ReturnType>(url, data))
+    }
+  } satisfies withData<ReturnType>
+}
+
+function replace<ReturnType>(url: string) {
+  return {
+    async with(data: object) {
+      return mustReturnData(await axios.put<ReturnType>(url, data))
+    }
+  } satisfies withData<ReturnType>
+}
+
+function create<ReturnType>(url: string) {
+  return {
+    async with(data: Object) {
+      return mustReturnData(await axios.post<ReturnType>(url, data))
+    }
+  } satisfies withData<ReturnType>
+
+}
+
+
+
+
 
 export const GET = axios.get
 export const POST = axios.post
