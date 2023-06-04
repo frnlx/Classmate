@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ClassAPI } from "./route-helper"
 import { CategoryData } from "@/types/fetchmodels";
+import { Category } from "@prisma/client"
 
 // Get Class Categories -- 'GET:/classrooms/[classid]/categories' -- https://notion.so/skripsiadekelas/df2bc14815614458b6875a695237f5eb
-export const useClassCategories = (classroomid: string | undefined) => {
+export const useClassCategories = (classroomid: string | undefined, initialData?: Category) => {
   return useQuery({
-    queryKey:
-      ['classroom', classroomid, 'categories'],
+    initialData,
+    queryKey: ['classroom', classroomid, 'categories'],
     
     enabled: !!classroomid,
 

@@ -1,4 +1,5 @@
 'use client'
+import { providerConfig } from '@/api/client/auth'
 import { ClientComponentProvider, ColorModeScriptClient } from '@/components/Chakra'
 import { color } from '@/lib/logger/chalk'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -18,7 +19,7 @@ export default function Providers(props: Props) {
   const [queryClient] = useState(() => new QueryClient())
   // color.cyan('  |-(app) Provider')
   return (
-    <SessionProvider session={props.session} >
+    <SessionProvider session={ props.session } {...providerConfig}>
       <QueryClientProvider client={queryClient}>
         <ClientComponentProvider>
           <ColorModeScriptClient />

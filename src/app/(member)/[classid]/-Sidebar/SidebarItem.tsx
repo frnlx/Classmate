@@ -5,7 +5,7 @@ import { ReactNode } from "react"
 import { useRoom } from "../../-Navbar/Navbar"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { Hash, Link, Trash } from "@phosphor-icons/react"
-import { ClassAPI } from "@/api/client/route-helper"
+import { ClassAPI } from "@/api/client/api"
 
 export function SidebarItem(p: {
   icon: ReactNode

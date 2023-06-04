@@ -4,17 +4,12 @@ import { LandingPageRedirectIfLoggedIn } from '@/components/use-client/Auth'
 import InteractiveBackground from '@/components/use-client/InteractiveBackground'
 import { color } from '@/lib/logger/chalk'
 import Image from 'next/image'
+import { cookies } from 'next/headers';
+
 
 // Server Component
 export default function LandingPage() {
   color.yellow('  ,- Landing Page')
-
-
-  // const session = await getServerSession(authOptions)
-  // if (session) {
-  //   color.blue('  redirect to /dashboard')
-  //   redirect('/dashboard')
-  // }
 
   const emojis = ['⚡', '⚡', '⚡', '🚀', '🚀', '🚀', '🙀', '🎯','🎯','🎯',];
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];

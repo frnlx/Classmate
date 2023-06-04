@@ -1,17 +1,18 @@
 'use client'
 
-import { useCreateClass, useUser } from "@/api/client/user";
+import { useCreateClass } from "@/api/client/user";
 import { color } from "@/lib/logger/chalk";
 import clsx from "clsx"
 import { NavbarAddClassIcon } from "./NavbarIcons"
 
 interface prop extends React.HTMLAttributes<HTMLButtonElement>{
+  userid: string
 }
 
-export default function NavbarItemAddButton({ className, ...rest }: prop) {
+export default function NavbarItemAddButton({ userid, className, ...rest }: prop) {
   // color.cyan('    `- Add Button')
 
-  const createClassroomMutation = useCreateClass()
+  const createClassroomMutation = useCreateClass(userid)
 
   return (
     <button { ...rest } className={ clsx(
