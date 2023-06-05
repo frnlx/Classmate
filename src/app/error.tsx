@@ -1,11 +1,9 @@
 'use client' // Error components must be Client Components
+import { SignOutButton } from "@/components/use-client/Auth"
 import { ErrorProps } from "@/types/next"
-import { redirect } from "next/navigation"
 import { useEffect } from "react"
 
 export default function NewErrorPage({ error, reset }: ErrorProps) {
-  if(error.name === "Unauthorized") redirect('/auth')
-
   useEffect(() => {
     console.error(error)
   }, [error])
@@ -13,6 +11,8 @@ export default function NewErrorPage({ error, reset }: ErrorProps) {
   return (
     <div>
       <h2>
+        { error.message }
+        <SignOutButton />
         <button onClick={ () => reset() }>
         </button>
       </h2>

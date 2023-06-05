@@ -1,10 +1,16 @@
-import { Res, ResponseGenerator } from "@/lib/responses";
+import { ErrorRes, Res, ResponseGenerator, RouteError } from "@/api/responses";
 import { Awaitable } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
-import { RouteResponse } from "@/api/utils";
 import { RouteParams } from "@/components/lib/client-helper";
 
-export type RouteHandler = (request: NextRequest, response: ResponseGenerator, params: string[], body?: any) => Awaitable<NextResponse>
+
+
+export type RouteHandler = (
+  request: NextRequest,
+  response: ResponseGenerator,
+  params: string[],
+  body?: any
+) => Awaitable<NextResponse> | unknown
 export type RouteHandlerParam = Parameters<RouteHandler>;
 export type RouteLookupType = { [key: string]: RouteHandler }
 
@@ -88,18 +94,18 @@ export const routesHandler = (routes: RouteLookupType) => {
 
         } catch (error) {
 
-          if ( error && error instanceof RouteResponse)
-            return Res[error.responseType]()
+          if ( error && error instanceof RouteError)
+            return ErrorRes[error.responseType]()
 
           console.log(`Error caught on route: ${route} \n Error message:`)
           console.log(error)
 
-          return Res.error()
+          return ErrorRes.error()
         }
       }
     }
 
     // Route not found
-    return Res.notFound()
+    return ErrorRes.notfound()
   }
 }

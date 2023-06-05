@@ -75,6 +75,16 @@ export const ClientAPI = {
 } satisfies ClientAPISimple
 
 
+
+
+
+
+
+
+
+
+
+
 // ----------------------------------------------
 // Helper Util
 // ----------------------------------------------
@@ -96,26 +106,51 @@ function requestFn<ReturnValue, RouteUrl extends string = string>(fn: (url: stri
     let url = route as string
     Object
       .entries<string>(params)
-      .forEach(([param, value]) => url.replace(new RegExp(`(\[${param}\])`), value))
+      .forEach(([param, value]) => {
+        url = url.replace(new RegExp(`(\\[${param}\\])`), value)
+      })
     return fn(url)
   }
 }
 
 // Example
-(async () => {
-  // declaring
-  const e = requestFn(fetch<User>, `/api/users/:userid`);
-  // consuming
-  const f = await e({ userid: 'asdff' })
+// (async () => {
+//   // declaring
+//   const e = requestFn(fetch<User>, `/api/users/:userid`);
+//   // consuming
+//   const f = await e({ userid: 'asdff' })
 
-  // declaring
-  const g = requestFn(update<User>, `/api/users/:userid`);
-  // consuming
-  const h = g({ userid: 'asdff' }).with({name: 'yes'})
-})()
+//   // declaring
+//   const g = requestFn(update<User>, `/api/users/:userid`);
+//   // consuming
+//   const h = g({ userid: 'asdff' }).with({name: 'yes'})
+// })()
 
 
 
+axios.interceptors.request.use(
+  (config) => {
+    console.warn("AXIOS request")
+    return config
+  },
+  (error) => {
+    console.warn("AXIOS request error")
+    return Promise.reject(error)
+  }
+)
+
+// const customaxios = axios.create()
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  console.warn("AXIOS response")
+  
+  return response
+}, function (error) {
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  return Promise.reject(error)
+});
 
 
 // Indicates a fetcher must return data

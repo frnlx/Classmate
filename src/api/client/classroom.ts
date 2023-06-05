@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
-import { ClassAPI } from "./api"
+import { ClientAPI } from "./api"
+import { useUserid } from "./auth"
 
 // Get Class -- 'GET:/classrooms/[classid]' -- https://notion.so/skripsiadekelas/5c9abfbdf06948728a6127e6d5327954
-export const useClassroomQuery = (classroomid?: string) => {
+export const useClassroomQuery = (classid: string) => {
+  const userid = useUserid()
   return useQuery({
     queryKey:
-      ['classroom', classroomid],
+      ['classroom', classid],
     
-    enabled: !!classroomid,
+    enabled: !!classid,
 
     queryFn: async () =>
-      classroomid ? ClassAPI
-        .GetClassData(classroomid).then(res => res.data) : null
+      ClientAPI.getClassroom({ userid, classid })
   })
 }

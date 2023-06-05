@@ -1,6 +1,6 @@
 import { color } from "@/lib/logger/chalk"
 import { LayoutProps } from "@/types/next"
-import Providers from "./providers"
+import Providers from "./-Provider/providers"
 import { getLoggedInSession_redirectIfNotAuth } from "@/lib/auth-helper"
 import Navbar from "./-Navbar/Navbar"
 import NavbarItem from "./-Navbar/NavbarItem"
@@ -23,7 +23,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
   const session = await getLoggedInSession_redirectIfNotAuth()
 
   // PreFetch user data including the classlist.
-  const classlist = await prefetch.user.joinedclassrooms()
+  const classlist = await prefetch.user.classroomlist()
 
   // Render after finished fetching classlist and session.
   return (

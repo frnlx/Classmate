@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { ClassroomData } from "@/types/fetchmodels";
 import { nanoid } from "nanoid";
 import { db } from "../db"
+import { notImplemented } from "../responses"
 
 export const userRoutes: RouteLookupType = {
 
@@ -19,7 +20,7 @@ export const userRoutes: RouteLookupType = {
   // Update User
   // https://www.notion.so/skripsiadekelas/Update-User-9ad5efcb17d64492b88c0f0e267e56ab?pvs=4
   'PATCH:/users/[userid]':
-    async (req, res, [userid]) => { return res.notYetImplemented() },
+    async (req, res, [userid]) => { return notImplemented() },
   
   // Get Joined Classrooms
   // https://www.notion.so/skripsiadekelas/Get-Joined-Classrooms-bf08bd8c8a0a43e4a9f0f0036c2bdf37?pvs=4
@@ -29,13 +30,14 @@ export const userRoutes: RouteLookupType = {
       const data = await prisma.classroom.findMany({
         where: { members: { some: { id: userid }} },
       })
+      console.log("API - New Classroom Created")
       return res.json(data)
     },
   
   // Get Owned Classrooms
   // https://www.notion.so/skripsiadekelas/Get-Owned-Classrooms-cbe926fdfd5044bd896764f38ed9b7aa?pvs=4
   'GET:/users/[userid]/owned-classrooms':
-    async (req, res, [userid]) => { return res.notYetImplemented() },
+    async (req, res, [userid]) => { return notImplemented() },
   
   // Join Class
   // https://www.notion.so/skripsiadekelas/Join-Class-ae0d2a35550145c69ef1f51c0afc0be8?pvs=4

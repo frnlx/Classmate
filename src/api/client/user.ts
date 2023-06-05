@@ -1,6 +1,5 @@
-import { ClassroomData, UserData } from "@/types/fetchmodels"
 import { Classroom } from "@prisma/client"
-import { useSessionRequired, useUserid } from "./auth"
+import { useUserid } from "./auth"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ClientAPI } from "./api"
 
@@ -16,7 +15,7 @@ export function useUserClassList(initialData?: Classroom[]) {
 export function useJoinClass() {
 
   const userid = useUserid()
-  const { setQueriesData, fetchQuery } = useQueryClient()
+  const { setQueriesData, getQueryData } = useQueryClient()
   return useMutation({
     
     mutationFn(classid: string) {
@@ -24,8 +23,11 @@ export function useJoinClass() {
     },
     
     onSuccess(newClassroom) {
+
+
       return setQueriesData(['user', userid, 'classroom'],
         (classroomlist?: Classroom[]) => {
+          console.log(classroomlist)
           return classroomlist ? [...classroomlist, newClassroom] : classroomlist
         }
       )
@@ -35,26 +37,29 @@ export function useJoinClass() {
 }
 
 // Create Classroom -- 'POST:/users/[userid]/classrooms' -- https://notion.so/skripsiadekelas/090d86a5d6644de196a2f896406ae69d
-export const useCreateClass = () => {
+export function useCreateClass () {
 
   const userid = useUserid()
-  const queryClient = useQueryClient()
+  const qc = useQueryClient()
   return useMutation({
     
-    mutationFn() {
+    mutationFn: () => {
       return ClientAPI.createClassroom({ userid }).with({})
     },
 
-    onSuccess: (newClassroom) => queryClient
-      .setQueryData(['user', userid, 'classrooms'], (classroomlist?: Classroom[]) => {
-        if (classroomlist === undefined) {
-          queryClient.invalidateQueries(['user', userid, 'classrooms'])
+    onSuccess: (newclass) => {
+      
+      const key = ['user', userid, 'classroom']
+
+      qc.setQueryData(key, (oldclasslist?: Classroom[]) => {
+        if (oldclasslist === undefined) {
+          console.warn("OldClassList is Undefined? How come.")
         }
-        else {
-          let newClassroomList: Classroom[] = JSON.parse(JSON.stringify(classroomlist))
-          newClassroomList.push(newClassroom)
-          return newClassroomList
-        }
+        return oldclasslist ? [...oldclasslist, newclass] : undefined
       })
+
+    }
+
   })
+
 }

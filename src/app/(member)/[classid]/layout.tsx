@@ -5,7 +5,6 @@ import { SidebarItem } from "./-Sidebar/SidebarItem"
 import { SidebarHomeIcon, SidebarRewardShopIcon, SidebarTasksIcon } from "./-Sidebar/SidebarIcons"
 import { prisma } from "@/lib/db"
 import { notFound } from "next/navigation"
-import { getUser } from "@/api/caching/prefetch"
 
 export default async function ClassroomLayout({ children, params }: LayoutProps) {
 

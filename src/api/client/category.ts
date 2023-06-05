@@ -1,40 +1,40 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CategoryData } from "@/types/fetchmodels";
 import { Category } from "@prisma/client"
+import { ClientAPI } from "./api"
+import { useUserid } from "./auth"
 
 // Get Class Categories -- 'GET:/classrooms/[classid]/categories' -- https://notion.so/skripsiadekelas/df2bc14815614458b6875a695237f5eb
-export const useClassCategories = (classroomid: string | undefined, initialData?: Category) => {
+export const useClassCategories = (classid: string, initialData?: Category[]) => {
+  const userid = useUserid()
   return useQuery({
     initialData,
-    queryKey: ['classroom', classroomid, 'categories'],
-    
-    enabled: !!classroomid,
-
-    queryFn: async () => classroomid ? 
-      ClassAPI
-        .GetClassCategories(classroomid).then(res => res.data) : null
+    queryKey:
+      ['classroom', classid, 'categories'],
+    queryFn() {
+      return ClientAPI.getCategoryList({ userid, classid, })
+    } 
   })
 }
 
 // Create Category -- 'POST:/classrooms/[classid]/categories' -- https://notion.so/skripsiadekelas/430315c8671c4569b6e3ca941a9494c5
 export const useCreateCategory = (classid: string) => {
+  const userid = useUserid()
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: () =>
-      ClassAPI
-        .CreateClassCategory(classid).then(res => res.data),
+    mutationFn:
+      () => ClientAPI.createCategory({ userid, classid }).with({}),
 
     // 💡 response of the mutation is passed to onSuccess
     onSuccess: (newCategory) => {
       // ✅ update detail view directly
       queryClient
-        .setQueryData(['classroom', classid, 'categories'], (categories?: CategoryData[]) => {
+        .setQueryData(['classroom', classid, 'categories'], (categories?: Category[]) => {
           if (categories === undefined)
             queryClient.invalidateQueries(['classroom', classid, 'categories'])
           else {
-            let newCategoryList: CategoryData[] = JSON.parse(JSON.stringify(categories))
-            newCategoryList.push(newCategory)
+            let newCategoryList: Category[] = [...categories, newCategory]
             return newCategoryList
           }
         })
@@ -43,14 +43,14 @@ export const useCreateCategory = (classid: string) => {
 }
 
 // Get Category -- 'GET:/classrooms/[classid]/categories/[categoryid]' -- https://notion.so/skripsiadekelas/21f5c88d01b94bc089bd2d632da5c70f
-export const useCategoryData = (classid: string, categoryid: string) => {
+export const useCategoryData = (classid: string, catid: string) => {
+  const userid = useUserid()
   return useQuery({
     queryKey:
-      ['category', categoryid],
+      ['category', catid],
 
     queryFn: async () =>
-      ClassAPI
-        .GetCategory(classid, categoryid).then(res => res.data)
+      ClientAPI.getCategory({ userid, classid, catid })
   })
 }
 

@@ -16,7 +16,8 @@ export default function SectionList() {
   if (isLoading) return <>Loading</>
   if (error) return <>{"An error occured: " + (error as any).message}</>
   
-  return <>{data?.sections.map(section =>
+  return <>
+    { data?.sections.map(section =>
     <SectionItem
       key={section.id}
       label={section.name}
@@ -29,5 +30,6 @@ export default function SectionList() {
         />)}
       <AddResourceButton />
     </SectionItem>
-  )}</>
+    ) }
+  </>
 }

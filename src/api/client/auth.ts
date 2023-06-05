@@ -1,3 +1,4 @@
+import { RuntimeError } from "@/lib/error"
 import { InitialDataFunction, QueryFunction, useQuery } from "@tanstack/react-query"
 import { useSession } from "next-auth/react"
 import { redirect } from "next/navigation"
@@ -19,7 +20,12 @@ export function useSessionRequired() {
 }
 
 export function useUserid(){
-  const userid = useSession().data?.user.id
-  if (userid === undefined) throw new Error('This hook needs to be put under <SessionProvider> (session not found!)')
+  const userid = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/auth')
+    },
+  }).data?.user.id
+  if (userid === undefined) throw new RuntimeError("Unauthorized",'This hook needs to be put under <SessionProvider> (session not found!)')
   return userid
 }

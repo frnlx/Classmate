@@ -19,13 +19,13 @@ export default function Providers(props: Props) {
   const [queryClient] = useState(() => new QueryClient())
   // color.cyan('  |-(app) Provider')
   return (
-    <SessionProvider session={ props.session } {...providerConfig}>
-      <QueryClientProvider client={queryClient}>
+    <SessionProvider session={ props.session } { ...providerConfig }>
+      <QueryClientProvider client={ queryClient }>
         <ClientComponentProvider>
           <ColorModeScriptClient />
-          {props.children}
+          { props.children }
         </ClientComponentProvider>
       </QueryClientProvider>
     </SessionProvider>
-  );
+  )
 }

@@ -5,7 +5,8 @@ import { ReactNode } from "react"
 import { useRoom } from "../../-Navbar/Navbar"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { Hash, Link, Trash } from "@phosphor-icons/react"
-import { ClassAPI } from "@/api/client/api"
+import { ClientAPI } from "@/api/client/api"
+import { useUserid } from "@/api/client/auth"
 
 export function SidebarItem(p: {
   icon: ReactNode
@@ -45,6 +46,7 @@ function ContextMenu(p: {
 }) {
   const toast = useAppToast()
   const room = useRoom()
+  const userid = useUserid()
 
   if (!p.isCategory) return <>{p.children}</>
   
@@ -71,15 +73,17 @@ function ContextMenu(p: {
       </ContextMenuItem>
       <ContextMenuItem icon={<Trash/>}
         onClick={() => { room.currentId ?
-          ClassAPI.DeleteCategory(room.currentId, p.id).then(
+          ClientAPI.deleteCategory({
+            userid, classid: room.currentId, catid: p.id
+          }).then(
             () => {
-              
               toast(`Category ${name} deleted.`, 'success', 'gray')
+
             } 
           ).catch(
             () => {
-              
               toast(`Error occured`, 'error')
+
             }
           ) : null
         }}

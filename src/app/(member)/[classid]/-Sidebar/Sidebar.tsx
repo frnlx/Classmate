@@ -42,7 +42,7 @@ function SidebarHeader({ currentId }: {
 
 //----------------------------------------------------
 function CategoryList({ currentId }: {
-  currentId?: string
+  currentId: string
 }) {
   const { data: categoryList } = useClassCategories(currentId)
   return (

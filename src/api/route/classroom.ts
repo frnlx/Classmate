@@ -1,7 +1,6 @@
 import { RouteLookupType } from "@/lib/route";
 import { MustBeAuthenticated } from "../utils";
 import { prisma } from "@/lib/db";
-import { nanoid } from "nanoid";
 
 export const classroomRoutes: RouteLookupType = {
 
