@@ -20,15 +20,3 @@ export const routes: RouteLookupType = {
   ...sectionRoutes,
   ...resourceRoutes,
 }
-
-
-function test() {
-  
-
-}
-
-const test2 = () => {
-
-}
-
-test2()

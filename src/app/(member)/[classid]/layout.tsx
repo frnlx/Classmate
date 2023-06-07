@@ -3,31 +3,26 @@ import Pages from "./-Sidebar/Pages"
 import Sidebar from "./-Sidebar/Sidebar"
 import { SidebarItem } from "./-Sidebar/SidebarItem"
 import { SidebarHomeIcon, SidebarRewardShopIcon, SidebarTasksIcon } from "./-Sidebar/SidebarIcons"
-import { prisma } from "@/lib/db"
-import { notFound } from "next/navigation"
+import { prefetch } from "@/api/caching/prefetch"
 
 export default async function ClassroomLayout({ children, params }: LayoutProps) {
 
+  // Extract classid from URL dynamic route
   const classid = params?.['classid'] as string
-  if (!classid) notFound()
 
-
-  const classdata = await prisma.classroom.findUnique({
-    where: {
-      id: classid
-    }
-  })
-  if (!classdata) notFound()
+  // PreFetch category list 
+  const classdata = await prefetch.classroom.data(classid)
+  const categoryList = await prefetch.classroom.categorylist(classid)
 
   return (
-    <Pages defaultTab="home"> {/** Provides context of current sidebar route */}
-      <Sidebar> { /** Displays the sidebar. Show static pages  */}
-        <SidebarItem icon={<SidebarHomeIcon />} label="Home" id="home" />
-        <SidebarItem icon={<SidebarTasksIcon />} label="Assignment" id="assignment" />
-        <SidebarItem icon={<SidebarRewardShopIcon />} label="Reward Shop" id="reward_shop" />
+    <Pages defaultTab="home">
+
+      <Sidebar classlist={ Array.from(categoryList.values()) } classdata={classdata}>
+        <SidebarItem icon={<SidebarHomeIcon />}       label="Home"        id="home" />
+        <SidebarItem icon={<SidebarTasksIcon />}      label="Assignment"  id="assignment" />
       </Sidebar>
-      {children}
+      { children }
+      
     </Pages>
   )
-}
-// https://nextjs.org/docs/app/api-reference/file-conventions/layout
+} 

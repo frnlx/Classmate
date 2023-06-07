@@ -3,17 +3,6 @@ import { Awaitable } from "next-auth";
 import { NextResponse, NextRequest } from "next/server";
 import { RouteParams } from "@/components/lib/client-helper";
 
-
-
-export type RouteHandler = (
-  request: NextRequest,
-  response: ResponseGenerator,
-  params: string[],
-  body?: any
-) => Awaitable<NextResponse> | unknown
-export type RouteHandlerParam = Parameters<RouteHandler>;
-export type RouteLookupType = { [key: string]: RouteHandler }
-
 export const route = (cb: RouteHandler) => cb
 
 
@@ -90,7 +79,7 @@ export const routesHandler = (routes: RouteLookupType) => {
           const response = Res
 
           // Pass the param and Run the callback
-          return (await routes[route])(request, response, nextparams, data)
+          return (await routes[route as `${method}:/${string}`])(request, response, nextparams, data)
 
         } catch (error) {
 
@@ -109,3 +98,48 @@ export const routesHandler = (routes: RouteLookupType) => {
     return ErrorRes.notfound()
   }
 }
+
+// Route Function Type
+export type RouteHandler = (
+  request: NextRequest,
+  response: ResponseGenerator,
+  params: string[],
+  body?: any
+) => Awaitable<NextResponse>
+
+export type RouteHandlerParam = Parameters<RouteHandler>
+
+// Route Lookup Type 
+export type RouteLookupType = {
+  [key in `${method}:/${string}`]: RouteHandler
+}
+
+export type HandlerLookup = {
+  [name: string]: RouteHandler
+}
+
+// Route Method Type
+export type method =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "PATCH"
+  | "DELETE"
+  | "HEAD"
+  | "OPTIONS"
+
+// type RouteLookupV2 = t1 | t2
+
+// type t1 = {
+//   [key in `${method}:/${string}` | `/${string}`]?: RouteHandler
+// }
+// type t2 = {
+//   [key in `/${string}`]?: RouteLookupV2
+// }
+
+// const test: RouteLookupV2 = {
+//   'GET:/aasdfasdf': () => { },
+//   '/asdf': {
+//     'GET:/': () => {}
+//   },
+// }

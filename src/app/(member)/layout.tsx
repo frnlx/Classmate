@@ -11,26 +11,30 @@ import { prefetch } from "@/api/caching/prefetch"
 
 export default async function AppLayout({ children, params }: LayoutProps) {
 
-  await sleepInDev(2)
-
-  color.yellow('  |-(app) Layout Rendered')
-  color.magenta('    - getting session server-side')
-
-  // On await, display the loading.tsx
-  // @see AppLoadingPage
-
   // Get Logged in session first
   const session = await getLoggedInSession_redirectIfNotAuth()
 
-  // PreFetch user data including the classlist.
-  const classlist = await prefetch.user.classroomlist()
+  // PreFetch class list
+  const classlist = await prefetch.user.classroomlist() // -> <Navbar>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Render after finished fetching classlist and session.
   return (
     <main className="bg-dark0 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-white flex-grow-1">
-
       <Providers session={ session }>
-        
         <Navbar
           defaultRoom={ <NavbarItem label="My Dashboard" routeid="dashboard" icon={<NavbarDashboardIcon />}/> }
           staticRooms={ <>

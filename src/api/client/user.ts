@@ -15,7 +15,7 @@ export function useUserClassList(initialData?: Classroom[]) {
 export function useJoinClass() {
 
   const userid = useUserid()
-  const { setQueriesData, getQueryData } = useQueryClient()
+  const qc = useQueryClient()
   return useMutation({
     
     mutationFn(classid: string) {
@@ -23,11 +23,8 @@ export function useJoinClass() {
     },
     
     onSuccess(newClassroom) {
-
-
-      return setQueriesData(['user', userid, 'classroom'],
+      qc.setQueriesData(['user', userid, 'classroom'],
         (classroomlist?: Classroom[]) => {
-          console.log(classroomlist)
           return classroomlist ? [...classroomlist, newClassroom] : classroomlist
         }
       )

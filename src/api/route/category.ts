@@ -1,5 +1,5 @@
 import { RouteLookupType } from "@/lib/route";
-import { MustBeAuthenticated } from "../utils";
+import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 
 export const categoryRoutes: RouteLookupType = {
@@ -7,7 +7,7 @@ export const categoryRoutes: RouteLookupType = {
   // Get Class Categories
   // https://www.notion.so/skripsiadekelas/Get-Class-Categories-df2bc14815614458b6875a695237f5eb?pvs=4
   'GET:/classrooms/[classid]/categories': async (req, res, [id]) => {
-    await MustBeAuthenticated()
+    await membersOnly()
     const categories = await prisma.category.findMany({
       where: { classroomId: id }
     })
@@ -17,7 +17,7 @@ export const categoryRoutes: RouteLookupType = {
   // Create Category
   // https://www.notion.so/skripsiadekelas/Create-Category-430315c8671c4569b6e3ca941a9494c5?pvs=4
   'POST:/classrooms/[classid]/categories': async (req, res, [id]) => { 
-    await MustBeAuthenticated()
+    await membersOnly()
     const newCategory = await prisma.category.create({
       data: {
         name: 'New Category',
@@ -39,7 +39,7 @@ export const categoryRoutes: RouteLookupType = {
   // Get Category
   // https://www.notion.so/skripsiadekelas/Get-Category-21f5c88d01b94bc089bd2d632da5c70f?pvs=4
   'GET:/classrooms/[classid]/categories/[categoryid]': async (req, res, [classid, categoryid]) => {
-    await MustBeAuthenticated()
+    await membersOnly()
     const category = await prisma.category.findUnique({
       where: { id: categoryid },
       include: {
@@ -52,7 +52,7 @@ export const categoryRoutes: RouteLookupType = {
   // Delete Category
   // https://www.notion.so/skripsiadekelas/Delete-Category-ee287838e9b94ee9ae79acb249172aa1?pvs=4
   'DELETE:/classrooms/[classid]/categories/[categoryid]': async (req, res, [classid, categoryid]) => { 
-    await MustBeAuthenticated()
+    await membersOnly()
     const deletedCategory = await prisma.category.delete({
       where: { id: categoryid },
     })

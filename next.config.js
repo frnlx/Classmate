@@ -6,6 +6,9 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
+  // headers() { }
+  // redirects() { }
+  // rewrites() { }
 
 }
 

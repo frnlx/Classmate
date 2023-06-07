@@ -44,8 +44,8 @@ type SectionsIncldPost = (Section & { post: Resource[] })[]
 // alt+shift+a requestFn\(||`/
 export const ClientAPI = {
 
-  getUser:                       requestFn(fetch<User>,              `/api/users/[userid]`)
-  , getClassroomList:            requestFn(fetch<Classroom[]>,       `/api/users/[userid]/classrooms`)
+  getUser:                       requestFn(fetch<User>,              `/api/users/[userid]`) // ✅
+  , getClassroomList:            requestFn(fetch<Classroom[]>,       `/api/users/[userid]/classrooms`) // ✅
   , getClassroom:                requestFn(fetch<Classroom>,         `/api/users/[userid]/classrooms/[classid]`)
   , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)
   , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
@@ -59,7 +59,7 @@ export const ClientAPI = {
   , createSection:               requestFn(create<Section>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)
   , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
 
-  , joinClassroom:               requestFn(join<Classroom>,          `/api/users/[userid]/classrooms/[classid]`)
+  , joinClassroom:               requestFn(join<Classroom>,          `/api/users/[userid]/classrooms/[classid]`) // ✅
 
   , updateUser:                  requestFn(update<User>,             `/api/users/[userid]`)
   , updateClassroom:             requestFn(update<Classroom>,        `/api/users/[userid]/classrooms/[classid]`)

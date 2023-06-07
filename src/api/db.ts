@@ -34,5 +34,7 @@ export const db = {
       where: { id }, include: { classes: { include: { categories: { where: { classroomId: classid }, include: { sections: { include: { post: true } } } } } } }
     })
   },
-}
 
+
+  
+}

@@ -5,8 +5,8 @@ import { NextResponse } from "next/server"
 
 export const Res = {
 
-  json:    (data: any) => NextResponse.json(data, { status: 200 }),
-  created: (data: any) => NextResponse.json(data, { status: 201 }),
+  json:    <T>(data: T) => NextResponse.json(data, { status: 200 }),
+  created: <T>(data: T) => NextResponse.json(data, { status: 201 }),
   ok:      () => new NextResponse(undefined, { status: 204 }),
 
 };

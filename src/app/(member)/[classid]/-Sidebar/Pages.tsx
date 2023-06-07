@@ -2,62 +2,50 @@
 
 import { Root } from "@radix-ui/react-tabs";
 import { useRouter, useSelectedLayoutSegment } from "next/navigation";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode } from "react";
 import { useRoom } from "../../-Navbar/Navbar";
-import { color } from "@/lib/logger/chalk";
+import { createReactContext } from "@/lib/react"
 
-// CreateContext & UseContext
-// --------------------------
-const PageContext = createContext<PageContextType>({
-  currentid: ''
-})
-export const usePage = () => useContext(PageContext)
+const {
+  provider: PageContextProvider,
+  hook: usePage
+} = createReactContext({ currentid: '' })
 
-// Context Component
-// -----------------
+
+
 export default function Pages (p: {
   children?: ReactNode
   defaultTab: string
 }) {
-  color.cyan('  `- (classid) Pages')
-  
+
   const { currentId } = useRoom();
 
   const selectedSegment = useSelectedLayoutSegment()
   const router = useRouter();
 
-  // Somehow find the key of the tabs??
+  const contextValue = { currentid: selectedSegment ?? ''}
 
   return (
-    currentId ? 
-    <PageContext.Provider value={{
-      currentid: selectedSegment ?? '',
-    }}>
-      <Root
-        className='flex flex-grow-1 w-full'
-        activationMode="manual"
-        orientation="vertical"
-        value={selectedSegment ?? p.defaultTab}
-        onValueChange={(e) => {
-          // console.log(currentId)
-          router.push(`/${currentId}/${e}`)
-          // Push route to that page.
-        }}
-        defaultValue={p.defaultTab}
-      >
-        {p.children}
-      </Root>
-    </PageContext.Provider> : null
-  );
+    currentId ?
+      <PageContextProvider value={ contextValue }>
+        
+        <Root
+          className='flex flex-grow-1 w-full'
+          activationMode="manual"
+          orientation="vertical"
+          value={ selectedSegment ?? p.defaultTab }
+          onValueChange={ (e) => {
+            // @ts-ignore
+            router.push(`/${currentId}/${e}`)
+          } }
+          defaultValue={ p.defaultTab }
+        >
+          { p.children }
+        </Root>
+
+      </PageContextProvider>
+      : null
+  )
 }
  
-
-
-
-
-export type AppPage = {
-  id: string,
-}
-export type PageContextType = {
-  currentid: string,
-}
+export { usePage }
