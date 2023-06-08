@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CategoryData } from "@/types/fetchmodels";
-import { Category } from "@prisma/client"
+import { Category, Section } from "@prisma/client"
 import { ClientAPI } from "./api"
 import { useUserid } from "./auth"
 
@@ -35,7 +35,7 @@ export function useCreateCategory(classid: string) {
 }
 
 // Get Category -- 'GET:/classrooms/[classid]/categories/[categoryid]' -- https://notion.so/skripsiadekelas/21f5c88d01b94bc089bd2d632da5c70f
-export function useCategoryData(classid: string, catid: string) {
+export function useCategoryData(classid: string, catid: string, initialData: Category ) {
   const userid = useUserid()
   return useQuery({
     queryKey:
@@ -44,5 +44,16 @@ export function useCategoryData(classid: string, catid: string) {
     queryFn() { 
       return ClientAPI.getCategory({ userid, classid, catid })
     } 
+  })
+}
+
+export function useSectionList(classid: string, catid: string, initialData: Section[]) {
+  const userid = useUserid()
+  return useQuery({
+    initialData,
+    queryKey: ['category', catid, 'sections'],
+    queryFn() {
+      return ClientAPI.getSectionList({ userid, classid, catid })
+    }
   })
 }

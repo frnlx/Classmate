@@ -9,6 +9,7 @@ import { SidebarCategoryIcon } from "./SidebarIcons";
 import { ArrowDown, CaretDown, Plus } from "@phosphor-icons/react";
 import { Category, Classroom } from "@prisma/client"
 import clsx from "clsx"
+import { ButtonTooltip } from "@/components/use-client/Tooltip"
 
 
 export default function Sidebar(p: {
@@ -97,12 +98,14 @@ function AddCategoryButton() {
   const createCategory = useCreateCategory(room.currentId ?? '')
 
   return (
-    <button
-      className="text-light2 hover:text-light0 text-sm"
-      onClick={() => { }}
-    >
-      <Plus weight="bold" />
-    </button>
+    <ButtonTooltip label="Add New Category">
+      <button
+        className="text-light2 hover:text-light0 text-sm"
+        onClick={() => { }}
+      >
+        <Plus weight="bold" />
+      </button>
+    </ButtonTooltip>
   )
 
 }

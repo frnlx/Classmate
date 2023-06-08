@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import Link from 'next/link'
+import { Route } from "next"
 
 
 type prop = {
@@ -17,8 +18,7 @@ function Button(prop: prop) {
 
   if (prop.nextjs) return (
     <Link
-      // @ts-ignore
-      href={ prop.href! }
+      href={ prop.href as Route }
       className={ `block
       ${padding}
       ${prop.plain ?

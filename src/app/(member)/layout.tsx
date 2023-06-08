@@ -35,6 +35,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
   return (
     <main className="bg-dark0 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-white flex-grow-1">
       <Providers session={ session }>
+
         <Navbar
           defaultRoom={ <NavbarItem label="My Dashboard" routeid="dashboard" icon={<NavbarDashboardIcon />}/> }
           staticRooms={ <>
@@ -46,6 +47,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
         >
           {children}
         </Navbar> 
+        
         <ReactQueryDevtools initialIsOpen={ false } />
       </Providers>
     </main>

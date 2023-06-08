@@ -9,6 +9,7 @@ import { ClientAPI } from "@/api/client/api"
 import { useUserid } from "@/api/client/auth"
 import { useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import clsx from "clsx"
+import { ButtonTooltip } from "@/components/use-client/Tooltip"
 
 export function SidebarItem(p: {
   icon: ReactNode
@@ -48,7 +49,9 @@ export function SidebarItem(p: {
       >
         <span className="w-8 leading-5">{p.icon}</span>
         <span className="font-semibold leading-5 w-full">{ p.label }</span>
-        <SettingsButton active={ active } />
+        {
+          p.isCategory ? <SettingsButton active={ active } /> : null
+        }
       </Trigger>
     </ContextMenu>
   )
@@ -61,13 +64,15 @@ function SettingsButton(p: {
 }) {
   
   return (
-    <div className={ clsx(
-      "w-4 h-4 text-light1",
-      p.active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-      "hover:text-white"
-    ) }>
-      <GearSix weight={ "fill" }/>
-    </div>
+    <ButtonTooltip label="Edit Category">
+      <div className={ clsx(
+        "w-4 h-4 text-light1",
+        p.active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+        "hover:text-white"
+      ) }>
+        <GearSix weight={ "fill" }/>
+      </div>
+    </ButtonTooltip>
   )
 }
 

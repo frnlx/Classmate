@@ -1,7 +1,20 @@
-import { RouteLookupType } from "@/lib/route";
+import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
+
+
+const resource = {
+
+  async getData() {
+
+  },
+
+  async delete() {
+    
+  }
+
+} satisfies HandlerLookup
 
 export const resourceRoutes: RouteLookupType = {
 

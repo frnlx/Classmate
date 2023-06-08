@@ -4,6 +4,7 @@ import { usePage } from "../../-Sidebar/Pages"
 import Link from "next/link"
 import clsx from "clsx"
 import { Note } from "@phosphor-icons/react"
+import { Route } from "next"
 
 export default function ResourceItem(p: {
   secid: string
@@ -17,8 +18,7 @@ export default function ResourceItem(p: {
   )
 
   return (
-    // @ts-ignore
-    <Link href={`./${p.id}`}>
+    <Link href={`/${p.id}`}>
       <div className={clsx(
         "px-2 py-3 flex flex-row items-center gap-2 rounded-md",
         "hover:text-slate-300 hover:bg-slate-700/25"

@@ -11,9 +11,14 @@ export default async function ClassroomLayout({ children, params }: LayoutProps)
   const classid = params?.['classid'] as string
 
   // PreFetch category list 
-  const classdata = await prefetch.classroom.data(classid)
   const categoryList = await prefetch.classroom.categorylist(classid)
+  const classdata = await prefetch.classroom.data(classid)
 
+  // console.log("Classroom Layout Log")
+  // console.log(classid)
+  // console.log(classdata)
+  // console.log(categoryList)
+  
   return (
     <Pages defaultTab="home">
 

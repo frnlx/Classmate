@@ -26,10 +26,6 @@ export default function RootLayout(p: {
   )
 }
 
-
-
-
-
 const inter = Inter({
   subsets: ['latin'],
   display: 'block',

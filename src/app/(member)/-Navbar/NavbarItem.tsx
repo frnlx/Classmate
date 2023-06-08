@@ -92,15 +92,13 @@ function NavbarItemTooltip(p: {
   children: ReactNode
   label: string
 }) {
-  
-
   return (
     <TooltipBase
       trigger={ p.children }
+      side="right"
+      className="m-4"
     >
-      <span className="text-sm font-semibold">
-        {p.label}
-      </span>
+      {p.label}
     </TooltipBase>
   )
 

@@ -46,15 +46,15 @@ export const ClientAPI = {
 
   getUser:                       requestFn(fetch<User>,              `/api/users/[userid]`) // ✅
   , getClassroomList:            requestFn(fetch<Classroom[]>,       `/api/users/[userid]/classrooms`) // ✅
-  , getClassroom:                requestFn(fetch<Classroom>,         `/api/users/[userid]/classrooms/[classid]`)
-  , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)
-  , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
+  , getClassroom:                requestFn(fetch<Classroom>,         `/api/users/[userid]/classrooms/[classid]`) // ✅
+  , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
+  , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
   , getSectionList:              requestFn(fetch<Section[]>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)
   , getSectionListInclResources: requestFn(fetch<SectionsIncldPost>, `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/resources`)
   , getResourceList:             requestFn(fetch<Resource[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources`)
   , getResource:                 requestFn(fetch<Resource>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
 
-  , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`)
+  , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
   , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
   , createSection:               requestFn(create<Section>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)
   , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)

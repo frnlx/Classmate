@@ -1,6 +1,19 @@
-import { RouteLookupType } from "@/lib/route";
+import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
+
+
+const section = {
+
+  async getData() {
+    
+  },
+
+  async delete() {
+
+  }
+
+} satisfies HandlerLookup
 
 export const sectionRoutes: RouteLookupType = {
 
