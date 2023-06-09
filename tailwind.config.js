@@ -12,6 +12,10 @@ module.exports = {
         slideLeftAndFade: 'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         slideRightAndFade: 'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        overlayShow: 'overlayShow 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        contentShow: 'contentShow 400ms cubic-bezier(.56,1.42,.48,1)',
+        overlayHide: 'overlayHide 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        contentHide: 'contentHide 300ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       boxShadow: {
         outline: "0 0 1px 3px #ffffff66",
@@ -42,12 +46,29 @@ module.exports = {
           from: { opacity: 0, transform: "translateX(-2px)" },
           to: { opacity: 1, transform: "translateX(0)" },
         },
+        overlayShow: {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        contentShow: {
+          from: { opacity: 0, transform: 'translate(-50%, -48%) scale(0.56)' },
+          to: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+        },
+        overlayHide: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        contentHide: {
+          from: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+          to: { opacity: 0, transform: 'translate(-50%, -48%) scale(0.56)' },
+        },
       },
       backgroundImage: {
         radialGreenGradient:
           "radial-gradient(circle, rgba(0,65,41,1) 0%, rgba(24,24,27,1) 60%)",
         radialGreenGradientTransparent:
           "radial-gradient(circle, rgba(0,65,60,0.6) 0%, rgba(0,65,60,0) 60%)",
+
       },
       colors: {
         transparent: "transparent",
