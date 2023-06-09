@@ -2,10 +2,12 @@ import { createClient } from "@supabase/supabase-js";
 import { Category, Classroom, PrismaClient, Resource, Section } from "@prisma/client";
 
 // # Unused
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// export const supabase = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// )
+
+
 // # Unused
 
 

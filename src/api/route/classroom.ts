@@ -24,12 +24,12 @@ const classroom = {
     await membersOnly()
     const data = await prisma.user.findUniqueOrThrow({
       where: { id: uid },
-      include: {
+      select: {
         classes: {
           where: {
             id: cid
           },
-          include: {
+          select: {
             categories: true
           }
         }
