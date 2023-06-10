@@ -33,18 +33,25 @@ export default function NavbarItemAddButton() {
 function CreateClassModal(p: {
   children: ReactNode
 }) {
+
+
   return (
     <ModalBase
       trigger={ p.children }
-      title="Create New Classroom"
+      title="Add a New Classroom"
       desc="Your server is where you and your friends hang out. Make yours and start talking"
-      footer={ (Footer) =>
-        <Footer>
-        
-        </Footer>
+      footer={ (Footer) => <></>
       }
     >
-      Test
+      <div className="flex gap-2 flex-row">
+        <button className="bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
+          <div className="text-sm text-light0">Have an invite?</div>
+          Join a classroom
+        </button>
+        <button className="bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
+          Create a new classroom
+        </button>
+      </div>
     </ModalBase>
   )
 }
