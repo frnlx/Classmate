@@ -1,16 +1,13 @@
 'use client'
 
-import { useCreateClass } from "@/api/client/user";
+import { useCreateClass } from "@/api/client/user"
 import clsx from "clsx"
 import { NavbarAddClassIcon } from "./NavbarIcons"
-import { ModalBase } from "@/components/use-client/Modal"
+import { ModalBase, ModalButton } from "@/components/use-client/Modal"
 import { ReactNode, useState } from "react"
+import JoinForm from "@/components/form/JoinForm"
 
 export default function NavbarItemAddButton() {
-  // color.cyan('    `- Add Button')
-
-  // Using hook from a different file, ❌ doesn't work. why?
-  const { mutate: createClass } = useCreateClass()
 
   return (
     <CreateClassModal>
@@ -34,9 +31,9 @@ function CreateClassModal(p: {
   children: ReactNode
 }) {
   const [modalState, setModal] = useState<
-    "closed" | "index" | "create" | "join"  
-    >("closed")
-  
+    "closed" | "index" | "create" | "creating" | "join" | "joining"
+  >("closed")
+
   const closeModal = () => setModal("closed")
 
 
@@ -46,7 +43,6 @@ function CreateClassModal(p: {
         trigger={ p.children }
         title="Add a New Classroom"
         desc="Your server is where you and your friends hang out. Make yours and start talking"
-        footer={ (Footer) => <></> }
         open={ modalState === "index" ? true : false }
         onChange={ (state) => {
           if (state) setModal("index")
@@ -55,13 +51,13 @@ function CreateClassModal(p: {
       >
         <div className="flex gap-2 flex-row">
           <button
-            onClick={()=>setModal("join")}
+            onClick={ () => setModal("join") }
             className="bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
             <div className="text-sm text-light0">Have an invite?</div>
             Join a classroom
           </button>
           <button
-            onClick={()=>setModal("create")}
+            onClick={ () => setModal("create") }
             className="bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
             Create a new classroom
           </button>
@@ -72,36 +68,42 @@ function CreateClassModal(p: {
       <ModalBase
         title="Create a New Classroom"
         desc="Give your new server a personality with a name and an icon. You can always change it later"
-        footer={ (Footer, Button) =>
-          <Footer>
-            <div className="w-full">
-              <Button label="<- Back" onClick={()=>setModal("index")} />
-            </div>
-            <Button label="Create" onClick={()=>{}} primary />
-          </Footer> }
         open={ modalState === "create" ? true : false }
         onChange={ state => {
           if (!state) closeModal()
-        }}
+        } }
       >
-
+        <div className="flex justify-end">
+          <ModalButton label="<- Back" onClick={ () => setModal("index") } />
+          <ModalButton label="Create" onClick={ () => { } } primary />
+        </div>
       </ModalBase>
 
 
       <ModalBase
         title="Join a Server"
         desc="Enter an invite below to join an existing server"
-        footer={ (Footer, Button) =>
-          <Footer>
-            <div className="w-full">
-              <Button label="<- Back" onClick={ () => setModal("index") } />
-            </div>
-            <Button label="Join" onClick={ () => { } } primary />
-          </Footer> }
         open={ modalState === "join" ? true : false }
         onChange={ state => {
           if (!state) closeModal()
-        }}
+        } }
+      >
+        <JoinForm onSubmit={ (values) => {
+          console.log(values)
+        } }>
+          <div className="flex justify-end gap-2 mt-4">
+            <ModalButton label="<- Back" onClick={ () => setModal("index") } />
+            <ModalButton label="Join" onClick={ () => { } } primary submit />
+          </div>
+        </JoinForm>
+      </ModalBase>
+
+
+      <ModalBase
+        title="Joining..."
+        desc="Please wait while we connect you with the classroom"
+        open={ modalState === "joining" ? true : false }
+        onChange={ state => { } }
       >
 
       </ModalBase>

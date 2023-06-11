@@ -6,6 +6,7 @@ export function createReactContext<ContextType>(init: ContextType) {
   const hook = () => useContext(context)
   return {
     provider: context.Provider,
-    hook
+    hook,
+    context
   }
 }
