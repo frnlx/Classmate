@@ -5,7 +5,7 @@ import React, { ReactNode } from "react"
 
 
 export function ModalBase(p: {
-  trigger: ReactNode
+  trigger?: ReactNode
   title: string
   desc: string
   children?: ReactNode

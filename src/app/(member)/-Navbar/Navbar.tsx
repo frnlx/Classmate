@@ -20,7 +20,7 @@ const {
 
 // Context Component
 // -----------------
-export default function Navbar (p: {
+export default function Navbar(p: {
   children?: ReactNode,
   defaultRoom: ReactNode,
   staticRooms?: ReactNode,
@@ -39,36 +39,49 @@ export default function Navbar (p: {
 
   return (
     <RoomContextProvider value={ contextValue }>
-      <div className={clsx(
-        "bg-dark1 w-20",                      
+      
+      <div className={ clsx(
+        "bg-dark1 w-20",
         "h-screen flex flex-col gap-4"
       ) }>
-
-
-        <ul className="flex flex-col gap-2 p-4">
+        <ListGroup>
           { p.defaultRoom }
           { p.staticRooms }
-        </ul>
+        </ListGroup>
 
-        
-        <ul className="flex flex-col gap-4 p-4">
-          {
-            userClassList?.map((classroom, i) =>
-              <NavbarItem
-                key={i}
-                label={classroom.name}
-                routeid={classroom.id}
-                inviteID={classroom.inviteID}
-              />
-            )
-          }
+        <ListGroup>
+          <ClassList list={ userClassList } />
           <NavbarItemAddButton />
-        </ul>
-        
+        </ListGroup>
+
       </div>
-      {p.children}
+
+      { p.children }
     </RoomContextProvider>
-  );
+  )
 }
 
 export { useRoom }
+
+function ListGroup(p: { children: ReactNode }) {
+  return (
+    <ul className="flex flex-col gap-2 p-4">
+      { p.children }
+    </ul>
+  )
+}
+
+function ClassList(p: { list?: Classroom[] }) {
+  return (
+    <>
+      { p.list?.map(classroom =>
+        <NavbarItem
+          key={ classroom.id }
+          label={ classroom.name }
+          routeid={ classroom.id }
+          inviteID={ classroom.inviteID }
+        />
+      ) }
+    </>
+  )
+}
