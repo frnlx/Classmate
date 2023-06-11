@@ -88,7 +88,13 @@ module.exports = {
 
         alert: "#D2473A", //red
         warn: "#C97C0B", // orange
+
+        oklight: "#19e6a0", // green light
         ok: "#008E5A", // green
+        okdark: "#004d34", // green dark
+
+
+
         primary: "#0e76f0", // blue
         unique: "#7C5ECF", // unique
       },

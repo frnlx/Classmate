@@ -10,12 +10,17 @@ export function ModalBase(p: {
   desc: string
   children?: ReactNode
   footer: (
-    footer: (p: { children?: ReactNode },
-    close: ReactNode
-  ) => JSX.Element) => JSX.Element
+    Footer: (p: { children?: ReactNode }, close: ReactNode) => JSX.Element,
+    Button: typeof ModalButton 
+  ) => JSX.Element
+  open?: boolean
+  onChange?: (state: boolean) => void
 }) {
   return (
-    <Root>
+    <Root
+      open={ p.open }
+      onOpenChange={ p.onChange }
+    >
       <Trigger>
         { p.trigger }
       </Trigger>
@@ -25,7 +30,7 @@ export function ModalBase(p: {
 
         <Content className={ clsx(
           // appearance
-          "rounded-2xl bg-dark1 p-6 focus:outline-none",
+          "rounded-2xl bg-dark1 focus:outline-none overflow-hidden",
           // responsive width
           "w-full max-w-md",
           // shadow
@@ -37,25 +42,28 @@ export function ModalBase(p: {
           "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         ) }>
 
+          <div className="p-5 pt-6">
 
+            <header className="mb-4 p-2 text-center">
+              <Title className="font-semibold text-xl text-white m-0 mb-2">
+                { p.title }
+              </Title>
 
-          <header className="mb-4 p-2 text-center">
-            <Title className="font-semibold text-xl text-white m-0 mb-2">
-              { p.title }
-            </Title>
+              <Description className="text-sm text-light0">
+                { p.desc }
+              </Description>
+            </header>
 
-            <Description className="text-sm text-light0">
-              { p.desc }
-            </Description>
-          </header>
+            { p.children }
 
-          { p.children }
+          </div>
           
           { p.footer(
-            (p: { children?: ReactNode }) => <div className="mt-9 flex justify-end bg-black">
-              { p.children }
-            </div>,
-
+            (p: { children?: ReactNode }) =>
+              <div className="p-5 flex justify-end bg-dark2/20">
+                { p.children }
+              </div>,
+            ModalButton
           ) }
           
           <Close asChild>
@@ -70,5 +78,30 @@ export function ModalBase(p: {
         </Content>
       </Portal>
     </Root>
+  )
+}
+
+function ModalButton(p: {
+  label: string
+  onClick: () => void
+  primary?: boolean
+}) {
+  return (
+    <button
+      onClick={p.onClick}
+      className={ clsx(
+        "p-2.5 px-5 text-sm font-semibold rounded-lg transition-all duration-200",
+        p.primary ? clsx(
+          "text-whiter bg-ok px-8",
+          "hover:brightness-75",
+          "active:brightness-50"
+        ) : clsx(
+          "text-light1",
+          "hover:text-light0 hover:bg-light2/20",
+          "active:brightness-110"
+        )
+    )}>
+      {p.label}
+    </button>
   )
 }
