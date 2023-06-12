@@ -1,5 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
-import { Category, Classroom, PrismaClient, Resource, Section } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 // # Unused
 // export const supabase = createClient(
