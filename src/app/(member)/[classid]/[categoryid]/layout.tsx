@@ -13,19 +13,19 @@ export default async function CategoryPage({ children, params }: LayoutProps) {
 
   color.magenta('CategoryPage: '+categoryid)
 
-  // const categorySectionsAndResources = await prefetch.category.sectionsAndResources(classid, categoryid)
-  // const categoryData = await prefetch.category.data(classid, categoryid)
+  const categorySectionsAndResources = await prefetch.category.sectionsAndResources(classid, categoryid)
+  const categoryData = await prefetch.category.data(classid, categoryid)
 
-  // color.yellow("Category Section And Resouce Size")
-  // color.yellow(categorySectionsAndResources.size)
+  color.yellow("Category Section And Resouce Size")
+  color.yellow(categorySectionsAndResources.size)
 
   return (
     <div className="m-8 flex flex-col gap-4 max-w-2xl h-max">
 
-      {/* <Header
+      <Header
         name={ categoryData.name }
         title={ categoryData.title }
-      /> */}
+      />
       
       {/* <SectionList
         prefetchedData={ categorySectionsAndResources }

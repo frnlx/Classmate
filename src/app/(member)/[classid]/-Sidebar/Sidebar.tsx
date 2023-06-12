@@ -84,7 +84,7 @@ function CategoryList(p: {
             key={page.id}
             id={page.id}
             icon={<SidebarCategoryIcon />}
-            label={page.name}
+            label={page.id}
             isCategory // enables context menu
           />) : <>Loading Categories</>
       }
