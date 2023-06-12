@@ -2,6 +2,7 @@ import { Classroom } from "@prisma/client"
 import { useUserid } from "./auth"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ClientAPI } from "./api"
+import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm"
 
 export function useUserClassList(initialData?: Classroom[]) {
   const userid = useUserid()
@@ -40,8 +41,8 @@ export function useCreateClass () {
   const qc = useQueryClient()
   return useMutation({
     
-    mutationFn: () => {
-      return ClientAPI.createClassroom({ userid }).with({})
+    mutationFn: (values: InferedCreateClassroomFormSchema) => {
+      return ClientAPI.createClassroom({ userid }).with(values)
     },
 
     onSuccess: (newclass) => {

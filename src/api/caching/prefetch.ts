@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import { ServerFunctionError } from "@/lib/error"
 import { prisma } from "@/lib/db"
 import { useUserid } from "../client/auth"
+import { color } from "@/lib/logger/chalk"
 
 
 // This is a list of function that dedupe any calls to db and cache them in one request
@@ -17,7 +18,8 @@ type resourceid = string
 let cached: {
 
   user?: User,
-  userClassrooms?:              Map<classid,    Classroom>
+  userClassrooms?: Map<classid, Classroom>
+  
   selectedClassroomCategories?: Map<categoryid, Category>
   
   selectedCategoryData?:        Map<sectionid,  SectionIncludeResources>
@@ -36,7 +38,7 @@ let cached: {
  */
 
 function throwNotFound(str: string): never {
-  throw new ServerFunctionError(str)
+  throw new Error('NotFound | '+str)
 }
 
 export const prefetch = {
@@ -70,15 +72,23 @@ export const prefetch = {
     },
     async categorylist(classid: string) {
       // await prefetch.classroom.data(classid) // makes sure user allowed to see
+      // console.log("Get Category List")
 
       if (cached.selectedClassroomCategories)
         return cached.selectedClassroomCategories
+      
+      // console.log("No Cached Category List.. Fetching")
       
       const data = await db.getUserClassroomCategories(await getUserId(), classid)
       if (!data)
         throw new Error('User Not Found!')
       if (!data.classes.some(c => c.id === classid))
         throw new Error('Classroom Not Found!')
+      
+      // console.log("Data" + JSON.stringify(data, null, 2))
+      // const mymap = new Map(data.classes.map(cl => [cl.id, cl]))
+      // console.log("Data")
+      // mymap.forEach((val, key)=> console.log(key, val))
 
       cached.user = data 
       cached.userClassrooms = new Map(data.classes.map(cl => [cl.id, cl]))
@@ -92,14 +102,24 @@ export const prefetch = {
   category: {
 
     async data(classid: string, categoryid: string) {
+      const val = await prefetch.classroom.categorylist(classid)
+      // console.log("Val" + val.get(categoryid))
+      // color.magenta("categoryData")
+
       return (await prefetch.classroom.categorylist(classid))?.get(categoryid)
         ?? throwNotFound('Category not Found')
     },
     async sectionsAndResources(classid: string, categoryid: string) {
       // await prefetch.category.data(classid, categoryid) // makes sure user allowed to see
-      if (cached.selectedCategoryData)
-        return cached.selectedCategoryData
-
+      
+      
+      if (cached.selectedCategoryData) {
+        color.yellow('Cached Found...')
+        return cached.selectedCategoryData  
+      }
+      
+      color.magenta("Fetching sectionsAndResources: "+categoryid)
+      
       const data = await db.getUserClassroomCategoriesSectionsAndResourcse(await getUserId(), classid, categoryid)
       if (!data)
         throw new Error('User Not Found!')

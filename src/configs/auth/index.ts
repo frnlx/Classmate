@@ -16,7 +16,8 @@ export const authOptions: AuthOptions = {
   // Authentication Tokens
   session: {
     strategy: 'jwt',
-    maxAge: 600, // 2592000 // 30 days default
+    // maxAge: 600, // 2592000 // 30 days default
+    maxAge: 2592000, // 2592000 // 30 days default
     updateAge: 5,
   },
   jwt: {

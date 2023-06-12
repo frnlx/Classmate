@@ -130,11 +130,11 @@ function requestFn<ReturnValue, RouteUrl extends string = string>(fn: (url: stri
 
 axios.interceptors.request.use(
   (config) => {
-    console.warn("AXIOS request")
+    // console.warn("AXIOS request")
     return config
   },
   (error) => {
-    console.warn("AXIOS request error")
+    // console.warn("AXIOS request error")
     return Promise.reject(error)
   }
 )
@@ -143,7 +143,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
-  console.warn("AXIOS response")
+  // console.warn("AXIOS response")
   
   return response
 }, function (error) {

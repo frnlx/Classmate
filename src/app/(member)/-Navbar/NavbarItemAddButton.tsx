@@ -1,11 +1,14 @@
 'use client'
 
-import { useCreateClass } from "@/api/client/user"
+import { useCreateClass, useJoinClass } from "@/api/client/user"
 import clsx from "clsx"
 import { NavbarAddClassIcon } from "./NavbarIcons"
 import { ModalBase, ModalButton } from "@/components/use-client/Modal"
 import { ReactNode, useState } from "react"
 import JoinForm from "@/components/form/JoinForm"
+import { useRouter } from "next/navigation"
+import CreateClassForm from "@/components/form/CreateClassForm"
+import { Route } from "next"
 
 export default function NavbarItemAddButton() {
 
@@ -35,7 +38,7 @@ function CreateClassModal(p: {
   >("closed")
 
   const closeModal = () => setModal("closed")
-
+  const router = useRouter()
 
   return (
     <>
@@ -52,14 +55,15 @@ function CreateClassModal(p: {
         <div className="flex gap-2 flex-row">
           <button
             onClick={ () => setModal("join") }
-            className="bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
-            <div className="text-sm text-light0">Have an invite?</div>
+            className="font-semibold text-sm bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
+            <div className="text-xs text-light0">Have an invite?</div>
             Join a classroom
           </button>
           <button
             onClick={ () => setModal("create") }
-            className="bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
-            Create a new classroom
+            className="font-semibold text-sm bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
+            <div className="text-xs text-light0">Own a class?</div>
+            Create a classroom
           </button>
         </div>
       </ModalBase>
@@ -69,14 +73,15 @@ function CreateClassModal(p: {
         title="Create a New Classroom"
         desc="Give your new server a personality with a name and an icon. You can always change it later"
         open={ modalState === "create" ? true : false }
-        onChange={ state => {
-          if (!state) closeModal()
-        } }
+        onChange={ state => { } }
       >
-        <div className="flex justify-end">
-          <ModalButton label="<- Back" onClick={ () => setModal("index") } />
-          <ModalButton label="Create" onClick={ () => { } } primary />
-        </div>
+        <CreateClassForm
+          onBack={ () => setModal("index") }
+          onCreate={ (classid) => {
+            closeModal()
+            router.push(`/${classid}` as Route)
+          } }
+        />
       </ModalBase>
 
 
@@ -84,18 +89,14 @@ function CreateClassModal(p: {
         title="Join a Server"
         desc="Enter an invite below to join an existing server"
         open={ modalState === "join" ? true : false }
-        onChange={ state => {
-          if (!state) closeModal()
-        } }
+        onChange={ state => { } }
       >
-        <JoinForm onSubmit={ (values) => {
-          console.log(values)
-        } }>
-          <div className="flex justify-end gap-2 mt-4">
-            <ModalButton label="<- Back" onClick={ () => setModal("index") } />
-            <ModalButton label="Join" onClick={ () => { } } primary submit />
-          </div>
-        </JoinForm>
+        <JoinForm
+          onBack={ () => setModal("index") }
+          onJoin={ (classid) => {
+            closeModal()
+            router.push(`/${classid}` as Route)
+          } } />
       </ModalBase>
 
 
@@ -103,6 +104,15 @@ function CreateClassModal(p: {
         title="Joining..."
         desc="Please wait while we connect you with the classroom"
         open={ modalState === "joining" ? true : false }
+        onChange={ state => { } }
+      >
+
+      </ModalBase>
+
+      <ModalBase
+        title="Creating..."
+        desc="Please wait while we create you a classroom"
+        open={ modalState === "creating" ? true : false }
         onChange={ state => { } }
       >
 

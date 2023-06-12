@@ -1,6 +1,6 @@
 'use client'
 import { useClassroomQuery } from "@/api/client/classroom";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { List } from "@radix-ui/react-tabs";
 import { useRoom } from "../../-Navbar/Navbar";
 import { useClassCategories, useCreateCategory } from "@/api/client/category";
@@ -69,7 +69,9 @@ function CategoryList(p: {
   currentId: string
   categoryList: Category[]
 }) {
-
+  useEffect(() => {
+    console.log(`CategoryList Rerender ${p.currentId}`)
+  },[])
   return (
     <>
       <div className="font-bold text-xs text-light2 px-2 py-0.5 flex justify-between">

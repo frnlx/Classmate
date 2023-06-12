@@ -2,6 +2,7 @@ import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
+import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm"
 
 
 const user = {
@@ -51,14 +52,14 @@ const user = {
   },
 
   // ❌ Non-Idempotent // ❌ Untested
-  async createClassroom(_, res, [uid, cid], body) {
+  async createClassroom(_, res, [uid, cid], body: InferedCreateClassroomFormSchema) {
 
     const session = await membersOnly()
     if (uid !== session.user.id) throw new Error('User not found')
 
     const newClasroom = await prisma.classroom.create({
       data: {
-        name: `${session.user.name}'s Classroom`,
+        name: body.name,
         members: {
           connect: { id: uid } // will throw if not found
         },
@@ -98,7 +99,7 @@ export const userRoutes: RouteLookupType = {
 
     'GET:/users/[userid]':            user.getData,
     'GET:/users/[userid]/classrooms': user.getClassrooms,
-  'PATCH:/users/[userid]/joinClass':  user.joinClassroom,
+  'PATCH:/users/[userid]/classrooms/7':  user.joinClassroom,
    'POST:/users/[userid]/classrooms': user.createClassroom,
 
 }

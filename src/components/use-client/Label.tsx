@@ -19,8 +19,8 @@ const Label = React.forwardRef<
     ref={ ref }
     className={ clsx(
       className,
-      "uppercase font-semibold text-light0",
-      "text-xs font-medium leading-none",
+      "uppercase font-black text-light0",
+      "text-[10px] ml-1 leading-none",
       //peer disabled
       "peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
     ) }

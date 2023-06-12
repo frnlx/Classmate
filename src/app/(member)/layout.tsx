@@ -5,7 +5,6 @@ import { getLoggedInSession_redirectIfNotAuth } from "@/lib/auth-helper"
 import Navbar from "./-Navbar/Navbar"
 import NavbarItem from "./-Navbar/NavbarItem"
 import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
-import { sleepInDev } from "@/lib/util"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { prefetch } from "@/api/caching/prefetch"
 

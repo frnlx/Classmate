@@ -1,4 +1,4 @@
-import { X } from "@phosphor-icons/react"
+'use client'
 import { Close, Content, Description, Overlay, Portal, Root, Title, Trigger } from "@radix-ui/react-dialog"
 import clsx from "clsx"
 import React, { ReactNode } from "react"
@@ -59,27 +59,7 @@ export function ModalBase(p: {
 
             { p.children }
 
-            {/* { p.content ? p.content(ModalButton) : null} */}
-            
           </div>
-          
-          {/* { p.footer ? p.footer(
-            (p: { children?: ReactNode }) =>
-              <div className="p-5 flex justify-end bg-dark2/20">
-                { p.children }
-              </div>,
-            ModalButton
-          ) : null } */}
-          
-          {/* <Close asChild>
-            <button className={ clsx(
-              "text-light0 p-2 absolute top-4 right-4 inline-flex appearance-none rounded-md focus:shadow-[0_0_0_2px] focus:outline-none",
-              "hover:text-white hover:bg-dark2/50"
-            ) }>
-              <X weight="bold" />
-            </button>
-          </Close> */}
-
         </Content>
       </Portal>
     </Root>
@@ -92,24 +72,43 @@ export function ModalButton(p: {
   primary?: boolean
   submit?: boolean
   reset?: boolean
+  disabled?: boolean
 }) {
   return (
     <button
+      disabled={p.disabled ?? false}
       type={ p.submit ? "submit" : p.reset ? "reset" : "button"}
       onClick={p.onClick}
       className={ clsx(
-        "p-2.5 px-5 text-sm font-semibold rounded-lg transition-all duration-200",
+        //Size and Dimensino
+        "p-2.5 px-5 rounded-md brightness-100",
+        //Font
+        "text-xs font-semibold",
+        //Animation
+        "transition-all duration-200",
+        //Allignment
+        "inline-flex items-center justify-center",
+        //Disabled
+        "disabled:cursor-not-allowed",
+        "disabled:opacity-50",
+        "disabled:shadow-none",
         p.primary ? clsx(
           "text-whiter bg-ok px-8",
-          "hover:brightness-75",
-          "active:brightness-50"
+          // "hover:brightness-75",
+          "hover:shadow-[0_0_20px_-3px_#008E5A]",
+          "hover:shadow-ok",
+          "active:brightness-90",
+          // "disabled:grayscale",
+          "disabled:hover:brightness-100",
         ) : clsx(
           "text-light1",
           "hover:text-light0 hover:bg-light2/20",
-          "active:brightness-110"
+          "active:brightness-125"
         )
     )}>
       {p.label}
     </button>
   )
 }
+
+const cl = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background"

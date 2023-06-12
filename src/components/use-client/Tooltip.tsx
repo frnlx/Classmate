@@ -30,7 +30,7 @@ export default function TooltipBase(p: {
       delayDuration={ 0 }
       disableHoverableContent={ true }
     >
-      <Trigger>{ p.trigger }</Trigger>
+      <Trigger asChild>{ p.trigger }</Trigger>
       <Portal>
         <Content
           side={p.side ?? "top"}

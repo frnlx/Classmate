@@ -58,7 +58,8 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
           <Link
             // @ts-ignore
             href={`/${routeid}`}
-            onClick={() => setSelected(true)}
+            onClick={ () => setSelected(true) }
+            
             className={clsx(
               "w-full h-full flex justify-center items-center",
               // (active ? "translate-x-3" : null)

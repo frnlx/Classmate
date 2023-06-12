@@ -9,7 +9,6 @@ export const metadata = rootMetadata
 export default function RootLayout(p: {
   children: React.ReactNode,
 }) {
-  color.yellow('- Root Layout')
   return (
     <html
       lang="en"

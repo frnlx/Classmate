@@ -83,7 +83,7 @@ const FormDescription = forwardRef<
       <p
         ref={ ref }
         id={ formDescriptionId }
-        className={ clsx("text-sm", className) }
+        className={ clsx("text-xs text-light0 ml-1", className) }
         { ...props }
       />
     )

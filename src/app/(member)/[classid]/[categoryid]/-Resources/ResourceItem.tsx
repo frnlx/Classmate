@@ -18,7 +18,7 @@ export default function ResourceItem(p: {
   )
 
   return (
-    <Link href={`/${p.id}`}>
+    <Link href={`/${p.id}` as Route}>
       <div className={clsx(
         "px-2 py-3 flex flex-row items-center gap-2 rounded-md",
         "hover:text-slate-300 hover:bg-slate-700/25"
