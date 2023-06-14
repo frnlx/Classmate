@@ -16,7 +16,13 @@ type Props = {
 // const queryClient = new QueryClient()
 
 export default function Providers(props: Props) {
-  const [queryClient] = useState(() => new QueryClient())
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false
+      }
+    }
+  }))
   // color.cyan('  |-(app) Provider')
   return (
     <SessionProvider session={ props.session } { ...providerConfig } basePath="/api/auth">
