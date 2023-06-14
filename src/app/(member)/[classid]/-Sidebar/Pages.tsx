@@ -5,6 +5,7 @@ import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { ReactNode } from "react";
 import { useRoom } from "../../-Navbar/Navbar";
 import { createReactContext } from "@/lib/react"
+import { Route } from "next"
 
 const {
   provider: PageContextProvider,
@@ -35,8 +36,18 @@ export default function Pages (p: {
           orientation="vertical"
           value={ selectedSegment ?? p.defaultTab }
           onValueChange={ (e) => {
-            // @ts-ignore
-            router.push(`/${currentId}/${e}`)
+            router.push(`/${currentId}/${e}` as Route)
+
+            try {
+              const str = localStorage.getItem('lastvisitedcategory')
+              if(!str) throw 0
+              const lastVisitedCategory = JSON.parse(str) as { [key in string]: string }
+              lastVisitedCategory[currentId] = e
+              localStorage.setItem('lastvisitedcategory', JSON.stringify(lastVisitedCategory))
+            } catch (error) {
+              localStorage.setItem('lastvisitedcategory', JSON.stringify({ [currentId]: e }))
+            }
+
           } }
           defaultValue={ p.defaultTab }
         >

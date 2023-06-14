@@ -11,6 +11,7 @@ import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/Contex
 import { Hash, Link as LinkIcon } from "@phosphor-icons/react"
 import TooltipBase from "@/components/use-client/Tooltip"
 import { gotoClassroom } from "./redirectClassroom"
+import { Route } from "next"
 
 interface prop {
   image?: string
@@ -54,16 +55,30 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
           "before:w-2 before:h-6 before:-left-4 before:top-3 before:bg-white before:rounded-md", // what it look like
           "before:opacity-0 before:transition-all before:block before:absolute before:content-['']", // what it takes to make it appear
           (active ? "translate-x-3 before:opacity-100" : null), // transition when active
-          
+            
           "hover:bg-[#008E5A] hover:rounded-xl"
         )}
         >
-          <Link
-            // @ts-ignore
-            href={`/${routeid}`}
+          <div
+            // href={ `/${routeid}` }
             onClick={ () => {
-              startTransition(()=>gotoClassroom(routeid))
+              // startTransition(() => gotoClassroom(routeid))
               setSelected(true)
+              if (inviteID) {
+                try {
+                  const local = JSON.parse(localStorage.getItem('lastvisitedcategory')!) as { [key: string]: string }
+                  if (local[routeid]) {
+                    
+                    router.push(`/${routeid}/${local[routeid]}` as Route)
+                  }
+                  else router.push(`/${routeid}/home` as Route)
+                } catch (error) {
+                  localStorage.removeItem('lastvisitedcategory')
+                  router.push(`/${routeid}/home` as Route)
+                }
+              } else {
+                router.push(`/${routeid}` as Route)
+              }
             } }
             
             className={clsx(
@@ -76,8 +91,7 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
                 //  and if right click -> instantly click it normally without popping up context menu
                 e.preventDefault()
                 setSelected(true)
-                // @ts-ignore
-                router.push(`/${routeid}`)
+                router.push(`/${routeid}` as Route)
               }
             }}>
             <VisuallyHidden>{label}</VisuallyHidden> {/** For good accessibility and a tag semantic*/}
@@ -85,7 +99,7 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
               image ? <Image src={image} alt={label + "'s Server Picture"} width={60} height={60} /> : null
             }
             {icon}
-          </Link>
+          </div>
         </li>
       </NavbarItemTooltip>
     </NavbarItemContextMenu>
