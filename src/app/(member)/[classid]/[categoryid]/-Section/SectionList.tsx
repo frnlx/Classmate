@@ -5,19 +5,20 @@ import { useCategoryData, useSectionList } from "@/api/client/category"
 import SectionItem from "./SectionItem"
 import ResourceItem from "../-Resources/ResourceItem"
 import AddResourceButton from "../-Resources/AddButton"
-import { CategoryIncludeSectionIncludeResource, Resource } from "@prisma/client"
+import { CategoryIncludeSectionIncludeResource, Resource, Section } from "@prisma/client"
 import { SectionIncludeResources } from "@/api/db"
 import { useSectionResources } from "@/api/client/resource"
 import { RouteHandler } from "@/lib/route"
 import { useEffect } from "react"
 
 export default function SectionList(p: {
-  prefetchedData: Map<string, SectionIncludeResources>
+  // prefetchedData: Map<string, SectionIncludeResources>
+  prefetchedDataArray: (Section & { post: Resource[] })[]
 }) {
   const room = useRoom()
   const page = usePage()
 
-  const { data, isLoading, error } = useSectionList(room.currentId, page.currentid, Array.from(p.prefetchedData.values()))
+  const { data, isLoading, error } = useSectionList(room.currentId, page.currentid, Array.from(p.prefetchedDataArray))
 
   useEffect(() => {
     console.log(data)
@@ -28,14 +29,15 @@ export default function SectionList(p: {
 
 
   return <div className="flex flex-col gap-6">
-    { data?.map(section =>
+    { p.prefetchedDataArray?.map(section =>
       <SectionItem
         key={ section.id }
         label={ section.name }
       >
 
         <ResourceList
-          prefetchedData={p.prefetchedData.get(section.id)?.post}
+          // prefetchedData={p.prefetchedData.get(section.id)?.post}
+          prefetchedData={ section.post }
           sectionid={ section.id }
         />
 

@@ -67,6 +67,28 @@ export const db = {
     })
   },
 
+  // Get all data required in user data
+  async getUserClassroomData(id: string) {
+    return await prisma.user.findUniqueOrThrow({
+      where: { id },
+      include: {
+        classes: {
+          include: {
+            categories: {
+              include: {
+                sections: {
+                  include: {
+                    post: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+  }
+
 
   
 }

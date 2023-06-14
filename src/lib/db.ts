@@ -21,7 +21,7 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     // log: ['error', 'query', 'info', 'warn'],
-    log: ['error', 'info', 'warn'],
+    log: ['query', 'error', 'info', 'warn'],
     errorFormat: 'minimal'
   })
 

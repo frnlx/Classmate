@@ -7,6 +7,7 @@ import { Section } from "@prisma/client"
 export const useCategorySections = (classid: string, categoryid: string) => {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     queryKey:
       ['category', categoryid, 'sections'],
     

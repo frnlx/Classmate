@@ -12,6 +12,7 @@ export const useSectionResources = (
 ) => {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     initialData,
     queryKey: ['section', sectionid, 'resources'],
     queryFn() {
@@ -30,6 +31,7 @@ export function useGetResource(
 ) {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     initialData,
     queryKey:['resource', resourceid],
     queryFn() {

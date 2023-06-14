@@ -7,6 +7,7 @@ import { Classroom } from "@prisma/client"
 export function useClassroomQuery(classid: string, initialData?: Classroom) {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     initialData,
     queryKey: ['classroom', classid],
     queryFn() {

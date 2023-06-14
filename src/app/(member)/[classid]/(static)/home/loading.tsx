@@ -1,5 +1,5 @@
 import DefaultLoadingScreenGenerator from "@/components/use-client/DefaultLoadingScreen";
 
-const LoadingScreen = DefaultLoadingScreenGenerator('/class/sidebar/home/page.tsx')
+const LoadingScreen = DefaultLoadingScreenGenerator('Classroom Homepage')
  
 export default LoadingScreen;

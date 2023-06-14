@@ -7,28 +7,29 @@ import NavbarItem from "./-Navbar/NavbarItem"
 import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { prefetch } from "@/api/caching/prefetch"
+import { prisma } from "@/lib/db"
 
 export default async function AppLayout({ children, params }: LayoutProps) {
 
   // Get Logged in session first
+  color.cyan("Get Logged in Session")
   const session = await getLoggedInSession_redirectIfNotAuth()
 
   // PreFetch class list
-  const classlist = await prefetch.user.classroomlist() // -> <Navbar>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
+  color.cyan("Prefetch user classlist")
+  // const classlist = await prefetch.user.classroomlist() // -> <Navbar>
+  const userdata = await prisma.user.findUnique({
+    where: {
+      id: session.user.id
+    },
+    include: {
+      classes: {
+        include: {
+          categories: true
+        }
+      }
+    }
+  })
 
   // Render after finished fetching classlist and session.
   return (
@@ -42,7 +43,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
             <NavbarItem label="My Statistics" routeid="stats" icon={ <NavbarStatisticsIcon /> } />
             <NavbarItem label="My Classrooms" routeid="classlist" icon={ <NavbarClassListIcon /> } />
           </> }
-          prefetchedClasslist={ Array.from(classlist.values()) }
+          prefetchedClasslist={ userdata?.classes }
         >
           {children}
         </Navbar> 

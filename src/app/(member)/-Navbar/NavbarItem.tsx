@@ -3,13 +3,14 @@ import Image from "next/image";
 import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import clsx from "clsx";
 import Link from "next/link";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { VisuallyHidden } from "@chakra-ui/react";
 import useAppToast from "@/components/lib/toasts"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { Hash, Link as LinkIcon } from "@phosphor-icons/react"
 import TooltipBase from "@/components/use-client/Tooltip"
+import { gotoClassroom } from "./redirectClassroom"
 
 interface prop {
   image?: string
@@ -35,6 +36,8 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
     if (childSegmentRoute !== routeid) setSelected(false)
     else setSelected(true);
   }, [childSegmentRoute])
+
+  const [isPending, startTransition] = useTransition()
   
   return (
     <NavbarItemContextMenu
@@ -58,7 +61,10 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
           <Link
             // @ts-ignore
             href={`/${routeid}`}
-            onClick={ () => setSelected(true) }
+            onClick={ () => {
+              startTransition(()=>gotoClassroom(routeid))
+              setSelected(true)
+            } }
             
             className={clsx(
               "w-full h-full flex justify-center items-center",

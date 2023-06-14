@@ -7,6 +7,7 @@ import { useUserid } from "./auth"
 export function useClassCategories(classid: string, initialData?: Category[]) {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     initialData,
     queryKey:
       ['classroom', classid, 'categories'],
@@ -38,6 +39,7 @@ export function useCreateCategory(classid: string) {
 export function useCategoryData(classid: string, catid: string, initialData: Category ) {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     queryKey:
       ['category', catid],
 
@@ -50,6 +52,7 @@ export function useCategoryData(classid: string, catid: string, initialData: Cat
 export function useSectionList(classid: string, catid: string, initialData: Section[]) {
   const userid = useUserid()
   return useQuery({
+    enabled: false,
     initialData,
     queryKey: ['category', catid, 'sections'],
     queryFn() {

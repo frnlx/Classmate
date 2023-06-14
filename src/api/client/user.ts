@@ -7,6 +7,7 @@ import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassF
 export function useUserClassList(initialData?: Classroom[]) {
   const userid = useUserid()
   return useQuery(['user', userid, 'classroom'], {
+    enabled: false,
     initialData,
     queryFn:
       () => ClientAPI.getClassroomList({ userid }),

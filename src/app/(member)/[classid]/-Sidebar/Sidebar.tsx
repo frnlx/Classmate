@@ -1,28 +1,44 @@
 'use client'
 import { useClassroomQuery } from "@/api/client/classroom";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useTransition } from "react";
 import { List } from "@radix-ui/react-tabs";
 import { useRoom } from "../../-Navbar/Navbar";
-import { useClassCategories, useCreateCategory } from "@/api/client/category";
+import { useCreateCategory } from "@/api/client/category";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarCategoryIcon } from "./SidebarIcons";
-import { ArrowDown, CaretDown, Plus } from "@phosphor-icons/react";
+import { CaretDown, Plus } from "@phosphor-icons/react";
 import { Category, Classroom } from "@prisma/client"
 import clsx from "clsx"
 import { ButtonTooltip } from "@/components/use-client/Tooltip"
+import { addCategory } from "./addsidebar"
+import { useRouter } from "next/navigation"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { ClientAPI } from "@/api/client/api"
+import { useUserid } from "@/api/client/auth"
 
 
 export default function Sidebar(p: {
   children: ReactNode
-  classlist: Category[]
-  classdata: Classroom
+  prefetchedclasslist: Category[]
+  prefetchedclassdata: Classroom
 }) {
 
   const { currentId } = useRoom()
+  const userid = useUserid()
 
-  const { data: classroom } = useClassroomQuery(currentId, p.classdata)
-  const { data: categoryList } = useClassCategories(currentId, p.classlist)
+  // const { data: classroom } = useClassroomQuery(currentId, p.prefetchedclassdata)
+  // const { data: categoryList } = useClassCategories(currentId, p.prefetchedclasslist)
 
+  const { data: categoryList } = useQuery({
+    queryKey: ['classrooms', currentId, 'categorylist'],
+    queryFn() {
+      return ClientAPI.getCategoryList({ userid, classid: currentId })
+    },
+    enabled: !!userid && !!currentId,
+    initialData: p.prefetchedclasslist,
+    staleTime: 30,
+    refetchOnWindowFocus: false,
+  })
 
   return (
     <List className='bg-dark1 w-56 h-screen flex-shrink-0 gap-2' loop>
@@ -32,7 +48,8 @@ export default function Sidebar(p: {
         {p.children}
       </div>
       <div className="py-2 px-2">
-        <CategoryList currentId={ currentId } categoryList={ categoryList! } />
+        {/* <CategoryList currentId={ currentId } categoryList={ categoryList! } /> */}
+        <CategoryList currentId={ currentId } categoryList={ categoryList } />
       </div>
       
     </List>
@@ -90,7 +107,6 @@ function CategoryList(p: {
       }
     </>
   )
-
 }
 
 
@@ -99,11 +115,21 @@ function AddCategoryButton() {
   const room = useRoom()
   const createCategory = useCreateCategory(room.currentId ?? '')
 
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
+
+  const qc = useQueryClient()
+
   return (
     <ButtonTooltip label="Add New Category">
       <button
         className="text-light2 hover:text-light0 text-sm"
-        onClick={() => { }}
+        onClick={ () => startTransition(() => {
+          return addCategory(room.currentId).then(() => {
+            qc.invalidateQueries(['classrooms', room.currentId, 'categorylist'])
+            // router.refresh()
+          })
+        }) }
       >
         <Plus weight="bold" />
       </button>
