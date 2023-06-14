@@ -79,15 +79,16 @@ export const routesHandler = (routes: RouteLookupType) => {
           const response = Res
 
           // Pass the param and Run the callback
-          return (await routes[route as `${method}:/${string}`])(request, response, nextparams, data)
+          return await routes[route as `${method}:/${string}`](request, response, nextparams, data)
 
         } catch (error) {
+
+          console.log(`Error caught on route: ${route} \n Error message:`)
+          console.log(error)
 
           if ( error && error instanceof RouteError)
             return ErrorRes[error.responseType]()
 
-          console.log(`Error caught on route: ${route} \n Error message:`)
-          console.log(error)
 
           return ErrorRes.error()
         }
