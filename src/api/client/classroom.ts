@@ -1,16 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
-import { ClassAPI } from "../route-helper"
+import { ClientAPI } from "./api"
+import { useUserid } from "./auth"
+import { Classroom } from "@prisma/client"
 
 // Get Class -- 'GET:/classrooms/[classid]' -- https://notion.so/skripsiadekelas/5c9abfbdf06948728a6127e6d5327954
-export const useClassroomQuery = (classroomid?: string) => {
+export function useClassroomQuery(classid: string, initialData?: Classroom) {
+  const userid = useUserid()
   return useQuery({
-    queryKey:
-      ['classroom', classroomid],
-    
-    enabled: !!classroomid,
-
-    queryFn: async () =>
-      classroomid ? ClassAPI
-        .GetClassData(classroomid).then(res => res.data) : null
+    enabled: false,
+    initialData,
+    queryKey: ['classroom', classid],
+    queryFn() {
+      return ClientAPI.getClassroom({ userid, classid })
+    }
   })
 }

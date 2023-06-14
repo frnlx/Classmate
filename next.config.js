@@ -5,7 +5,13 @@ const nextConfig = {
   },
   experimental: {
     typedRoutes: true,
+    serverActions: true,
+    
   },
+  // headers() { }
+  // redirects() { }
+  // rewrites() { }
+
 }
 
 module.exports = nextConfig

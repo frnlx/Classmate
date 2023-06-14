@@ -1,5 +1,5 @@
 
-export default function AppLayoutLoadingPage() {
+export default function PagesLoadingPage() {
 
   return (
     <div>

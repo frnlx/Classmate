@@ -1,65 +1,95 @@
-import { RouteLookupType } from "@/lib/route";
-import { MustBeAuthenticated } from "../utils";
+import { HandlerLookup, RouteLookupType } from "@/lib/route";
+import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 
-export const categoryRoutes: RouteLookupType = {
-  
-  // Get Class Categories
-  // https://www.notion.so/skripsiadekelas/Get-Class-Categories-df2bc14815614458b6875a695237f5eb?pvs=4
-  'GET:/classrooms/[classid]/categories': async (req, res, [id]) => {
-    await MustBeAuthenticated()
-    const categories = await prisma.category.findMany({
-      where: { classroomId: id }
-    })
-    return res.json(categories)
-  },
+const category = {
 
-  // Create Category
-  // https://www.notion.so/skripsiadekelas/Create-Category-430315c8671c4569b6e3ca941a9494c5?pvs=4
-  'POST:/classrooms/[classid]/categories': async (req, res, [id]) => { 
-    await MustBeAuthenticated()
-    const newCategory = await prisma.category.create({
-      data: {
-        name: 'New Category',
-        title: 'Untitled Category',
-        classroom: {
-          connect: { id }
-        },
-        sections: {
-          create: {
-            name: 'Overview',
-            order: 0
+  // ✅ Idempotent // ❌ Untested
+  async getData(_, res, [uid, cid, catid ]) {
+    await membersOnly()
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: { id: cid },
+          select: {
+            categories: {
+              where: { id: catid }
+            }
           }
         }
       }
     })
-    return res.json(newCategory)
+    return res.json(data.classes[0].categories[0])
   },
-  
-  // Get Category
-  // https://www.notion.so/skripsiadekelas/Get-Category-21f5c88d01b94bc089bd2d632da5c70f?pvs=4
-  'GET:/classrooms/[classid]/categories/[categoryid]': async (req, res, [classid, categoryid]) => {
-    await MustBeAuthenticated()
-    const category = await prisma.category.findUnique({
-      where: { id: categoryid },
+
+
+  // ✅ Idempotent // ❌ Untested
+  async getSections(_, res, [uid, cid, catid]) {
+    await membersOnly()
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
       include: {
-        sections: { include: { post: true } }
+        classes: {
+          where: { id: cid },
+          include: {
+            categories: {
+              where: { id: catid },
+              include: {
+                sections: true
+              }
+            }
+          }
+        }
       }
     })
-    return res.json(category)
+    return res.json(data.classes[0].categories[0].sections) 
   },
 
-  // Delete Category
-  // https://www.notion.so/skripsiadekelas/Delete-Category-ee287838e9b94ee9ae79acb249172aa1?pvs=4
-  'DELETE:/classrooms/[classid]/categories/[categoryid]': async (req, res, [classid, categoryid]) => { 
-    await MustBeAuthenticated()
-    const deletedCategory = await prisma.category.delete({
-      where: { id: categoryid },
+  // ❌ Non-Idempotent // ❌ Untested
+  async createSection(_, res, [uid, cid, catid]) {
+    await membersOnly()
+
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: { id: cid },
+          select: { categories: { where: { id: catid } } }
+        }
+      }
     })
-    return res.json(deletedCategory)
-   },
+    if (!data.classes[0])
+      throw new Error('Unauthorized | User is not part of the class to create sections')
+    if (!data.classes[0].categories[0])
+      throw new Error('NotFound | Category is not in the classroom')
 
+    const section = await prisma.section.create({
+      data: {
+        name: 'Untitled Section',
+        order: 0,
+        category: {
+          connect: { id: catid }
+        }
+      }
+    })
+    
+    return res.json(section)
+  },
 
+  async deleteCategory(_, res, [uid, cid, catid]) {
+  
+    return res.json({})
+  }
+
+} satisfies HandlerLookup
+
+export const categoryRoutes: RouteLookupType = {
+
+     'GET:/users/[userid]/classrooms/[classid]/categories/[catid]': category.getData,
+  'DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]': category.deleteCategory,
+     'GET:/users/[userid]/classrooms/[classid]/categories/[catid]/sections': category.getSections,
+    'POST:/users/[userid]/classrooms/[classid]/categories/[catid]/sections': category.createSection,
 
 
 }

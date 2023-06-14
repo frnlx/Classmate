@@ -18,4 +18,4 @@ function Card({ children }: props) {
   );
 }
  
-export default Card;
+export default Card

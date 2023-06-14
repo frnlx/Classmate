@@ -1,5 +1,7 @@
 // Bold 28px
 // phosphoricons.com?weight=bold&size=28&color=000000
+// COPY AS RAW SVG
+// Don't forget to change `-
 
 import { HTMLProps } from "react"
 
@@ -57,6 +59,17 @@ export function NavbarClassListIcon() {
       <path d="M64,44H220a8,8,0,0,1,8,8V176" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
     </svg>
     
+  )
+}
+
+export function NavbarAddClassIcon() {
+  return (
+    <svg className={ className } width={ size } height={ size }
+      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none" />
+      <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
+      <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
+    </svg>
+
   )
 }
 

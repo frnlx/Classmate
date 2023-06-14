@@ -8,6 +8,8 @@ export default function InteractiveBackground() {
   const bgref = useRef<HTMLDivElement | null>(null)
   const hovref = useRef<HTMLDivElement | null>(null)
 
+  globalThis.document
+
   // const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   let mousePos = { x: 0, y: 0 }
 

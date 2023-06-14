@@ -1,31 +1,122 @@
 'use client'
 
-import { useCreateClass, useUser } from "@/api/client/user";
-import { color } from "@/lib/logger/chalk";
+import { useCreateClass, useJoinClass } from "@/api/client/user"
+import clsx from "clsx"
+import { NavbarAddClassIcon } from "./NavbarIcons"
+import { ModalBase, ModalButton } from "@/components/use-client/Modal"
+import { ReactNode, useState } from "react"
+import JoinForm from "@/components/form/JoinForm"
+import { useRouter } from "next/navigation"
+import CreateClassForm from "@/components/form/CreateClassForm"
+import { Route } from "next"
 
-interface prop extends React.HTMLAttributes<HTMLButtonElement>{
-}
-
-export default function NavbarItemAddButton({ className, ...rest }: prop) {
-  color.cyan('    `- Add Button')
-
-  const createClassroomMutation = useCreateClass()
+export default function NavbarItemAddButton() {
 
   return (
-    <button {...rest} className={`
-    border-4 border-slate-600
-    text-slate-400 text-lg
-    transition-all duration-200 w-14 h-14 rounded-full 
-    hover:border-slate-500
-    flex justify-center items-center  
-    group
-    cursor-pointer
-    `}
-      onClick={() => createClassroomMutation.mutate()}
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" className="transition-all duration-200 fill-slate-600 group-hover:fill-slate-500">
-        <path d="M11 19v-6H5v-2h6V5h2v6h6v2h-6v6h-2Z" />
-      </svg>
-    </button>
+    <CreateClassModal>
+      <button className={ clsx(
+        "w-12 h-12",
+        "transition-all duration-200 rounded-3xl cursor-pointer list-none",
+        "bg-zinc-600",
+        "hover:bg-[#008E5A]",
+        "flex justify-center items-center"
+      ) }
+      >
+        <NavbarAddClassIcon />
+      </button>
+    </CreateClassModal>
+  )
+}
+
+
+
+function CreateClassModal(p: {
+  children: ReactNode
+}) {
+  const [modalState, setModal] = useState<
+    "closed" | "index" | "create" | "creating" | "join" | "joining"
+  >("closed")
+
+  const closeModal = () => setModal("closed")
+  const router = useRouter()
+
+  return (
+    <>
+      <ModalBase
+        trigger={ p.children }
+        title="Add a New Classroom"
+        desc="Your server is where you and your friends hang out. Make yours and start talking"
+        open={ modalState === "index" ? true : false }
+        onChange={ (state) => {
+          if (state) setModal("index")
+          if (!state) closeModal()
+        } }
+      >
+        <div className="flex gap-2 flex-row">
+          <button
+            onClick={ () => setModal("join") }
+            className="font-semibold text-sm bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
+            <div className="text-xs text-light0">Have an invite?</div>
+            Join a classroom
+          </button>
+          <button
+            onClick={ () => setModal("create") }
+            className="font-semibold text-sm bg-dark2 w-full p-4 rounded-md hover:bg-ok transition-all duration-150">
+            <div className="text-xs text-light0">Own a class?</div>
+            Create a classroom
+          </button>
+        </div>
+      </ModalBase>
+
+
+      <ModalBase
+        title="Create a New Classroom"
+        desc="Give your new server a personality with a name and an icon. You can always change it later"
+        open={ modalState === "create" ? true : false }
+        onChange={ state => { } }
+      >
+        <CreateClassForm
+          onBack={ () => setModal("index") }
+          onCreate={ (classid) => {
+            closeModal()
+            router.push(`/${classid}` as Route)
+          } }
+        />
+      </ModalBase>
+
+
+      <ModalBase
+        title="Join a Server"
+        desc="Enter an invite below to join an existing server"
+        open={ modalState === "join" ? true : false }
+        onChange={ state => { } }
+      >
+        <JoinForm
+          onBack={ () => setModal("index") }
+          onJoin={ (classid) => {
+            closeModal()
+            router.push(`/${classid}` as Route)
+          } } />
+      </ModalBase>
+
+
+      <ModalBase
+        title="Joining..."
+        desc="Please wait while we connect you with the classroom"
+        open={ modalState === "joining" ? true : false }
+        onChange={ state => { } }
+      >
+
+      </ModalBase>
+
+      <ModalBase
+        title="Creating..."
+        desc="Please wait while we create you a classroom"
+        open={ modalState === "creating" ? true : false }
+        onChange={ state => { } }
+      >
+
+      </ModalBase>
+    </>
   )
 }

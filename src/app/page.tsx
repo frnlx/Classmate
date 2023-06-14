@@ -4,17 +4,12 @@ import { LandingPageRedirectIfLoggedIn } from '@/components/use-client/Auth'
 import InteractiveBackground from '@/components/use-client/InteractiveBackground'
 import { color } from '@/lib/logger/chalk'
 import Image from 'next/image'
+import { cookies } from 'next/headers';
+
 
 // Server Component
 export default function LandingPage() {
   color.yellow('  ,- Landing Page')
-
-
-  // const session = await getServerSession(authOptions)
-  // if (session) {
-  //   color.blue('  redirect to /dashboard')
-  //   redirect('/dashboard')
-  // }
 
   const emojis = ['⚡', '⚡', '⚡', '🚀', '🚀', '🚀', '🙀', '🎯','🎯','🎯',];
   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -25,7 +20,6 @@ export default function LandingPage() {
       <main className='wrapper homepage text-zinc-50'>
 
         <LandingPageRedirectIfLoggedIn>
-
           <header className='px-4 py-3 sticky top-0 z-50 bg-zinc-900/8  0 backdrop-blur-sm border-x-0 border-y-0 border-b-zinc-800 border-b border-solid'>
             <div className='container m-auto flex justify-between items-center'>
               <a href='/'>

@@ -1,32 +1,81 @@
-import { RouteLookupType } from "@/lib/route";
-import { MustBeAuthenticated } from "../utils";
+import { HandlerLookup, RouteLookupType } from "@/lib/route";
+import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
-import { nanoid } from "nanoid";
+
+const classroom = {
+
+  // ✅ Idempotent // ❌ Untested
+  async getData(_, res, [uid, cid]) {
+    await membersOnly()
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: { id: cid }
+        }
+      }
+    })
+
+    return res.json(data.classes[0])
+  },
+
+  // ✅ Idempotent // ❌ Untested
+  async getCategories(_, res, [uid, cid]) {
+    await membersOnly()
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: {
+            id: cid
+          },
+          select: {
+            categories: true
+          }
+        }
+      }
+    })
+
+    return res.json(data.classes[0].categories)
+  },
+
+  // ❌ Non-Idempotent // ❌ Untested
+  async createCategory(_, res, [uid, cid], body) {
+    await membersOnly()
+
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: { classes: { where: { id: cid } } }
+    })
+    if (!data.classes[0]) throw new Error('Unauthorized | User is not part of the class')
+
+    const newCategory = await prisma.category.create({
+      data: {
+        name: 'New Category',
+        title: 'Untitled Category',
+        classroom: {
+          connect: { id: cid }
+        },
+        sections: {
+          create: {
+            name: 'Overview',
+            order: 0
+          }
+        }
+      },
+    })
+    return res.json(newCategory)
+
+  }
+
+} satisfies HandlerLookup
+
 
 export const classroomRoutes: RouteLookupType = {
 
-  // Get Class
-  // https://www.notion.so/skripsiadekelas/Get-Class-5c9abfbdf06948728a6127e6d5327954?pvs=4
-  'GET:/classrooms/[classid]':
-    async (req, res, [id]) => {
-      await MustBeAuthenticated()
-      const classData = await prisma.classroom.findUnique({
-        where: { id },
-        include: {
-          members: true
-        }
-      })
-      return res.json(classData)
-    },
-  
-  // Get Class Invites
-  // https://www.notion.so/skripsiadekelas/Get-Class-Invites-3e2e953194d0482daa188994bba654b3?pvs=4
-  'GET:/classrooms/[classid]/invites': async (req, res) => { return res.notYetImplemented() },
-
-  // Create Class Invite
-  // https://www.notion.so/skripsiadekelas/Create-Class-Invite-61d9d1c320f14f6596532fcdbe815aa2?pvs=4
-  'POST:/classrooms/[classid]/invites': async (req, res) => { return res.notYetImplemented() },
-
+   'GET:/users/[userid]/classrooms/[classid]':            classroom.getData,
+   'GET:/users/[userid]/classrooms/[classid]/categories': classroom.getCategories,
+  'POST:/users/[userid]/classrooms/[classid]/categories': classroom.createCategory,
 
 
 }

@@ -1,53 +1,116 @@
-import { RouteLookupType } from "@/lib/route";
-import { MustBeAuthenticated } from "../utils";
+import { HandlerLookup, RouteLookupType } from "@/lib/route";
+import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
+import { Prisma } from "@prisma/client"
+
+
+const section = {
+
+  async getData(_, res, [uid, cid, catid, sectid]) {
+    await membersOnly()
+
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: { id: cid },
+          select: {
+            categories: {
+              where: { id: catid },
+              include: { 
+                sections: {
+                  where: { id: sectid }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    return res.json(data.classes[0].categories[0].sections[0])
+  },
+
+  async getResources(_, res, [uid, cid, catid, sectid]) {
+    await membersOnly()
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: { id: cid },
+          select: {
+            categories: {
+              where: { id: catid },
+              include: {
+                sections: {
+                  where: { id: sectid },
+                  select: {
+                    post: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    })
+
+    return res.json(data.classes[0].categories[0].sections[0].post)
+  },
+
+  async createResource(_, res, [uid, cid, catid, sectid], body: Prisma.ResourceCreateInput) {
+    await membersOnly()
+
+    const data = await prisma.user.findUniqueOrThrow({
+      where: { id: uid },
+      select: {
+        classes: {
+          where: { id: cid },
+          select: {
+            categories: {
+              where: { id: catid },
+              select: {
+                sections: {
+                where: { id: sectid }
+              }}
+            }
+          }
+        }
+      }
+    })
+    if (!data.classes[0])
+      throw new Error('Unauthorized | User is not part of the class to create sections')
+    if (!data.classes[0].categories[0])
+      throw new Error('NotFound | Category is not in the classroom')
+    if (!data.classes[0].categories[0].sections[0])
+      throw new Error('NotFound | Section is not in the category')
+    
+    const resource = await prisma.resource.create({
+      data: {
+        title: body.title,
+        order: 0,
+        content: body.content,
+        Section: {
+          connect: { id: sectid }
+        }
+      }
+    })
+  
+    return res.json(resource)
+  },
+
+  async delete(_, res, [uid, cid, catid, sectid]) {
+
+
+    return res.json({})
+  }
+
+} satisfies HandlerLookup
 
 export const sectionRoutes: RouteLookupType = {
 
-  // Get Category Sections	https://notion.so/skripsiadekelas/4deb71d64df8435bb817d72db0809bd9
-  'GET:/classrooms/[classid]/categories/[categoryid]/sections':
-    async (req, res, [classid, categoryid]) => {
-      await MustBeAuthenticated()
-      const sections = await prisma.section.findMany({
-        where: { categoryId: categoryid }
-      })
-      return res.json(sections)
-    },
+  'GET:/users/[userid]/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]': section.getData,
+  'GET:/users/[userid]/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]/resources': section.getData,
+  'POST:/users/[userid]/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]/resources': section.createResource,
 
-  // Create Section	https://notion.so/skripsiadekelas/48c756edc1784e08bdf3b4ea1ea35022
-  'POST:/classrooms/[classid]/categories/[categoryid]/sections':
-    async (req, res, [classid, categoryid]) => {
-      await MustBeAuthenticated()
-      await prisma.section.create({
-        data: {
-          name: 'Untitled Section',
-          order: 0,
-          category: { connect: { id: categoryid } }
-        }
-      })
-      return res.ok()
-    },
-
-  // Get Section	https://notion.so/skripsiadekelas/9034f0f58ae14c9f8c4065c277b578bf
-  'GET:/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]':
-    async (req, res, [classid, categoryid, sectionid]) => {
-      await MustBeAuthenticated();
-      const section = await prisma.section.findUnique({
-        where: { id: sectionid }
-      })
-      return res.json(section)
-    },
-
-  // Delete Section	https://notion.so/skripsiadekelas/2cff42aa237a4cc68ee23aba3b53ed0f
-  'DELETE:/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]':
-    async (req, res, [classid, categoryid, sectionid]) => {
-      await MustBeAuthenticated()
-      await prisma.resource.deleteMany({
-        where: { sectionId: sectionid }
-      })
-      const section = await prisma.section.delete({
-        where: { id: sectionid },
-      })
-      return res.json(section)
-    }
 }

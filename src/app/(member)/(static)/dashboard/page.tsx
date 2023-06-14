@@ -1,11 +1,9 @@
 import { SignOutButton } from "@/components/use-client/Auth"
 import { color } from "@/lib/logger/chalk";
-import { sleepInDev } from "@/lib/util"
 import { PageProps } from "@/types/next";
 
 export default async function DashboardPage ({ params, searchParams }: PageProps) {
   color.yellow('  ,- Dasboard Page')
-  await sleepInDev(2)
   const rand = Math.random()
 
   return (

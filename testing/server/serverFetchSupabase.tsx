@@ -1,20 +1,20 @@
-import { supabase } from "@/lib/db";
+// import { supabase } from "@/lib/db";
 
-const ServerFetchFromSupabase = async () => {
+// const ServerFetchFromSupabase = async () => {
 
-  const { data: countries, status } = await supabase.from('countries').select()
+//   const { data: countries, status } = await supabase.from('countries').select()
 
-  return (
-    <div>
-    {
-      countries ? 
-        countries.map((country) => (
-          <div key={country.id}>{country.name}</div>
-        ))
-        : null
-    }
-    </div>
-  );
-}
+//   return (
+//     <div>
+//     {
+//       countries ? 
+//         countries.map((country) => (
+//           <div key={country.id}>{country.name}</div>
+//         ))
+//         : null
+//     }
+//     </div>
+//   );
+// }
  
-export default ServerFetchFromSupabase;
+// export default ServerFetchFromSupabase;

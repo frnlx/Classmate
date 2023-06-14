@@ -1,86 +1,87 @@
 'use client'
 
 import { useUserClassList } from "@/api/client/user"
-import { ReactNode, createContext, useContext, useEffect, useState } from "react"
+import { ReactNode } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
-import { useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
-import { Icon } from "@phosphor-icons/react"
-import { color } from "@/lib/logger/chalk"
+import { useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import clsx from "clsx"
 import { Classroom } from "@prisma/client"
+import { createReactContext } from "@/lib/react"
 
 
 // CreateContext & UseContext
 // --------------------------
-const RoomContext = createContext<RoomContextType>({
-  currentId: '',
-})
-export const useRoom = () => useContext(RoomContext)
+const {
+  provider: RoomContextProvider,
+  hook: useRoom
+} = createReactContext({ currentId: '' })
+
 
 // Context Component
 // -----------------
-export default function Navbar (p: {
+export default function Navbar(p: {
   children?: ReactNode,
   defaultRoom: ReactNode,
   staticRooms?: ReactNode,
   prefetchedClasslist?: Classroom[]
 }) {
-  color.cyan('  `-(app) Navbar')
+
   //  Fetch initial User Class List
   const { data: userClassList, isLoading } = useUserClassList(p.prefetchedClasslist)
 
-  // Getting context from route segment
+  // Get context from route segment
   const childSegment = useSelectedLayoutSegment()
   const childChildSegment = useSelectedLayoutSegments()[1]
   const selectedPage = childSegment === '(static)' ? childChildSegment : childSegment
 
-  return (
-    <RoomContext.Provider value={{
-      currentId: selectedPage ?? 'dashboard',
-    }}>
-      <div className={clsx(
-        "bg-dark1",                               // Navbar color
-        "w-20",                                     // Navbar width
-        "h-screen flex flex-col gap-4"
-      )}>
+  const contextValue = { currentId: selectedPage ?? 'dashboard' }
 
-        <ul className="flex flex-col gap-2 p-4">
+  return (
+    <RoomContextProvider value={ contextValue }>
+      
+      <div className={ clsx(
+        "bg-dark1 w-20",
+        "h-screen flex flex-col gap-4"
+      ) }>
+        <ListGroup>
           { p.defaultRoom }
           { p.staticRooms }
-        </ul>
+        </ListGroup>
 
-        <ul className="flex flex-col gap-4 p-4">
-          {
-            userClassList?.map((classroom, i) =>
-              <NavbarItem
-                key={i}
-                label={classroom.name}
-                routeid={classroom.id}
-                inviteID={classroom.inviteID}
-              />
-            )
-          }
+        <ListGroup>
+          <ClassList list={ userClassList } />
           <NavbarItemAddButton />
-        </ul>
-        
+        </ListGroup>
+
       </div>
-      {p.children}
-    </RoomContext.Provider>
-  );
+
+      { p.children }
+    </RoomContextProvider>
+  )
 }
 
-export type RoomContextType = {
-  currentId: string,
+export { useRoom }
+
+function ListGroup(p: { children: ReactNode }) {
+  return (
+    <ul className="flex flex-col gap-2 p-4">
+      { p.children }
+    </ul>
+  )
 }
-export type AppRoom = {
-  label: string,
-  id: string,
-  icon?: Icon
+
+function ClassList(p: { list?: Classroom[] }) {
+  return (
+    <>
+      { p.list?.map(classroom =>
+        <NavbarItem
+          key={ classroom.id }
+          label={ classroom.name }
+          routeid={ classroom.id }
+          inviteID={ classroom.inviteID }
+        />
+      ) }
+    </>
+  )
 }
-
-
-
-// Default Rooms
-
-export type staticPageNames = "dashboard" | "statistics" | "classlist" | "tasks"

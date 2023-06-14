@@ -1,11 +1,12 @@
-import { createClient } from "@supabase/supabase-js";
 import { PrismaClient } from "@prisma/client";
 
 // # Unused
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// export const supabase = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// )
+
+
 // # Unused
 
 
@@ -20,8 +21,9 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     // log: ['error', 'query', 'info', 'warn'],
-    log: ['error', 'info', 'warn'],
+    log: ['query', 'error', 'info', 'warn'],
     errorFormat: 'minimal'
   })
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+

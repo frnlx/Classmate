@@ -49,5 +49,7 @@ export function LandingPageRedirectIfLoggedIn(p: {
     )
   }, [])
 
-  return <>{ p.children }</>
+  return <>
+    { p.children }
+  </>
 }
