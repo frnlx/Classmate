@@ -1,42 +1,49 @@
 import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
+import { notFound } from "next/navigation"
+import { notAuthorized } from "../responses"
 
 const classroom = {
 
   // ✅ Idempotent // ❌ Untested
   async getData(_, res, [uid, cid]) {
     await membersOnly()
-    const data = await prisma.user.findUniqueOrThrow({
-      where: { id: uid },
-      select: {
-        classes: {
-          where: { id: cid }
+    const data = await prisma.classroom.findFirst({
+      where: {
+        id: cid,
+        members: {
+          some: {
+            id: uid
+          }
         }
-      }
+      },
     })
+    if (!data) notAuthorized()
 
-    return res.json(data.classes[0])
+    return res.json(data)
   },
 
   // ✅ Idempotent // ❌ Untested
   async getCategories(_, res, [uid, cid]) {
     await membersOnly()
-    const data = await prisma.user.findUniqueOrThrow({
-      where: { id: uid },
-      select: {
-        classes: {
-          where: {
-            id: cid
-          },
-          select: {
-            categories: true
+    const data = await prisma.classroom.findFirst({
+      where: {
+        id: cid,
+        members: {
+          some: {
+            id: uid
           }
         }
+      },
+      select: {
+        categories: true
       }
     })
+    console.log("HELLO????")
+    if (!data) notAuthorized()
 
-    return res.json(data.classes[0].categories)
+    return res.json(data.categories)
   },
 
   // ❌ Non-Idempotent // ❌ Untested

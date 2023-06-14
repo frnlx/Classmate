@@ -99,7 +99,7 @@ export const userRoutes: RouteLookupType = {
 
     'GET:/users/[userid]':            user.getData,
     'GET:/users/[userid]/classrooms': user.getClassrooms,
-  'PATCH:/users/[userid]/classrooms/7':  user.joinClassroom,
+  'PATCH:/users/[userid]/classrooms/join':  user.joinClassroom,
    'POST:/users/[userid]/classrooms': user.createClassroom,
 
 }
