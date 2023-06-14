@@ -47,6 +47,7 @@ export const ClientAPI = {
   getUser:                       requestFn(fetch<User>,              `/api/users/[userid]`) // ✅
   , getClassroomList:            requestFn(fetch<Classroom[]>,       `/api/users/[userid]/classrooms`) // ✅
   , getClassroom:                requestFn(fetch<Classroom>,         `/api/users/[userid]/classrooms/[classid]`) // ✅
+  , getClassroomMembers:         requestFn(fetch<User[]>,            `/api/users/[userid]/classrooms/[classid]/members`) // ✅
   , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
   , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
   , getSectionList:              requestFn(fetch<Section[]>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)

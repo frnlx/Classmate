@@ -66,6 +66,26 @@ const classroom = {
     })
     return res.json(newCategory)
 
+  },
+
+  async getMembers(_, res, [uid, cid], __) {
+    await membersOnly()
+
+    const data = await prisma.user.findFirst({
+      where: {id: uid},
+      select: {   
+        classes: {
+          where: {
+            id: cid,
+          },
+          select: {
+            "members": true
+          }
+        }
+      }
+    })
+
+    return res.json(data?.classes[0].members);
   }
 
 } satisfies HandlerLookup
@@ -74,6 +94,7 @@ const classroom = {
 export const classroomRoutes: RouteLookupType = {
 
    'GET:/users/[userid]/classrooms/[classid]':            classroom.getData,
+   'GET:/users/[userid]/classrooms/[classid]/members':    classroom.getMembers,
    'GET:/users/[userid]/classrooms/[classid]/categories': classroom.getCategories,
   'POST:/users/[userid]/classrooms/[classid]/categories': classroom.createCategory,
 
