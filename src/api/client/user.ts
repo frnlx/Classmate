@@ -25,7 +25,7 @@ export function useJoinClass() {
     },
     
     onSuccess(newClassroom) {
-      qc.setQueriesData(['user', userid, 'classroom'],
+      qc.setQueriesData(['classlist'],
         (classroomlist?: Classroom[]) => {
           return classroomlist ? [...classroomlist, newClassroom] : classroomlist
         }
@@ -48,7 +48,8 @@ export function useCreateClass () {
 
     onSuccess: (newclass) => {
       
-      const key = ['user', userid, 'classroom']
+
+      const key = ['classlist']
 
       qc.setQueryData(key, (oldclasslist?: Classroom[]) => {
         if (oldclasslist === undefined) {
