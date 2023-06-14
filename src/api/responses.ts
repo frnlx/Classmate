@@ -23,19 +23,19 @@ export class RouteError extends Error {
   constructor(readonly responseType: ErrorType) { super() }
 }
 
-export function notAuthenticated() {
+export function notAuthenticated():never {
   throw new RouteError('unauthenticated')
 }
-export function notAuthorized() {
+export function notAuthorized(): never {
   throw new RouteError('forbidden')
 }
-export function notFound() {
+export function notFound(): never {
   throw new RouteError('notfound')
 }
-export function notImplemented() {
+export function notImplemented(): never {
   throw new RouteError('notimplemented')
 }
-export function badrequest() {
+export function badrequest(): never {
   throw new RouteError('badrequest')
 }
 
