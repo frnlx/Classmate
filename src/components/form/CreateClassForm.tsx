@@ -29,7 +29,8 @@ export default function CreateClassForm(p: {
   const form = useForm<InferedCreateClassroomFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: `${session.data?.user.name}'s Classroom`
+      name: `${session.data?.user.name}'s Classroom`,
+      subject: ''
     },
     mode: "onBlur"
   })
