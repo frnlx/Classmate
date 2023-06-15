@@ -5,7 +5,7 @@ import { SidebarItem } from "./-Sidebar/SidebarItem"
 import { SidebarHomeIcon, SidebarTasksIcon } from "./-Sidebar/SidebarIcons"
 import { prisma } from "@/lib/db"
 import { getUserData } from "../utils"
-import { getCachedSession } from "@/lib/auth-helper"
+import { getCachedSession } from "@/lib/auth"
 import { notFound, redirect } from "next/navigation"
 
 

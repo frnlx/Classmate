@@ -1,7 +1,7 @@
 'use client'
 
 import { useUserClassList } from "@/api/client/user"
-import { ReactNode, useEffect, useState } from "react"
+import { ReactNode, useEffect, useState, useTransition } from "react"
 import NavbarItemAddButton from "./NavbarItemAddButton"
 import NavbarItem from "./NavbarItem"
 import { notFound, useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
@@ -11,6 +11,9 @@ import { createReactContext } from "@/lib/react"
 import { QueryClient, useQuery } from "@tanstack/react-query"
 import { ClientAPI } from "@/api/client/api"
 import Link from "next/link"
+import { ModalButton } from "@/components/use-client/Modal"
+import { Route } from "next"
+import ScrollArea from "@/components/use-client/ScrollArea"
 
 
 // CreateContext & UseContext
@@ -54,11 +57,9 @@ export default function Navbar(p: {
 
   // check if current id is in userdata
   const router = useRouter()
-  const [found, setFound] = useState<boolean | null>(null) 
+  const [found, setFound] = useState<boolean | null>(null)
   const chidlsegments = useSelectedLayoutSegments()
   useEffect(() => {
-    // console.log(childSegment)
-    // console.log(p.prefetchedUserData.classes.some(c => c.id === childSegment))
     if (childSegment !== '(static)' && !classlist.some(c => c.id === childSegment)) {
       console.log(false)
       setFound(false)
@@ -68,28 +69,35 @@ export default function Navbar(p: {
     }
   }, [childSegment, classlist])
 
-
+  // Apply Context Value  
   const contextValue = { currentId: selectedPage ?? 'dashboard', userData: p.prefetchedUserData }
+
+  // Transition when routing
+  const [isPending, startTransition] = useTransition()
 
   return (
     <RoomContextProvider value={ contextValue }>
-      
+
       <div className={ clsx(
         "bg-dark1 w-20",
         "h-screen flex flex-col gap-4"
       ) }>
-        <ListGroup>
-          { p.defaultRoom }
-          { p.staticRooms }
-        </ListGroup>
+        <ScrollArea type="hidden" >
 
-        <ListGroup>
-          <ClassList list={ classlist } />
-          <NavbarItemAddButton />
-        </ListGroup>
+          <ListGroup>
+            { p.defaultRoom }
+            { p.staticRooms }
+          </ListGroup>
+
+          <ListGroup>
+            <ClassList list={ classlist } />
+            <NavbarItemAddButton />
+          </ListGroup>
+
+        </ScrollArea>
 
       </div>
-      
+
       {
         found === null ? (
           <div className="w-full h-full flex flex-col justify-center items-center">
@@ -98,12 +106,11 @@ export default function Navbar(p: {
             </div>
           </div>
         ) : found === false ? (
-          <div className="w-full h-full flex flex-col justify-center items-center">
+          <div className="w-full h-full flex flex-col justify-center items-center space-y-4">
             <div className="font-semibold">
               Classroom not found!
             </div>
-            <Link href="/dashboard">Go back to my Dashboard</Link>
-              
+            <ModalButton label="Go back to Dashboard" onClick={ () => startTransition(() => router.push('/dashboard' as Route)) } primary />
           </div>
         ) : p.children
       }
@@ -132,6 +139,7 @@ function ClassList(p: { list?: Classroom[] }) {
           label={ classroom.name }
           routeid={ classroom.id }
           inviteID={ classroom.inviteID }
+          emoji={ classroom.emoji }
         />
       ) }
     </>

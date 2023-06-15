@@ -19,7 +19,7 @@ export function ContextMenuBase(p: {
       */}
       <Portal>
         <Content className={clsx(
-          'bg-slate-800',
+          'bg-black',
           'min-w-[220px] rounded-md overflow-hidden',
           'p-1.5',
           'shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]',
@@ -52,22 +52,23 @@ export function ContextMenuItem(p: {
     <Item
       className={clsx(
         "group",
-        "rounded-sm flex items-center h-[25px] py-4 px-2 relative",
+        "rounded-sm flex items-center h-[25px] py-4 px-1.5 relative",
         "select-none outline-none",
         "text-slate-300 text-sm leading-none",
         "data-[disabled]:text-slate-600 data-[disabled]:pointer-events-none",
-        "data-[highlighted]:bg-slate-700 data-[highlighted]:text-slate-50"
+        "data-[highlighted]:bg-dark1 data-[highlighted]:text-slate-50",
+        "cursor-pointer"
       )}
       disabled={ p.disabled }
       onClick={ p.onClick }
     >
-      <div className="w-6 text-slate-400">{p.icon}</div>
+      <div className="w-6 text-light0 text-base">{p.icon}</div>
       { p.children }
       {
         p.shortcut ?
           <div className={clsx(
             "ml-auto",
-            "text-slate-400",
+            "text-white",
             "group-data-[highlighted]:text-white",
             "group-data-[disabled]:text-slate-600"
           )}>

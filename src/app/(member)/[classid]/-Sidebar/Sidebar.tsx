@@ -5,7 +5,7 @@ import { useUserid } from "@/api/client/auth"
 import { List, SidebarHeader, CategoryList, AddCategoryButton } from "./SidebarClient"
 import { getClassroomData, getUserData } from "../../utils"
 import { notFound } from "next/navigation"
-import { getCachedSession, getUserId } from "@/lib/auth-helper"
+import { getCachedSession, getUserId } from "@/lib/auth"
 
 export default function Sidebar(p: {
   children: ReactNode

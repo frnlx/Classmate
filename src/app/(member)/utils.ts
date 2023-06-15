@@ -1,4 +1,4 @@
-import { getUserId } from "@/lib/auth-helper"
+import { getUserId } from "@/lib/auth"
 import { prisma } from "@/lib/db"
 import { color } from "@/lib/logger/chalk"
 import { cache } from "react"

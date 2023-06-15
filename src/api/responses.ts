@@ -1,4 +1,4 @@
-import { isAuth } from "@/lib/auth-helper"
+import { isAuth } from "@/lib/auth"
 import { NextResponse } from "next/server"
 
 // Response Generator

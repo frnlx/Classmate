@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { getLoggedInSession_redirectIfNotAuth } from "@/lib/auth-helper"
+import { getLoggedInSession_redirectIfNotAuth } from "@/lib/auth"
 import AppBackground from "@/components/static/background"
 import JoinClassButton from "./JoinClassButton";
 import { redirect } from "next/navigation";

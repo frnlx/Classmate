@@ -21,14 +21,17 @@ model User {
 }
 
 model Classroom {
-  id         String     @id @default(cuid())
-  name       String
-  members    User[]
-  owner      User       @relation("owner", fields: [ownerId], references: [id])
-  ownerId    String
-  categories Category[]
-  created_at DateTime   @default(now())
-  inviteID   String
+  id          String     @id @default(cuid())
+  name        String
+  members     User[]
+  owner       User       @relation("owner", fields: [ownerId], references: [id])
+  ownerId     String
+  categories  Category[]
+  created_at  DateTime   @default(now())
+  inviteID    String
+  subject     String?
+  description String?
+  emoji       String?
 }
 
 model Category {

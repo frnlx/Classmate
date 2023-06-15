@@ -79,7 +79,7 @@ function CreateClassModal(p: {
           onBack={ () => setModal("index") }
           onCreate={ (classid) => {
             closeModal()
-            router.push(`/${classid}` as Route)
+            // router.push(`/${classid}` as Route)
           } }
         />
       </ModalBase>

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 import SectionList from "./-Section/SectionList"
 import { prefetch } from "@/api/caching/prefetch"
 import { color } from "@/lib/logger/chalk"
-import { getUserId } from "@/lib/auth-helper"
+import { getUserId } from "@/lib/auth"
 
 export default async function CategoryPage({ children, params }: LayoutProps) {
 

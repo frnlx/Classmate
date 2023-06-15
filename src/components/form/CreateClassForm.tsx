@@ -7,13 +7,21 @@ import { ReactNode } from "react"
 import { useForm } from "react-hook-form"
 import { Form, FormField, FormItem } from "../use-client/form/Form"
 import { FormControl, FormDescription, FormLabel, FormMessage } from "../use-client/form/FormField"
-import { TextInput } from "../static/Inputs"
+import { EmojiInput, TextInput } from "../static/Inputs"
 import { ModalButton } from "../use-client/Modal"
+import { getRandomClassroomEmoji } from "@/configs/emojis"
+import Twemoji from "react-twemoji"
+import { SAcreateClass } from "./createClass"
+import { useRouter } from "next/navigation"
+import { invalidateClasslist } from "@/app/(member)/-Navbar/Navbar"
+import { useQueryClient } from "@tanstack/react-query"
+import { Classroom } from "@prisma/client"
 
 /**
  * Form Schema Type
  */
 const formSchema = z.object({
+  emoji: z.string().nonempty(),
   name: z.string().nonempty("can't be empty").max(64, "too long"),
   subject: z.string().nonempty("can't be empty").max(64, "too long"),
 })
@@ -30,15 +38,25 @@ export default function CreateClassForm(p: {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: `${session.data?.user.name}'s Classroom`,
-      subject: ''
+      subject: '',
+      emoji: getRandomClassroomEmoji()
     },
     mode: "onBlur"
   })
 
+  const router = useRouter()
+  const qc = useQueryClient()
   async function onSubmit(values: InferedCreateClassroomFormSchema) {
     console.log(values)
     try {
-      const data = await createClass(values)
+      // const data = await createClass(values)
+      const data = await SAcreateClass(values)
+      // console.log(data)
+      qc.setQueryData(['classlist'], (oldData?: Classroom[]) => {
+        return oldData ? [...oldData, data] : oldData
+      })
+      // invalidateClasslist(qc)
+      // router.refresh()
       p.onCreate(data.id)
     } catch (error: any) {
       form.setError("root", error?.message)
@@ -50,6 +68,17 @@ export default function CreateClassForm(p: {
   return (
     <Form { ...form }>
       <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
+        <FormField control={ form.control } name="emoji" render={
+          ({ field }) => (
+            <FormItem>
+
+              <FormControl>
+                <EmojiInput { ...field } />
+              </FormControl>
+
+            </FormItem>
+          )
+        } />
         <FormField control={ form.control } name="name" render={
           ({ field }) => (
             <FormItem>

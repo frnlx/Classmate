@@ -1,7 +1,7 @@
 import { color } from "@/lib/logger/chalk"
 import { LayoutProps } from "@/types/next"
 import Providers from "./-Provider/providers"
-import { getCachedSession } from "@/lib/auth-helper"
+import { getCachedSession } from "@/lib/auth"
 import Navbar from "./-Navbar/Navbar"
 import NavbarItem from "./-Navbar/NavbarItem"
 import { NavbarClassListIcon, NavbarDashboardIcon, NavbarStatisticsIcon, NavbarTasksIcon } from "./-Navbar/NavbarIcons"
@@ -24,7 +24,7 @@ export default async function AppLayout({ children, params }: LayoutProps) {
 
   // Render after finished fetching classlist and session.
   return (
-    <main className="bg-dark0 w-screen h-screen overflow-clip text-slate-20 flex flex-row gap-0 text-white flex-grow-1">
+    <main className="bg-dark0 w-screen h-screen overflow-hidden text-slate-20 flex flex-row gap-0 text-white flex-grow-1">
       <Providers session={ session }>
         <Navbar
           defaultRoom={ <NavbarItem label="My Dashboard" routeid="dashboard" icon={<NavbarDashboardIcon />}/> }
