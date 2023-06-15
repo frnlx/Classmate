@@ -1,4 +1,5 @@
 import { Box } from "@/components/classroom/dashboard/Box";
+import ControlButton from "@/components/classroom/dashboard/ControlButton";
 import { CourseAbout } from "@/components/classroom/dashboard/CourseAbout";
 import { PeopleList } from "@/components/classroom/dashboard/PeopleList";
 import { PageProps } from "@/types/next";
@@ -11,6 +12,7 @@ export default async function ClassHomePage({
 
   return (
     <div className="w-full p-16">
+      <ControlButton classId={classId} />
       <div className="container max-w-3xl mx-auto flex flex-col space-y-2">
         <CourseAbout classId={classId} />
 

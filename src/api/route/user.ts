@@ -60,6 +60,8 @@ const user = {
     const newClasroom = await prisma.classroom.create({
       data: {
         name: body.name,
+        // FIXME: This is not correct
+        description: "",
         members: {
           connect: { id: uid } // will throw if not found
         },

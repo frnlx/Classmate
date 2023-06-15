@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ClassroomWithOwner, ClientAPI } from "./api";
 import { useUserid } from "./auth";
 import { Classroom, User } from "@prisma/client";
+import { EditClassroomFormSchema } from "@/components/form/EditClassForm";
 
 // Get Class -- 'GET:/classrooms/[classid]' -- https://notion.so/skripsiadekelas/5c9abfbdf06948728a6127e6d5327954
 export function useClassroomQuery(
@@ -29,6 +30,42 @@ export function useClassroomMembersQuery(
     queryKey: ["classroom-members", classid],
     queryFn() {
       return ClientAPI.getClassroomMembers({ userid, classid });
+    },
+  });
+}
+
+export function useEditClass(classid: string) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (values: EditClassroomFormSchema) => {
+      return ClientAPI.updateClassroom({ userid, classid }).with(values);
+    },
+
+    onSuccess: () => {
+      const key = ["classroom", classid];
+      qc.invalidateQueries(key);
+    },
+  });
+}
+
+export function useDeleteClass(classid: string) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => {
+      return ClientAPI.deleteClassroom({ userid, classid });
+    },
+
+    onSuccess: () => {
+      const key = ["user", userid, "classroom"];
+
+      qc.setQueryData(key, (oldclasslist?: Classroom[]) => {
+        if (oldclasslist === undefined) {
+          console.warn("OldClassList is Undefined? How come.");
+        }
+        return oldclasslist?.filter((v) => v.id !== classid);
+      });
     },
   });
 }

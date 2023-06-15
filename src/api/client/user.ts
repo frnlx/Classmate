@@ -3,6 +3,7 @@ import { useUserid } from "./auth"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ClientAPI } from "./api"
 import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm"
+import { EditClassroomFormSchema } from "@/components/form/EditClassForm"
 
 export function useUserClassList(initialData?: Classroom[]) {
   const userid = useUserid()
@@ -62,3 +63,4 @@ export function useCreateClass () {
   })
 
 }
+
