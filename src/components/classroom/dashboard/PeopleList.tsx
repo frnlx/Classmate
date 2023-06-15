@@ -13,9 +13,15 @@ import React, { useState } from "react";
 type CommonProps = {
   isAdmin: boolean;
   classId: string;
+  ownerId: string;
 };
 
-function PeopleRow({ user, isAdmin, classId }: { user: User } & CommonProps) {
+function PeopleRow({
+  user,
+  isAdmin,
+  classId,
+  ownerId,
+}: { user: User } & CommonProps) {
   const { data } = useSession();
   const { mutateAsync: removeStudent } = useRemoveUser(classId);
 
@@ -26,8 +32,14 @@ function PeopleRow({ user, isAdmin, classId }: { user: User } & CommonProps) {
   return (
     <div key={user.id} className="flex flex-row items-center space-x-2">
       <div className="w-6 h-6 bg-green-600 rounded-full" />
-      <span>{user.name}</span>
-      {isAdmin && data?.user.id !== user.id && (
+      <div className="flex flex-col">
+        <span>{user.name}</span>
+        {user.id === ownerId && (
+          <span className="text-light2 text-sm">Class owner</span>
+        )}
+      </div>
+
+      {isAdmin && data?.user.id !== user.id && ownerId !== user.id && (
         <button
           className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150 !ml-auto"
           onClick={onRemove}
@@ -40,7 +52,7 @@ function PeopleRow({ user, isAdmin, classId }: { user: User } & CommonProps) {
 }
 
 export function PeopleList({ classId }: { classId: string }) {
-  const { isAdmin } = useClassroomQuery(classId);
+  const { data: classroom, isAdmin } = useClassroomQuery(classId);
   const { data } = useClassroomMembersQuery(classId, []);
 
   if (data?.length === 0) return <p>There is no one in this class</p>;
@@ -55,12 +67,18 @@ export function PeopleList({ classId }: { classId: string }) {
               user={user}
               isAdmin={false}
               classId={classId}
+              ownerId={classroom?.ownerId ?? ""}
             />
           );
         })}
       </div>
 
-      <PeopleModal users={data ?? []} isAdmin={isAdmin} classId={classId} />
+      <PeopleModal
+        users={data ?? []}
+        isAdmin={isAdmin}
+        classId={classId}
+        ownerId={classroom?.ownerId ?? ""}
+      />
     </div>
   );
 }
@@ -69,6 +87,7 @@ export function PeopleModal({
   users,
   isAdmin,
   classId,
+  ownerId,
 }: {
   users: User[];
 } & CommonProps) {
@@ -90,6 +109,7 @@ export function PeopleModal({
               user={user}
               isAdmin={isAdmin}
               classId={classId}
+              ownerId={ownerId}
             />
           );
         })}
