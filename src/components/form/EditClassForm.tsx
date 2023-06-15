@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
  */
 const formSchema = z.object({
   name: z.string().nonempty("can't be empty").max(64, "too long"),
-  desc: z.string().nonempty("can't be empty"),
+  desc: z.string().nullable(),
 });
 export type EditClassroomFormSchema = z.infer<typeof formSchema>;
 
@@ -63,6 +63,7 @@ export default function EditClassForm(p: {
     }
   }
 
+
   const valid = form.formState.isValid;
 
   return (
@@ -85,7 +86,7 @@ export default function EditClassForm(p: {
         <FormField
           control={form.control}
           name="desc"
-          render={({ field }) => (
+          render={({ field }: any) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
                 <FormLabel>Description</FormLabel> <FormMessage />
