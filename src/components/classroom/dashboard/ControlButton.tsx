@@ -63,7 +63,6 @@ function LeaveClassButton({ classroom }: ButtonProps) {
         <button
           className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150"
           onClick={async () => {
-            // TODO: actually leave classroom
             await leaveClassroom(classroom.id);
             setIsOpen(false);
             push("/dashboard");
