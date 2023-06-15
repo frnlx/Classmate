@@ -18,7 +18,7 @@ export function CourseAbout({ classId }: { classId: string }) {
     <>
       <div className="flex flex-col space-y-1 text-center justify-center">
         <h1 className="font-xl font-bold">{data?.name}</h1>
-        <p>{data?.ownerId}</p>
+        <p>{data?.owner.name}</p>
       </div>
 
       <span className="font-light text-gray-500">About</span>

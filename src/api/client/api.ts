@@ -7,6 +7,7 @@ type ClientAPISimple = {
 }
 
 type SectionsIncldPost = (Section & { post: Resource[] })[]
+export type ClassroomWithOwner = Classroom & {owner: User}
 
 // alt+shift+a " \(|=>"
 // export const ClientAPI = {
@@ -46,7 +47,7 @@ export const ClientAPI = {
 
   getUser:                       requestFn(fetch<User>,              `/api/users/[userid]`) // ✅
   , getClassroomList:            requestFn(fetch<Classroom[]>,       `/api/users/[userid]/classrooms`) // ✅
-  , getClassroom:                requestFn(fetch<Classroom>,         `/api/users/[userid]/classrooms/[classid]`) // ✅
+  , getClassroom:                requestFn(fetch<ClassroomWithOwner>,`/api/users/[userid]/classrooms/[classid]`) // ✅
   , getClassroomMembers:         requestFn(fetch<User[]>,            `/api/users/[userid]/classrooms/[classid]/members`) // ✅
   , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
   , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
