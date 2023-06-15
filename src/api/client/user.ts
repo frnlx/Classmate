@@ -26,6 +26,9 @@ export function useJoinClass() {
     },
     
     onSuccess(newClassroom) {
+      // Server may return empty, so dont do anything
+      if (!!!newClassroom) return;
+
       qc.setQueriesData(['user', userid, 'classroom'],
         (classroomlist?: Classroom[]) => {
           return classroomlist ? [...classroomlist, newClassroom] : classroomlist
@@ -64,3 +67,24 @@ export function useCreateClass () {
 
 }
 
+export function useLeaveClass() {
+  const userid = useUserid()
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn(classid: string) {
+      return ClientAPI.leaveClassroom({ userid, classid })
+    },
+    
+    onSuccess(leftClassroom) {
+      // Server may return empty, so dont do anything
+      if (!!!leftClassroom) return;
+
+      qc.setQueriesData(['user', userid, 'classroom'],
+        (classroomlist?: Classroom[]) => {
+          return classroomlist?.filter((c) => c.id !== leftClassroom.id)
+        }
+      )
+    }
+
+  })
+}

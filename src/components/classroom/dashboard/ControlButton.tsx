@@ -2,9 +2,11 @@
 
 import { useSessionRequired } from "@/api/client/auth";
 import { useClassroomQuery } from "@/api/client/classroom";
+import { useLeaveClass } from "@/api/client/user";
 import EditClassForm from "@/components/form/EditClassForm";
 import { ModalBase } from "@/components/use-client/Modal";
 import { Classroom } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 type ButtonProps = { classroom: Classroom };
@@ -35,6 +37,8 @@ function EditClassButton({ classroom }: ButtonProps) {
 
 function LeaveClassButton({ classroom }: ButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { mutateAsync: leaveClassroom } = useLeaveClass();
+  const { push } = useRouter();
 
   return (
     <ModalBase
@@ -57,9 +61,11 @@ function LeaveClassButton({ classroom }: ButtonProps) {
         </button>
         <button
           className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150"
-          onClick={() => {
+          onClick={async () => {
             // TODO: actually leave classroom
+            await leaveClassroom(classroom.id);
             setIsOpen(false);
+            push("/dashboard");
           }}
         >
           Yes

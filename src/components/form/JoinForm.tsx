@@ -58,8 +58,8 @@ export default function JoinForm(p: {
 
   async function onSubmit(values: InferedJoinFormSchema) {
     try {
-      // const data = await joinClass(values.inviteid)
-      // p.onJoin(data.id)
+      const data = await joinClass(values.inviteid)
+      p.onJoin(data.id)
     } catch (error: any) {
       serverError(error?.message)
     }

@@ -95,7 +95,7 @@ function CreateClassModal(p: {
           onBack={ () => setModal("index") }
           onJoin={ (classid) => {
             closeModal()
-            router.push(`/${classid}` as Route)
+            classid && router.push(`/${classid}` as Route)
           } } />
       </ModalBase>
 

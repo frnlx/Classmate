@@ -73,6 +73,7 @@ export const ClientAPI = {
   , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
   , deleteSection:               requestFn(remove<Section[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
   , deleteResource:              requestFn(remove<Resource[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
+  , leaveClassroom:              requestFn(remove<Classroom>,        `/api/users/[userid]/classrooms/[classid]/leave`) // ✅
 
 } satisfies ClientAPISimple
 
