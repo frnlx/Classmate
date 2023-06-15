@@ -12,36 +12,6 @@ export type ClassroomWithOwner = Classroom & {owner: User}
 // alt+shift+a " \(|=>"
 // export const ClientAPI = {
 
-//     getUser:                     (userid)                                => fetch<User>              (`/api/users/${userid}`)
-//   , getClassroomList:            (userid)                                => fetch<Classroom[]>       (`/api/users/${userid}/classrooms`)
-//   , getClassroom:                (userid, classid)                       => fetch<Classroom>         (`/api/users/${userid}/classrooms/${classid}`)
-//   , getCategoryList:             (userid, classid)                       => fetch<Category[]>        (`/api/users/${userid}/classrooms/${classid}/categories`)
-//   , getCategory:                 (userid, classid, catid)                => fetch<Category>          (`/api/users/${userid}/classrooms/${classid}/categories/${catid}`)
-//   , getSectionList:              (userid, classid, catid)                => fetch<Section[]>         (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections`)
-//   , getSectionListInclResources: (userid, classid, catid)                => fetch<SectionsIncldPost> (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/resources`)
-//   , getResourceList:             (userid, classid, catid, sectid)        => fetch<Resource[]>        (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}/resources`)
-//   , getResource:                 (userid, classid, catid, sectid, resid) => fetch<Resource>          (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}/resources/${resid}`)
-
-//   , createClassroom:             (userid)                                => create<Classroom>        (`/api/users/${userid}/classrooms`)
-//   , createCategory:              (userid, classid)                       => create<Category>         (`/api/users/${userid}/classrooms/${classid}/categories`)
-//   , createSection:               (userid, classid, catid)                => create<Section>          (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections`)
-//   , createResource:              (userid, classid, catid, sectid)        => create<Resource>         (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}`)
-
-//   , joinClassroom:               (userid, classid)                       => join<Classroom>          (`/api/users/${userid}/classrooms/${classid}`)
-
-//   , updateUser:                  (userid)                                => update<User>             (`/api/users/${userid}`)
-//   , updateClassroom:             (userid, classid)                       => update<Classroom>        (`/api/users/${userid}/classrooms/${classid}`)
-//   , updateCategory:              (userid, classid, catid)                => update<Category>         (`/api/users/${userid}/classrooms/${classid}/categories/${catid}`)
-//   , updateSection:               (userid, classid, catid, sectid)        => update<Section>          (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}`)
-//   , updateResource:              (userid, classid, catid, sectid, resid) => update<Resource>         (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}/resources/${resid}`)
-
-//   , deleteClassroom:             (userid, classid)                       => remove<Classroom[]>      (`/api/users/${userid}/classrooms/${classid}`)
-//   , deleteCategory:              (userid, classid, catid)                => remove<Category[]>       (`/api/users/${userid}/classrooms/${classid}/categories/${catid}`)
-//   , deleteSection:               (userid, classid, catid, sectid)        => remove<Section[]>        (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}`)
-//   , deleteResource:              (userid, classid, catid, sectid, resid) => remove<Resource[]>       (`/api/users/${userid}/classrooms/${classid}/categories/${catid}/sections/${sectid}/resources/${resid}`)
-
-// } satisfies ClientAPISimple
-
 // alt+shift+a requestFn\(||`/
 export const ClientAPI = {
 
@@ -56,7 +26,7 @@ export const ClientAPI = {
   , getResourceList:             requestFn(fetch<Resource[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources`)
   , getResource:                 requestFn(fetch<Resource>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
 
-  , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
+  // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
   , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
   , createSection:               requestFn(create<Section>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)
   , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)

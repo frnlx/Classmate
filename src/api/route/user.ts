@@ -55,45 +55,47 @@ const user = {
     }
   },
 
-  // ❌ Non-Idempotent // ❌ Untested
-  async createClassroom(_, res, [uid, cid], body: InferedCreateClassroomFormSchema) {
+  // // ❌ Non-Idempotent // ❌ Untested
+  // async createClassroom(_, res, [uid, cid], body: InferedCreateClassroomFormSchema) {
 
-    const session = await membersOnly()
-    if (uid !== session.user.id) throw new Error('User not found')
+  //   throw new Error('Not allowed to create classroom using API handler. Use server action instead')
 
-    const newClasroom = await prisma.classroom.create({
-      data: {
-        name: body.name,
-        // FIXME: This is not correct
-        description: "",
-        members: {
-          connect: { id: uid } // will throw if not found
-        },
-        owner: {
-          connect: { id: uid } // will throw if not found
-        },
-        inviteID: nanoid(6),
-        categories: {
-          create: [
-            {
-              name: 'Overview',
-              title: 'My First Topic',
-              sections: {
-                create: [
-                  {
-                    name: 'Introduction',
-                    order: 0
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    })
+  //   const session = await membersOnly()
+  //   if (uid !== session.user.id) throw new Error('User not found')
 
-    return res.json(newClasroom)
-  },
+  //   const newClasroom = await prisma.classroom.create({
+  //     data: {
+  //       name: body.name,
+  //       // FIXME: This is not correct
+  //       description: "",
+  //       members: {
+  //         connect: { id: uid } // will throw if not found
+  //       },
+  //       owner: {
+  //         connect: { id: uid } // will throw if not found
+  //       },
+  //       inviteID: nanoid(6),
+  //       categories: {
+  //         create: [
+  //           {
+  //             name: 'Overview',
+  //             title: 'My First Topic',
+  //             sections: {
+  //               create: [
+  //                 {
+  //                   name: 'Introduction',
+  //                   order: 0
+  //                 }
+  //               ]
+  //             }
+  //           }
+  //         ]
+  //       }
+  //     }
+  //   })
+
+  //   return res.json(newClasroom)
+  // },
 
   // ❌ Non-Idempotent // ❌ Untested
   async leaveClassroom(_, res, [uid, cid]) {
@@ -133,7 +135,7 @@ export const userRoutes: RouteLookupType = {
      'GET:/users/[userid]':                            user.getData,
      'GET:/users/[userid]/classrooms':                 user.getClassrooms,
      'PUT:/users/[userid]/classrooms/[classid]':       user.joinClassroom,
-    'POST:/users/[userid]/classrooms':                 user.createClassroom,
+    // 'POST:/users/[userid]/classrooms':                 user.createClassroom,
   'DELETE:/users/[userid]/classrooms/[classid]/leave': user.leaveClassroom
 
 }

@@ -40,33 +40,33 @@ export function useJoinClass() {
 }
 
 // Create Classroom -- 'POST:/users/[userid]/classrooms' -- https://notion.so/skripsiadekelas/090d86a5d6644de196a2f896406ae69d
-export function useCreateClass () {
+// export function useCreateClass () {
 
-  const userid = useUserid()
-  const qc = useQueryClient()
-  return useMutation({
+//   const userid = useUserid()
+//   const qc = useQueryClient()
+//   return useMutation({
     
-    mutationFn: (values: InferedCreateClassroomFormSchema) => {
-      return ClientAPI.createClassroom({ userid }).with(values)
-    },
+//     mutationFn: (values: InferedCreateClassroomFormSchema) => {
+//       return ClientAPI.createClassroom({ userid }).with(values)
+//     },
 
-    onSuccess: (newclass) => {
+//     onSuccess: (newclass) => {
       
 
-      const key = ['classlist']
+//       const key = ['classlist']
 
-      qc.setQueryData(key, (oldclasslist?: Classroom[]) => {
-        if (oldclasslist === undefined) {
-          console.warn("OldClassList is Undefined? How come.")
-        }
-        return oldclasslist ? [...oldclasslist, newclass] : undefined
-      })
+//       qc.setQueryData(key, (oldclasslist?: Classroom[]) => {
+//         if (oldclasslist === undefined) {
+//           console.warn("OldClassList is Undefined? How come.")
+//         }
+//         return oldclasslist ? [...oldclasslist, newclass] : undefined
+//       })
 
-    }
+//     }
 
-  })
+//   })
 
-}
+// }
 
 export function useRemoveUser(classId: string) {
   const qc = useQueryClient()

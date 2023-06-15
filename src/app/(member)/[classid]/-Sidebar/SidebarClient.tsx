@@ -32,7 +32,7 @@ export function SidebarHeader(p: {
       return ClientAPI.getClassroom({ userid, classid: currentId })
     },
     enabled: !!userid && !!currentId,
-    initialData: userData.classes.find(c => c.id === currentId),
+    initialData: userData.classes.find(c => c.id === currentId) as Classroom,
   })
 
   return (

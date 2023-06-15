@@ -1,6 +1,5 @@
 'use client'
 
-import { useCreateClass, useJoinClass } from "@/api/client/user"
 import clsx from "clsx"
 import { NavbarAddClassIcon } from "./NavbarIcons"
 import { ModalBase, ModalButton } from "@/components/use-client/Modal"
