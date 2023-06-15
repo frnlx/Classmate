@@ -1,9 +1,11 @@
-import { Classroom } from "@prisma/client"
+import { Classroom, User } from "@prisma/client"
 import { useUserid } from "./auth"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ClientAPI } from "./api"
 import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm"
 import { EditClassroomFormSchema } from "@/components/form/EditClassForm"
+import { EditProfileFormSchema } from "@/components/home/dashboard/EditProfile"
+import { useSession } from "next-auth/react"
 
 export function useUserClassList(initialData?: Classroom[]) {
   const userid = useUserid()
@@ -65,6 +67,15 @@ export function useCreateClass () {
 
   })
 
+}
+
+export function useUpdateUser() {
+  const userId = useUserid()
+  return useMutation({
+    mutationFn(data: EditProfileFormSchema) {
+      return ClientAPI.updateUser({ userid: userId }).with(data)
+    },
+  })
 }
 
 export function useRemoveUser(classId: string) {

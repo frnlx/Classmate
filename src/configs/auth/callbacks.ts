@@ -50,10 +50,15 @@ export async function updateJWTfromSessionUpdate(
   newSession: Session | any,
 ) {
   console.warn('Session Update: Not Yet Implemented\n - returning existing token\n - token not updated')
-  const updatedToken: JWT = {
-    
+  const userData = await prisma
+    .user
+    .findUniqueOrThrow({ where: { id: existingToken.sub } });
+  return {
+    sub: userData.id,
+    picture: userData.pfp,
+    name: userData.name,
+    email: existingToken.email,
   }
-  return existingToken
 }
 
 export async function checkJWT(

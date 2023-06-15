@@ -3,6 +3,7 @@ import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
 import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm"
+import { EditProfileFormSchema } from "@/components/home/dashboard/EditProfile";
 
 
 const user = {
@@ -24,6 +25,28 @@ const user = {
       include: { classes: true }
     })
     return res.json(data.classes)
+  },
+
+  // ✅ Idempotent // ❌ Untested
+  async updateUser(_, res, [id], body: EditProfileFormSchema) {
+    await membersOnly()
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: {
+        name: body.name,
+        bio: body.bio
+      }
+    })
+    return res.json(updatedUser)
+  },
+
+  // ✅ Idempotent // ❌ Untested
+  async deleteUser(_, res, [id]) {
+    await membersOnly()
+    const removedUser = await prisma.user.delete({
+      where: { id },
+    })
+    return res.json(removedUser)
   },
 
   // ✅ Idempotent // ❌ Untested
@@ -132,6 +155,8 @@ const user = {
 export const userRoutes: RouteLookupType = {
 
      'GET:/users/[userid]':                            user.getData,
+  'DELETE:/users/[userid]':                            user.deleteUser,
+   'PATCH:/users/[userid]':                            user.updateUser,
      'GET:/users/[userid]/classrooms':                 user.getClassrooms,
      'PUT:/users/[userid]/classrooms/[classid]':       user.joinClassroom,
     'POST:/users/[userid]/classrooms':                 user.createClassroom,
