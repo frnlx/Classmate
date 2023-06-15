@@ -64,12 +64,12 @@ export const ClientAPI = {
   , joinClassroom:               requestFn(join<Classroom>,          `/api/users/[userid]/classrooms/[classid]`) // ✅
 
   , updateUser:                  requestFn(update<User>,             `/api/users/[userid]`)
-  , updateClassroom:             requestFn(update<Classroom>,        `/api/users/[userid]/classrooms/[classid]`)
+  , updateClassroom:             requestFn(update<Classroom>,        `/api/users/[userid]/classrooms/[classid]`) // ✅
   , updateCategory:              requestFn(update<Category>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
   , updateSection:               requestFn(update<Section>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
   , updateResource:              requestFn(update<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
 
-  , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`)
+  , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`) // ✅
   , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
   , deleteSection:               requestFn(remove<Section[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
   , deleteResource:              requestFn(remove<Resource[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
