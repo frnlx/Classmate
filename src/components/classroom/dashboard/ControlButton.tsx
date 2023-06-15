@@ -24,6 +24,7 @@ function EditClassButton({ classroom }: ButtonProps) {
       title="Edit classroom"
       open={isOpen}
       onChange={setIsOpen}
+      size="xl"
     >
       <EditClassForm
         defaultValues={classroom}

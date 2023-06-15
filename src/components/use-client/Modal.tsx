@@ -3,6 +3,7 @@ import { Close, Content, Description, Overlay, Portal, Root, Title, Trigger } fr
 import clsx from "clsx"
 import React, { ReactNode } from "react"
 
+type ModalSize = "sm" | "md" | "lg" | "xl"
 
 export function ModalBase(p: {
   trigger?: ReactNode
@@ -18,7 +19,9 @@ export function ModalBase(p: {
   ) => JSX.Element
   open?: boolean
   onChange?: (state: boolean) => void
+  size?: ModalSize
 }) {
+  
   return (
     <Root
       open={ p.open }
@@ -35,7 +38,12 @@ export function ModalBase(p: {
           // appearance
           "rounded-2xl bg-dark1 focus:outline-none overflow-hidden",
           // responsive width
-          "w-full max-w-sm",
+          "w-full",
+          p.size === undefined && "max-w-sm",
+          p.size === "sm" && "max-w-sm",
+          p.size === "md" && "max-w-md",
+          p.size === "lg" && "max-w-lg",
+          p.size === "xl" && "max-w-xl",
           // shadow
           "shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]", //shadow
           // animation

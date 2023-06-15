@@ -23,7 +23,7 @@ export function CourseAbout({ classId }: { classId: string }) {
       </div>
 
       <span className="font-light text-gray-500">About</span>
-      <p>{data?.description}</p>
+      <p className="whitespace-pre-line">{data?.description}</p>
     </>
   );
 }

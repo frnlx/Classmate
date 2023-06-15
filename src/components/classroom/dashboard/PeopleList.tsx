@@ -80,6 +80,7 @@ export function PeopleModal({
       title="People"
       trigger={<ModalButton label="Open List" onClick={() => {}} />}
       onChange={setOpen}
+      size="lg"
     >
       <div className="flex flex-col gap-y-2">
         {users.map((user) => {
