@@ -10,13 +10,18 @@ export function useClassroomQuery(
   initialData?: ClassroomWithOwner
 ) {
   const userid = useUserid();
-  return useQuery({
+  const query = useQuery({
     initialData,
     queryKey: ["classroom", classid],
     queryFn() {
       return ClientAPI.getClassroom({ userid, classid });
     },
   });
+
+  return {
+    ...query,
+    isAdmin: query.data?.ownerId === userid,
+  };
 }
 
 // Get Class Members -- 'GET:/classrooms/[classid]/members'

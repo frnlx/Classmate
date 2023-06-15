@@ -17,8 +17,8 @@ export default async function ClassHomePage({
         <CourseAbout classId={classId} />
 
         <div className="flex flex-row space-x-4">
-          <Box title="Assignments" className="basis-1/2" />
-          <Box title="People" className="basis-1/2">
+          {/* <Box title="Assignments" className="basis-1/2" /> */}
+          <Box title="People" className="w-full">
             <PeopleList classId={classId} />
           </Box>
         </div>

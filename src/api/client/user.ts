@@ -67,6 +67,19 @@ export function useCreateClass () {
 
 }
 
+export function useRemoveUser(classId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn(userId: string) {
+      return ClientAPI.leaveClassroom({ userid: userId, classid: classId })
+    },
+    
+    onSuccess() {
+      qc.invalidateQueries(["classroom-members", classId])
+    }
+  })
+}
+
 export function useLeaveClass() {
   const userid = useUserid()
   const qc = useQueryClient()
