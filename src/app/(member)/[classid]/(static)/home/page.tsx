@@ -11,7 +11,7 @@ export default async function ClassHomePage({
   const classId = params!.classid as string;
 
   return (
-    <div className="w-full p-16">
+    <div className="w-full p-16 overflow-y-auto">
       <ControlButton classId={classId} />
       <div className="container max-w-3xl mx-auto flex flex-col space-y-2">
         <CourseAbout classId={classId} />
