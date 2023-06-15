@@ -2,9 +2,8 @@
 
 import { ClientAPI } from '@/api/client/api'
 import { useUserid } from '@/api/client/auth'
-import { useClassroomQuery } from '@/api/client/classroom'
 import { CaretDown, Plus } from '@phosphor-icons/react'
-import { Category, Classroom, User } from '@prisma/client'
+import { Classroom } from '@prisma/client'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { useEffect, useTransition } from 'react'
