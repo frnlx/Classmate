@@ -30,7 +30,7 @@ model Classroom {
   ownerId     String
   categories  Category[]
   created_at  DateTime   @default(now())
-  inviteID    String
+  inviteID    String     @unique
   description String
 }
 
