@@ -8,7 +8,7 @@ import { useLeaveClass, useRemoveUser } from "@/api/client/user";
 import { ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Classroom, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 type CommonProps = {
   isAdmin: boolean;
@@ -78,7 +78,9 @@ export function PeopleList({ classId }: { classId: string }) {
         isAdmin={isAdmin}
         classId={classId}
         ownerId={classroom?.ownerId ?? ""}
-      />
+      >
+        <ModalButton label="Open List" onClick={ () => { } } />
+      </PeopleModal>
     </div>
   );
 }
@@ -88,17 +90,15 @@ export function PeopleModal({
   isAdmin,
   classId,
   ownerId,
+  children
 }: {
   users: User[];
+  children: ReactNode
 } & CommonProps) {
-  const [isOpen, setOpen] = useState(false);
-
   return (
     <ModalBase
-      open={isOpen}
       title="People"
-      trigger={<ModalButton label="Open List" onClick={() => {}} />}
-      onChange={setOpen}
+      trigger={children}
       size="lg"
     >
       <div className="flex flex-col gap-y-2">
