@@ -1,4 +1,4 @@
-import { Category, Classroom, Resource, Section, User } from "@prisma/client"
+import { Category, Classroom, Resource, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 
 
@@ -6,7 +6,6 @@ type ClientAPISimple = {
   [model: string]: ( params: any ) => any
 }
 
-type SectionsIncldPost = (Section & { post: Resource[] })[]
 export type ClassroomWithOwner = Classroom & {owner: User}
 
 // alt+shift+a " \(|=>"
@@ -21,27 +20,22 @@ export const ClientAPI = {
   , getClassroomMembers:         requestFn(fetch<User[]>,            `/api/users/[userid]/classrooms/[classid]/members`) // ✅
   , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
   , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
-  , getSectionList:              requestFn(fetch<Section[]>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)
-  , getSectionListInclResources: requestFn(fetch<SectionsIncldPost>, `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/resources`)
-  , getResourceList:             requestFn(fetch<Resource[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources`)
-  , getResource:                 requestFn(fetch<Resource>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
+  , getResourceList:             requestFn(fetch<Resource[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources`)
+  , getResource:                 requestFn(fetch<Resource>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
 
   // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
   , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
-  , createSection:               requestFn(create<Section>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections`)
-  , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
+  , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
 
   , joinClassroom:               requestFn(join<Classroom>,          `/api/users/[userid]/classrooms/[classid]`) // ✅
 
   , updateUser:                  requestFn(update<User>,             `/api/users/[userid]`)
   , updateClassroom:             requestFn(update<Classroom>,        `/api/users/[userid]/classrooms/[classid]`) // ✅
   , updateCategory:              requestFn(update<Category>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , updateSection:               requestFn(update<Section>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
   , updateResource:              requestFn(update<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
 
   , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`) // ✅
   , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , deleteSection:               requestFn(remove<Section[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]`)
   , deleteResource:              requestFn(remove<Resource[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
   , leaveClassroom:              requestFn(remove<Classroom>,        `/api/users/[userid]/classrooms/[classid]/leave`) // ✅
 
