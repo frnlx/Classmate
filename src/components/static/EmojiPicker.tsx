@@ -3,9 +3,6 @@ import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
 import { fetchFromCDN, fetchMessages, fetchShortcodes, Emoji } from 'emojibase'
 import { useState } from 'react'
-import Twemoji from 'react-twemoji'
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
 import './EmojiPicker.css'
 
 export default function EmojiPickerAlfon(p: {
