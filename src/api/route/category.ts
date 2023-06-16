@@ -25,7 +25,7 @@ const category = {
 
 
   // ✅ Idempotent // ❌ Untested
-  async getSections(_, res, [uid, cid, catid]) {
+  async getResources(_, res, [uid, cid, catid]) {
     await membersOnly()
     const data = await prisma.user.findUniqueOrThrow({
       where: { id: uid },
@@ -36,46 +36,16 @@ const category = {
             categories: {
               where: { id: catid },
               include: {
-                sections: true
+                Resource: true
               }
             }
           }
         }
       }
     })
-    return res.json(data.classes[0].categories[0].sections) 
+    return res.json(data.classes[0].categories[0].Resource) 
   },
 
-  // ❌ Non-Idempotent // ❌ Untested
-  async createSection(_, res, [uid, cid, catid]) {
-    await membersOnly()
-
-    const data = await prisma.user.findUniqueOrThrow({
-      where: { id: uid },
-      select: {
-        classes: {
-          where: { id: cid },
-          select: { categories: { where: { id: catid } } }
-        }
-      }
-    })
-    if (!data.classes[0])
-      throw new Error('Unauthorized | User is not part of the class to create sections')
-    if (!data.classes[0].categories[0])
-      throw new Error('NotFound | Category is not in the classroom')
-
-    const section = await prisma.section.create({
-      data: {
-        name: 'Untitled Section',
-        order: 0,
-        category: {
-          connect: { id: catid }
-        }
-      }
-    })
-    
-    return res.json(section)
-  },
 
   async deleteCategory(_, res, [uid, cid, catid]) {
   
@@ -88,8 +58,7 @@ export const categoryRoutes: RouteLookupType = {
 
      'GET:/users/[userid]/classrooms/[classid]/categories/[catid]': category.getData,
   'DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]': category.deleteCategory,
-     'GET:/users/[userid]/classrooms/[classid]/categories/[catid]/sections': category.getSections,
-    'POST:/users/[userid]/classrooms/[classid]/categories/[catid]/sections': category.createSection,
+     'GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources': category.getResources,
 
 
 }
