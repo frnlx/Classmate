@@ -38,27 +38,14 @@ model Classroom {
 
 model Category {
   id          String     @id @default(cuid())
-  name        String
   title       String
   classroom   Classroom? @relation(fields: [classroomId], references: [id])
   classroomId String?
-  sections    Section[]
   Resource    Resource[]
-}
-
-model Section {
-  id         String     @id @default(cuid())
-  name       String
-  category   Category   @relation(fields: [categoryId], references: [id])
-  categoryId String
-  order      Int
-  post       Resource[]
 }
 
 model Resource {
   id         String       @id @default(cuid())
-  Section    Section?     @relation(fields: [sectionId], references: [id])
-  sectionId  String?
   title      String
   content    String
   order      Int
@@ -76,6 +63,7 @@ model Assignment {
   resource   Resource     @relation(fields: [id], references: [id])
   dueDate    DateTime     @default(now())
   point      Int
+  xpReward   Int
   Submission Submission[]
 }
 
@@ -84,6 +72,7 @@ model Discussion {
   resource Resource @relation(fields: [id], references: [id])
   dueDate  DateTime @default(now())
   point    Int
+  xpReward Int
 }
 
 model NormalPost {
