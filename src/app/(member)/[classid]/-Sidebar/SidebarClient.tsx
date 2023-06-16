@@ -21,7 +21,6 @@ export { List } from '@radix-ui/react-tabs'
 export function SidebarHeader(p: {
 }) {
   const { currentId, userData } = useRoom()
-  // const { data } = useClassroomQuery(currentId)
   const userid = useUserid()
   const qc = useQueryClient()
   
