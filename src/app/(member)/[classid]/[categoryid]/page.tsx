@@ -3,7 +3,7 @@ import { PageProps } from "@/types/next"
 
 export default async function ClassCategoryPage({ params, searchParams }: PageProps) {
   return (
-    <ResourceList />
+    <></>
   )
 }
 // https://nextjs.org/docs/app/api-reference/file-conventions/page

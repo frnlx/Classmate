@@ -1,4 +1,4 @@
-import { Category, Classroom, Resource, User } from "@prisma/client"
+import { Assignment, Category, Classroom, Discussion, Resource, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 
 
@@ -7,6 +7,13 @@ type ClientAPISimple = {
 }
 
 export type ClassroomWithOwner = Classroom & {owner: User}
+export type ResourcePopulated = (Resource & {
+  Assignment: Assignment | null;
+  Discussion: Discussion | null;
+  _count: {
+      Comment: number;
+  };
+})
 
 // alt+shift+a " \(|=>"
 // export const ClientAPI = {
@@ -14,14 +21,14 @@ export type ClassroomWithOwner = Classroom & {owner: User}
 // alt+shift+a requestFn\(||`/
 export const ClientAPI = {
 
-  getUser:                       requestFn(fetch<User>,              `/api/users/[userid]`) // ✅
-  , getClassroomList:            requestFn(fetch<Classroom[]>,       `/api/users/[userid]/classrooms`) // ✅
-  , getClassroom:                requestFn(fetch<ClassroomWithOwner>,`/api/users/[userid]/classrooms/[classid]`) // ✅
-  , getClassroomMembers:         requestFn(fetch<User[]>,            `/api/users/[userid]/classrooms/[classid]/members`) // ✅
-  , getCategoryList:             requestFn(fetch<Category[]>,        `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
-  , getCategory:                 requestFn(fetch<Category>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
-  , getResourceList:             requestFn(fetch<Resource[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources`)
-  , getResource:                 requestFn(fetch<Resource>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
+  getUser:                       requestFn(fetch<User>,                       `/api/users/[userid]`) // ✅
+  , getClassroomList:            requestFn(fetch<Classroom[]>,                `/api/users/[userid]/classrooms`) // ✅
+  , getClassroom:                requestFn(fetch<ClassroomWithOwner>,         `/api/users/[userid]/classrooms/[classid]`) // ✅
+  , getClassroomMembers:         requestFn(fetch<User[]>,                     `/api/users/[userid]/classrooms/[classid]/members`) // ✅
+  , getCategoryList:             requestFn(fetch<Category[]>,                 `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
+  , getCategory:                 requestFn(fetch<Category>,                   `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
+  , getResourceList:             requestFn(fetch<ResourcePopulated[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources`)
+  , getResource:                 requestFn(fetch<ResourcePopulated>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
 
   // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
   , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
