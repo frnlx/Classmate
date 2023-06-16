@@ -9,9 +9,10 @@ import * as Popover from '@radix-ui/react-popover'
 import EmojiPickerAlfon from "./EmojiPicker"
 import { getRandomClassroomEmoji } from "@/configs/emojis"
 import ClassroomEmoji from "./emoji"
+import { Select, SelectProps } from "@chakra-ui/react"
 
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  type?: "text" | "url" | "email" | "tel" | "search" | "password" | "number";
+  type?: "text" | "url" | "email" | "tel" | "search" | "password" | "number" | "datetime-local";
   placeholder?: string;
 }
 
@@ -51,7 +52,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           "focus-visible:outline-none",
           "focus-visible:ring-4",
           // Disabled
-          "disabled:cursor-not-allowed disabled:opacity-50"
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          className
         )}
         {...props}
       />
@@ -167,4 +169,44 @@ const TextAreaInput = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 TextAreaInput.displayName = "TextAreaInput";
 
 
-export { TextInput, EmojiInput, TextAreaInput }
+const SelectInput = forwardRef<HTMLSelectElement, SelectProps>(
+  ({ className, ...props }, ref) => {
+    const { error } = useFormField();
+    const { formState } = useFormContext();
+
+    return (
+      <Select
+        className={clsx(
+          // Dimensions
+          "flex w-full rounded-md px-3 py-2 outline-transparent",
+          // Colors
+          "bg-dark0 border ring-offset-dark1 ring-dark2/50",
+          // Error
+          error
+            ? "border-alert focus-visible:ring-alert/30"
+            : formState.isSubmitted
+            ? "border-ok focus-visible:ring-ok/30"
+            : "border-dark2 focus-visible:ring-dark2/50",
+          // Text
+          "text-sm",
+          // Animation
+          "transition-all ring-0",
+          // File
+          "file:border-0 file:bg-transparent file:text-sm file:font-medium",
+          // Placeholder
+          "placeholder:text-muted-foreground",
+          // Focus Visible
+          "focus-visible:outline-none",
+          "focus-visible:ring-4",
+          // Disabled
+          "disabled:cursor-not-allowed disabled:opacity-50"
+        )}
+        {...props}
+      />
+    );
+  }
+);
+SelectInput.displayName = "SelectInput";
+
+
+export { TextInput, EmojiInput, TextAreaInput, SelectInput }
