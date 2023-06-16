@@ -7,14 +7,6 @@ declare module 'next-auth' {
     }
   }
 
-  // interface User{
-  //   bio: string
-  //   created_at: string
-  //   id: string
-  //   name: string
-  //   pfp: string
-  // } 
-
   interface Account{
 
   }
