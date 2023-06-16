@@ -82,7 +82,7 @@ export function CategoryList(p: {
             key={ page.id }
             id={ page.id }
             icon={ <SidebarCategoryIcon /> }
-            label={ page.id }
+            label={ page.title }
             isCategory // enables context menu
           />) : <>Loading Categories</>
       }
