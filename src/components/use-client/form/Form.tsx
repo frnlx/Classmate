@@ -58,7 +58,7 @@ const FormItem = forwardRef<
     const id = useId()
     return (
       <FormItemContextProvider value={ { id } }>
-        <div ref={ ref } className={ clsx("space-y-1") } { ...props } />
+        <div ref={ ref } className={ clsx("space-y-1", className) } { ...props } />
       </FormItemContextProvider>
     )
   }
