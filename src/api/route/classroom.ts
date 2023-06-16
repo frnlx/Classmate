@@ -59,16 +59,9 @@ const classroom = {
 
     const newCategory = await prisma.category.create({
       data: {
-        name: "New Category",
         title: "Untitled Category",
         classroom: {
           connect: { id: cid },
-        },
-        sections: {
-          create: {
-            name: "Overview",
-            order: 0,
-          },
         },
       },
     });
