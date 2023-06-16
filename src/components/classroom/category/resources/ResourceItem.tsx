@@ -1,20 +1,19 @@
 import { useGetResource } from "@/api/client/resource"
 import { useRoom } from "@/app/(member)/-Navbar/Navbar"
-import { usePage } from "../../-Sidebar/Pages"
+import { usePage } from "../../../../app/(member)/[classid]/-Sidebar/Pages"
 import Link from "next/link"
 import clsx from "clsx"
 import { Note } from "@phosphor-icons/react"
 import { Route } from "next"
 
 export default function ResourceItem(p: {
-  secid: string
   id: string
 }) {
   const room = useRoom()
   const page = usePage()
 
   const { data } = useGetResource(
-    room.currentId, page.currentid, p.secid, p.id,
+    room.currentId, page.currentid, p.id,
   )
 
   return (
