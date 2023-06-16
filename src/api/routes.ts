@@ -1,5 +1,4 @@
 import { RouteLookupType, route } from "@/lib/route";
-import { sectionRoutes } from "./route/section";
 import { userRoutes } from "./route/user";
 import { classroomRoutes } from "./route/classroom";
 import { categoryRoutes } from "./route/category";
@@ -17,6 +16,5 @@ export const routes: RouteLookupType = {
   ...userRoutes,
   ...classroomRoutes,
   ...categoryRoutes,
-  ...sectionRoutes,
   ...resourceRoutes,
 }
