@@ -1,8 +1,8 @@
 import '@/components/globals.css'
 import { Inter, Roboto_Mono  } from 'next/font/google'
 import { rootMetadata } from '@/configs/metadata'
-import { color } from '@/lib/logger/chalk'
-
+import Script from 'next/script'
+import EmojiParser from './EmojiParser'
 
 export const metadata = rootMetadata
 
@@ -18,9 +18,12 @@ export default function RootLayout(p: {
       <body
         className='bg-black font-sans m-0 p-0 box-border text-whiter'
         suppressHydrationWarning={true}
-      >
-        {p.children}
+        >
+        { p.children }
+        
       </body>
+      <EmojiParser/>
+
     </html>
   )
 }

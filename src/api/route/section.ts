@@ -85,18 +85,19 @@ const section = {
     if (!data.classes[0].categories[0].sections[0])
       throw new Error('NotFound | Section is not in the category')
     
-    const resource = await prisma.resource.create({
-      data: {
-        title: body.title,
-        order: 0,
-        content: body.content,
-        Section: {
-          connect: { id: sectid }
-        }
-      }
-    })
+    // const resource = await prisma.resource.create({
+    //   data: {
+    //     title: body.title,
+    //     order: 0,
+    //     content: body.content,
+    //     Section: {
+    //       connect: { id: sectid }
+    //     }
+    //   }
+    // })
   
-    return res.json(resource)
+    // return res.json(resource)
+    return res.json({})
   },
 
   async delete(_, res, [uid, cid, catid, sectid]) {

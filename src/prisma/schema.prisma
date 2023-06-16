@@ -31,7 +31,9 @@ model Classroom {
   categories  Category[]
   created_at  DateTime   @default(now())
   inviteID    String     @unique
-  description String
+  subject     String?
+  description String?
+  emoji       String?
 }
 
 model Category {

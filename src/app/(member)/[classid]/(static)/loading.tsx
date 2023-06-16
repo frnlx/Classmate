@@ -1,3 +1,3 @@
 import DefaultLoadingScreenGenerator from "@/components/use-client/DefaultLoadingScreen"
-const LoadingScreen = DefaultLoadingScreenGenerator('Classroom Content')
+const LoadingScreen = DefaultLoadingScreenGenerator('Room Content')
 export default LoadingScreen;

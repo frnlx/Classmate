@@ -5,11 +5,16 @@ import clsx from 'clsx';
 
 export default function ScrollArea (p: {
   children: ReactNode
+  type?: "auto" | "always" | "scroll" | "hover" | "hidden"
 }) {
+  const hidden = p.type === "hidden"
+  const type = p.type === "hidden" ? "scroll" : p.type
+
   return (
     <Root
-      type='scroll'
-      className="flex-grow w-1/2 overflow-hidden"
+      type={ type ?? "scroll" }
+      className="flex-grow w-full h-full overflow-hidden"
+      
     >
       <Viewport
         className="w-full h-full rounded-[inherit]"
@@ -24,9 +29,10 @@ export default function ScrollArea (p: {
         )}
         orientation="vertical"
         >
-        <Thumb className={clsx(
+        <Thumb className={ clsx(
+          "hidden",
           "bg-slate-600 flex-1 rounded-[10px] relative",
-          "before:content-[''] before:top-1/2 before:left-1/2 before:translate-x-[-50%] before:translate-y-[-50%] before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]"
+          hidden ? "hidden" : "before:content-[''] before:top-1/2 before:left-1/2 before:translate-x-[-50%] before:translate-y-[-50%] before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]"
         )} />
       </Scrollbar>
       <Corner className="bg-slate-400" />

@@ -1,4 +1,4 @@
-import { getUserId } from "@/lib/auth-helper"
+import { getUserId } from "@/lib/auth"
 import { Category, Classroom, Resource, Section, User } from "@prisma/client"
 import { SectionIncludeResources, db } from "../db"
 import { notFound } from "next/navigation"

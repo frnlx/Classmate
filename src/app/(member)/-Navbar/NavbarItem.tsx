@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation";
 import { VisuallyHidden } from "@chakra-ui/react";
 import useAppToast from "@/components/lib/toasts"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
-import { Hash, Link as LinkIcon } from "@phosphor-icons/react"
+import { Hash, Link as LinkIcon, Trash } from "@phosphor-icons/react"
 import TooltipBase from "@/components/use-client/Tooltip"
 import { gotoClassroom } from "./redirectClassroom"
+import { Route } from "next"
+import ClassroomEmoji from "@/components/static/emoji"
 
 interface prop {
   image?: string
@@ -18,9 +20,10 @@ interface prop {
   routeid: string
   inviteID?: string
   icon?: ReactNode
+  emoji?: string | null
 }
 
-export default function NavbarItem({ image, label, routeid, inviteID, icon }: prop) {
+export default function NavbarItem({ emoji, label, routeid, inviteID, icon, image }: prop) {
   // color.cyan('    `- Item')
 
   const router = useRouter()
@@ -54,16 +57,30 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
           "before:w-2 before:h-6 before:-left-4 before:top-3 before:bg-white before:rounded-md", // what it look like
           "before:opacity-0 before:transition-all before:block before:absolute before:content-['']", // what it takes to make it appear
           (active ? "translate-x-3 before:opacity-100" : null), // transition when active
-          
+            
           "hover:bg-[#008E5A] hover:rounded-xl"
         )}
         >
-          <Link
-            // @ts-ignore
-            href={`/${routeid}`}
+          <div
+            // href={ `/${routeid}` }
             onClick={ () => {
-              startTransition(()=>gotoClassroom(routeid))
+              // startTransition(() => gotoClassroom(routeid))
               setSelected(true)
+              if (inviteID) {
+                try {
+                  const local = JSON.parse(localStorage.getItem('lastvisitedcategory')!) as { [key: string]: string }
+                  if (local[routeid]) {
+                    
+                    router.push(`/${routeid}/${local[routeid]}` as Route)
+                  }
+                  else router.push(`/${routeid}/home` as Route)
+                } catch (error) {
+                  localStorage.removeItem('lastvisitedcategory')
+                  router.push(`/${routeid}/home` as Route)
+                }
+              } else {
+                router.push(`/${routeid}` as Route)
+              }
             } }
             
             className={clsx(
@@ -76,16 +93,16 @@ export default function NavbarItem({ image, label, routeid, inviteID, icon }: pr
                 //  and if right click -> instantly click it normally without popping up context menu
                 e.preventDefault()
                 setSelected(true)
-                // @ts-ignore
-                router.push(`/${routeid}`)
+                router.push(`/${routeid}` as Route)
               }
             }}>
-            <VisuallyHidden>{label}</VisuallyHidden> {/** For good accessibility and a tag semantic*/}
-            {
+            <VisuallyHidden>{ label }</VisuallyHidden> {/** For good accessibility and a tag semantic*/ }
+            <ClassroomEmoji text={ emoji } size="smaller" />
+            {/* {
               image ? <Image src={image} alt={label + "'s Server Picture"} width={60} height={60} /> : null
-            }
+            } */}
             {icon}
-          </Link>
+          </div>
         </li>
       </NavbarItemTooltip>
     </NavbarItemContextMenu>
@@ -153,13 +170,22 @@ function NavbarItemContextMenu(p: {
         Copy Invite Link
       </ContextMenuItem>
       <ContextMenuItem
-        icon={ <Hash weight='bold' /> }
+        icon={ <Hash weight='bold'/> }
         onClick={ () => {
           navigator.clipboard.writeText(id)
           toast('Classroom ID copied to clipboard.', 'success', 'gray')
         } }
       >
         Copy ID
+      </ContextMenuItem>
+      <ContextMenuItem
+        icon={ <Trash weight='bold' className="fill-alert" /> }
+        onClick={ () => {
+          // navigator.clipboard.writeText(id)
+          // toast('Classroom ID copied to clipboard.', 'success', 'gray')
+        } }
+      >
+        Archive Classroom
       </ContextMenuItem>
     </ContextMenuBase>
   )

@@ -1,6 +1,5 @@
 'use client'
 
-import { useCreateClass, useJoinClass } from "@/api/client/user"
 import clsx from "clsx"
 import { NavbarAddClassIcon } from "./NavbarIcons"
 import { ModalBase, ModalButton } from "@/components/use-client/Modal"
@@ -79,7 +78,7 @@ function CreateClassModal(p: {
           onBack={ () => setModal("index") }
           onCreate={ (classid) => {
             closeModal()
-            router.push(`/${classid}` as Route)
+            // router.push(`/${classid}` as Route)
           } }
         />
       </ModalBase>

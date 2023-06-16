@@ -1,4 +1,4 @@
-import { isAuth } from "@/lib/auth-helper";
+import { isAuth } from "@/lib/auth";
 import { RouteHandler, RouteHandlerParam } from "@/lib/route"
 import { redirect } from 'next/navigation'
 

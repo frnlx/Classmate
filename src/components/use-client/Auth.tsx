@@ -1,5 +1,6 @@
 'use client'
 import { Button } from "@chakra-ui/react";
+import { Route } from "next"
 import { getSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
@@ -49,7 +50,7 @@ export function LandingPageRedirectIfLoggedIn(p: {
   const router = useRouter()
   useEffect(() => {
     getSession().then(
-      (session) => session ? router.push('/dashboard') : null
+      (session) => session ? router.push('/dashboard' as Route) : null
     )
   }, [])
 

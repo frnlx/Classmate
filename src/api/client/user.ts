@@ -31,7 +31,7 @@ export function useJoinClass() {
       // Server may return empty, so dont do anything
       if (!!!newClassroom) return;
 
-      qc.setQueriesData(['user', userid, 'classroom'],
+      qc.setQueriesData(['classlist'],
         (classroomlist?: Classroom[]) => {
           return classroomlist ? [...classroomlist, newClassroom] : classroomlist
         }
