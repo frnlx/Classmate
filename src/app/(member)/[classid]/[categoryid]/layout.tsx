@@ -44,7 +44,7 @@ export default async function CategoryPage({ children, params }: LayoutProps) {
       <Header title={category.title} />
       <div className="flex flex-row space-x-4">
         <ResourceList />
-        <div className="w-full">{children}</div>
+        {children}
       </div>
     </div>
   );
