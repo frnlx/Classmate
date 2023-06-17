@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
 import { ResourceFormSchema } from "@/components/classroom/category/resources/AddResource";
 import { ResourceType } from "@prisma/client";
+import { CommentFormSchema } from "@/components/classroom/category/post/CommentSection";
 
 const resource = {
   async getData(_, res, [uid, cid, catid, rid]) {
@@ -40,6 +41,53 @@ const resource = {
     return res.json(data.classes[0].categories[0].Resource[0]);
   },
 
+  async getResourceComments(_, res, [uid, cid, catid, rid]) {
+    await membersOnly();
+    const comments = await prisma.comment.findMany({
+      where: { resourceId: rid },
+      include: {
+        user: true,
+      },
+    });
+
+    return res.json(
+      comments.map((comment) => ({
+        ...comment,
+        id: comment.id.toString(), // BigInt hotfix, will be reconverted to BigInt in client
+      }))
+    );
+  },
+
+  async createComment(_, res, [uid, cid, catid, rid], body: CommentFormSchema) {
+    await membersOnly();
+    const comment = await prisma.comment.create({
+      data: {
+        content: body.content,
+        user: { connect: { id: uid } },
+        resource: { connect: { id: rid } },
+      },
+    });
+
+    return res.json({
+      ...comment,
+      id: comment.id.toString(), // BigInt hotfix, will be reconverted to BigInt in client
+    });
+  },
+
+  async deleteComment(_, res, [uid, cid, catid, rid, commentid]) {
+    await membersOnly();
+    await prisma.comment.deleteMany({
+      where: {
+        id: BigInt(commentid),
+        userId: uid,
+      },
+    });
+
+    return res.json({
+      message: "OK",
+    });
+  },
+
   async createResource(
     _,
     res,
@@ -52,6 +100,9 @@ const resource = {
         content: body.content,
         category: {
           connect: { id: catid },
+        },
+        user: {
+          connect: { id: uid },
         },
         type: body.type,
         order: 0,
@@ -94,4 +145,10 @@ export const resourceRoutes: RouteLookupType = {
     resource.getData,
   "POST:/users/[userid]/classrooms/[classid]/categories/[categoryid]":
     resource.createResource,
+  "POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment":
+    resource.createComment,
+  "GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment":
+    resource.getResourceComments,
+  "DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]":
+    resource.deleteComment,
 };

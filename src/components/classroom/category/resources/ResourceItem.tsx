@@ -11,17 +11,23 @@ import { ResourcePopulated } from "@/api/client/api";
 
 export default function ResourceItem(p: { resource: ResourcePopulated }) {
   const path = usePathname();
-  console.log(p);
 
   let rewardData: {
     xpReward: number;
     point: number;
   } | null = null;
-  if (p.resource.type !== ResourceType.NORMAL_POST) {
-    rewardData = p.resource.Assignment || p.resource.Discussion;
+  if (p.resource.type === ResourceType.ASSIGNMENT) {
+    rewardData = p.resource.Assignment;
+  } else if (p.resource.type === ResourceType.DISCUSSION) {
+    rewardData = p.resource.Discussion;
   }
+
   return (
-    <Link href={`${path}/${p.resource.id}` as Route}>
+    <Link
+      href={
+        `/${path.split("/").slice(1, 3).join("/")}/${p.resource.id}` as Route
+      }
+    >
       <div className="flex flex-col gap-y-2 bg-dark1/80 hover:bg-dark1 duration-150 transition-all px-4 pt-4 pb-2 rounded-md">
         <div className={clsx("flex flex-row items-center gap-2")}>
           <div className="p-2 rounded-xl bg-slate-700">

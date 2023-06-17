@@ -1,3 +1,4 @@
+import { Comment, ResourceType } from "@prisma/client"
 import { Assignment, Category, Classroom, Discussion, Resource, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 
@@ -7,13 +8,40 @@ type ClientAPISimple = {
 }
 
 export type ClassroomWithOwner = Classroom & {owner: User}
-export type ResourcePopulated = (Resource & {
-  Assignment: Assignment | null;
-  Discussion: Discussion | null;
+export type ResourcePopulated = Resource & {
   _count: {
-      Comment: number;
+    Comment: number;
   };
-})
+} & (
+    | {
+        type: typeof ResourceType.ASSIGNMENT;
+        Assignment: Assignment;
+      }
+    | {
+        type: typeof ResourceType.DISCUSSION;
+        Discussion: Discussion;
+      }
+    | {
+        type: typeof ResourceType.NORMAL_POST;
+      }
+  );
+
+export type ResourcePopulatedWithUser = ResourcePopulated & {
+  user: User;
+};
+
+export type CommentWithUser = Comment & {
+  user: User
+}
+
+export type ResourcePopulatedWithUserComment = ResourcePopulatedWithUser & {
+  Comment: CommentWithUser[]
+}
+
+export type MessageResponse = {
+  message: string
+}
+
 
 // alt+shift+a " \(|=>"
 // export const ClientAPI = {
@@ -29,10 +57,12 @@ export const ClientAPI = {
   , getCategory:                 requestFn(fetch<Category>,                   `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
   , getResourceList:             requestFn(fetch<ResourcePopulated[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources`)
   , getResource:                 requestFn(fetch<ResourcePopulated>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
+  , getComments:                 requestFn(fetch<CommentWithUser[]>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
 
   // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
   , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
   , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
+  , createComment:               requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
 
   , joinClassroom:               requestFn(join<Classroom>,          `/api/users/[userid]/classrooms/[classid]`) // ✅
 
@@ -43,7 +73,8 @@ export const ClientAPI = {
 
   , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`) // ✅
   , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , deleteResource:              requestFn(remove<Resource[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
+  , deleteResource:              requestFn(remove<Resource[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
+  , deleteComment:               requestFn(remove<MessageResponse>,  `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]`)
   , leaveClassroom:              requestFn(remove<Classroom>,        `/api/users/[userid]/classrooms/[classid]/leave`) // ✅
 
 } satisfies ClientAPISimple
