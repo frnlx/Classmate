@@ -64,7 +64,7 @@ model Resource {
 
 model Assignment {
   id         String       @id @unique
-  resource   Resource     @relation(fields: [id], references: [id])
+  resource   Resource     @relation(fields: [id], references: [id], onDelete: Cascade)
   dueDate    DateTime     @default(now())
   point      Int
   xpReward   Int
@@ -73,7 +73,7 @@ model Assignment {
 
 model Discussion {
   id       String   @id @unique
-  resource Resource @relation(fields: [id], references: [id])
+  resource Resource @relation(fields: [id], references: [id], onDelete: Cascade)
   dueDate  DateTime @default(now())
   point    Int
   xpReward Int
@@ -81,7 +81,7 @@ model Discussion {
 
 model NormalPost {
   id       String   @id @unique
-  resource Resource @relation(fields: [id], references: [id])
+  resource Resource @relation(fields: [id], references: [id], onDelete: Cascade)
 }
 
 enum ResourceType {
@@ -95,7 +95,7 @@ model Comment {
   content    String
   userId     String
   user       User     @relation(fields: [userId], references: [id])
-  resource   Resource @relation(fields: [resourceId], references: [id])
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
   resourceId String
   createdAt  DateTime @default(now())
 }
@@ -105,7 +105,7 @@ model Submission {
   userId       String
   user         User       @relation(fields: [userId], references: [id])
   assignmentId String
-  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   fileUrl      String
   createdAt    DateTime   @default(now())
 }
