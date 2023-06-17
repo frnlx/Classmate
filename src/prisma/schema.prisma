@@ -20,6 +20,7 @@ model User {
   ownedClasses Classroom[]  @relation("owner")
   Comment      Comment[]
   Submission   Submission[]
+  Resource     Resource[]
 }
 
 model Classroom {
@@ -49,6 +50,9 @@ model Resource {
   title      String
   content    String
   order      Int
+  createdAt  DateTime     @default(now())
+  user       User         @relation(fields: [userId], references: [id])
+  userId     String
   category   Category     @relation(fields: [categoryId], references: [id])
   categoryId String
   Assignment Assignment?
