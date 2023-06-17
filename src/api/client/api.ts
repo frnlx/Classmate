@@ -73,7 +73,7 @@ export const ClientAPI = {
 
   , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`) // ✅
   , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , deleteResource:              requestFn(remove<Resource[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
+  , deleteResource:              requestFn(remove<MessageResponse>,  `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
   , deleteComment:               requestFn(remove<MessageResponse>,  `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]`)
   , leaveClassroom:              requestFn(remove<Classroom>,        `/api/users/[userid]/classrooms/[classid]/leave`) // ✅
 

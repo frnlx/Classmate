@@ -39,8 +39,8 @@ export default async function PostLayout({ params }: PageProps) {
     rewardDueData = resource.Discussion;
   }
   return (
-    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-4 bg-dark1">
-      <PostHeader resource={resource} />
+    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-4 bg-dark1 relative">
+      <PostHeader resource={resource} classId={params!.classid as string} />
       <table className="table-fixed">
         <tbody>
           <tr>

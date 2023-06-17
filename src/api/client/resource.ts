@@ -139,3 +139,23 @@ export function useDeleteComment(
     },
   });
 }
+
+export function useDeleteResource(classid: string, catid: string) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn(resid: string) {
+      return ClientAPI.deleteResource({
+        userid,
+        classid,
+        catid,
+        resid,
+      });
+    },
+
+    onSuccess() {
+      qc.invalidateQueries(["category", catid, "resources"]);
+    },
+  });
+}

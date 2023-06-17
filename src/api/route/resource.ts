@@ -88,6 +88,20 @@ const resource = {
     });
   },
 
+  async deleteResource(_, res, [uid, cid, catid, rid, commentid]) {
+    await membersOnly();
+    await prisma.resource.deleteMany({
+      where: {
+        id: rid,
+        userId: uid,
+      },
+    });
+
+    return res.json({
+      message: "OK",
+    });
+  },
+
   async createResource(
     _,
     res,
@@ -151,4 +165,6 @@ export const resourceRoutes: RouteLookupType = {
     resource.getResourceComments,
   "DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]":
     resource.deleteComment,
+  "DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]":
+    resource.deleteResource,
 };

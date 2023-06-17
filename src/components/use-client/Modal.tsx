@@ -233,3 +233,36 @@ export { ModalButton }
 //     </button>
 //   )
 // }
+
+export function ConfirmModal(p : {
+  title: string
+  desc: string
+  open: boolean
+  onChange: (open: boolean) => void
+  onConfirm: () => unknown
+  children: React.ReactNode
+}) {
+  return <ModalBase
+    trigger={p.children
+    }
+    title={p.title}
+    desc={p.desc}
+    open={p.open}
+    onChange={p.onChange}
+  >
+    <div className="flex flex-row space-x-2 justify-center">
+      <button
+        className="rounded-md bg-dark2 px-4 py-2 hover:bg-light2 transition-all duration-150"
+        onClick={() => p.onChange(false)}
+      >
+        No
+      </button>
+      <button
+        className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150"
+        onClick={p.onConfirm}
+      >
+        Yes
+      </button>
+    </div>
+  </ModalBase>
+}
