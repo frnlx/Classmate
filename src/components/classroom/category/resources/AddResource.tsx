@@ -3,7 +3,11 @@
 import { useSessionRequired } from "@/api/client/auth";
 import { useCreateResource } from "@/api/client/resource";
 import { useUpdateUser } from "@/api/client/user";
-import { TextInput, TextAreaInput, SelectInput } from "@/components/static/Inputs";
+import {
+  TextInput,
+  TextAreaInput,
+  SelectInput,
+} from "@/components/static/Inputs";
 import { ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Form, FormField, FormItem } from "@/components/use-client/form/Form";
 import { FormMessage } from "@/components/use-client/form/FormField";
@@ -16,57 +20,59 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-
 const baseSchema = z.object({
   title: z.string().nonempty("can't be empty").max(64, "too long"),
   content: z.string().nonempty("can't be empty"),
   type: z.nativeEnum(ResourceType),
 });
 
-const formSchema = z.discriminatedUnion("type",
-    [
-        z.object({
-            type: z.literal(ResourceType.ASSIGNMENT),
-            xp: z.number().min(1, "minimum point is 1"),
-            point: z.number().min(1, "minimum point is 1"),
-            dueDate: z.date()
-        }),
-        z.object({
-            type: z.literal(ResourceType.DISCUSSION),
-            xp: z.number().min(1, "minimum point is 1"),
-            point: z.number().min(1, "minimum point is 1"),
-            dueDate: z.date()
-        }),
-        z.object({
-            type: z.literal(ResourceType.NORMAL_POST)
-        })
-    ]
-).and(baseSchema)
-export type ResourceFormSchema = z.infer<typeof formSchema>;
+export const resourceFormSchema = z
+  .discriminatedUnion("type", [
+    z.object({
+      type: z.literal(ResourceType.ASSIGNMENT),
+      xp: z.number().min(1, "minimum point is 1"),
+      point: z.number().min(1, "minimum point is 1"),
+      dueDate: z.date(),
+    }),
+    z.object({
+      type: z.literal(ResourceType.DISCUSSION),
+      xp: z.number().min(1, "minimum point is 1"),
+      point: z.number().min(1, "minimum point is 1"),
+      dueDate: z.date(),
+    }),
+    z.object({
+      type: z.literal(ResourceType.NORMAL_POST),
+    }),
+  ])
+  .and(baseSchema);
+export type ResourceFormSchema = z.infer<typeof resourceFormSchema>;
 
 function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
-  const params = useParams()
-  const { mutateAsync: createResource } = useCreateResource(params.classid, params.categoryid)
+  const params = useParams();
+  const { mutateAsync: createResource } = useCreateResource(
+    params.classid,
+    params.categoryid
+  );
 
   const form = useForm<ResourceFormSchema>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(resourceFormSchema),
     reValidateMode: "onBlur",
   });
-  const resourceType = form.watch("type")
-  console.log(resourceType, form.formState.errors)
-  
+  const resourceType = form.watch("type");
+  console.log(resourceType, form.formState.errors);
+
   useEffect(() => {
     if (resourceType === ResourceType.NORMAL_POST) {
-        form.setValue("xp", 0)
-        form.setValue("point", 0)
-        // @ts-ignore
-        form.setValue("dueDate", undefined)
+      form.setValue("xp", 0);
+      form.setValue("point", 0);
+      // @ts-ignore
+      form.setValue("dueDate", undefined);
     }
-  }, [resourceType])
+  }, [resourceType]);
 
   async function onSubmit(values: ResourceFormSchema) {
     try {
-      await createResource(values)
+      await createResource(values);
       p.onUpdated && p.onUpdated();
     } catch (error: any) {
       form.setError("root", error?.message);
@@ -77,7 +83,7 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <FormField
+        <FormField
           control={form.control}
           name="type"
           render={({ field }) => (
@@ -86,18 +92,18 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                 <FormLabel>Type</FormLabel> <FormMessage />
               </div>
               <FormControl>
-                <SelectInput
-                    placeholder="Resource Type"
-                    {...field}
-                >
-                    {Object.keys(ResourceType).map(t => (
-                        <option className="text-black" key={t} value={t}>
-                            {t.split('_')
-                                .map(w => w[0].toUpperCase() + w.substring(1).toLowerCase())
-                                .join(' ')}
-                        </option>
+                <SelectInput placeholder="Resource Type" {...field}>
+                  {Object.keys(ResourceType).map((t) => (
+                    <option className="text-black" key={t} value={t}>
+                      {t
+                        .split("_")
+                        .map(
+                          (w) =>
+                            w[0].toUpperCase() + w.substring(1).toLowerCase()
                         )
-                    )}
+                        .join(" ")}
+                    </option>
+                  ))}
                 </SelectInput>
               </FormControl>
             </FormItem>
@@ -137,56 +143,71 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
             />
 
             {resourceType !== ResourceType.NORMAL_POST && (
-                <>
+              <>
                 <FormField
-                    control={form.control}
-                    name="dueDate"
-                    render={({ field }) => (
+                  control={form.control}
+                  name="dueDate"
+                  render={({ field }) => (
                     <FormItem>
-                        <div className="flex gap-1 align-bottom h-3">
-                            <FormLabel>Due Date</FormLabel> <FormMessage />
-                        </div>
-                        <FormControl>
-                            <TextInput
-                                type="datetime-local"
-                                className="[color-scheme:dark]"
-                                onChange={(event) => field.onChange(new Date(event.target.value))} />
-                        </FormControl>
+                      <div className="flex gap-1 align-bottom h-3">
+                        <FormLabel>Due Date</FormLabel> <FormMessage />
+                      </div>
+                      <FormControl>
+                        <TextInput
+                          type="datetime-local"
+                          className="[color-scheme:dark]"
+                          onChange={(event) =>
+                            field.onChange(new Date(event.target.value))
+                          }
+                        />
+                      </FormControl>
                     </FormItem>
-                    )}
+                  )}
                 />
 
                 <div className="flex flex-row space-x-2">
-                    <FormField
-                        control={form.control}
-                        name="xp"
-                        render={({ field }) => (
-                        <FormItem className="w-full">
-                            <div className="flex gap-1 align-bottom h-3">
-                                <FormLabel>XP Gained</FormLabel> <FormMessage />
-                            </div>
-                            <FormControl>
-                                <TextInput type="number" {...field} onChange={(event) => field.onChange(+event.target.value)} />
-                            </FormControl>
-                        </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="point"
-                        render={({ field }) => (
-                        <FormItem className="w-full">
-                            <div className="flex gap-1 align-bottom h-3">
-                                <FormLabel>Points Gained</FormLabel> <FormMessage />
-                            </div>
-                            <FormControl>
-                                <TextInput type="number" {...field} onChange={(event) => field.onChange(+event.target.value)} />
-                            </FormControl>
-                        </FormItem>
-                        )}
-                    />
+                  <FormField
+                    control={form.control}
+                    name="xp"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <div className="flex gap-1 align-bottom h-3">
+                          <FormLabel>XP Gained</FormLabel> <FormMessage />
+                        </div>
+                        <FormControl>
+                          <TextInput
+                            type="number"
+                            {...field}
+                            onChange={(event) =>
+                              field.onChange(+event.target.value)
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="point"
+                    render={({ field }) => (
+                      <FormItem className="w-full">
+                        <div className="flex gap-1 align-bottom h-3">
+                          <FormLabel>Points Gained</FormLabel> <FormMessage />
+                        </div>
+                        <FormControl>
+                          <TextInput
+                            type="number"
+                            {...field}
+                            onChange={(event) =>
+                              field.onChange(+event.target.value)
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                 </div>
-                </>
+              </>
             )}
           </>
         )}
@@ -215,11 +236,9 @@ export default function AddResource() {
       size="xl"
       title="Add Resource"
       trigger={
-        <button
-        className="rounded-md bg-dark2 text-light0 bg-opacity-80 px-6 py-3 hover:bg-opacity-100 transition-all duration-150 text-md font-semibold ml-auto"
-      >
-        Add Resource
-      </button>
+        <button className="rounded-md bg-dark2 text-light0 bg-opacity-80 px-6 py-3 hover:bg-opacity-100 transition-all duration-150 text-md font-semibold ml-auto">
+          Add Resource
+        </button>
       }
       onChange={setIsOpen}
     >

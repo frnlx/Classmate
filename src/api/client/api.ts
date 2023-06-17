@@ -16,13 +16,17 @@ export type ResourcePopulated = Resource & {
     | {
         type: typeof ResourceType.ASSIGNMENT;
         Assignment: Assignment;
+        Discussion: undefined;
       }
     | {
         type: typeof ResourceType.DISCUSSION;
+        Assignment: undefined;
         Discussion: Discussion;
       }
     | {
         type: typeof ResourceType.NORMAL_POST;
+        Assignment: undefined;
+        Discussion: undefined;
       }
   );
 
@@ -69,7 +73,7 @@ export const ClientAPI = {
   , updateUser:                  requestFn(update<User>,             `/api/users/[userid]`)
   , updateClassroom:             requestFn(update<Classroom>,        `/api/users/[userid]/classrooms/[classid]`) // ✅
   , updateCategory:              requestFn(update<Category>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , updateResource:              requestFn(update<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/sections/[sectid]/resources/[resid]`)
+  , updateResource:              requestFn(update<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
 
   , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`) // ✅
   , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)

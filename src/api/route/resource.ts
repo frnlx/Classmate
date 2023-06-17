@@ -102,12 +102,7 @@ const resource = {
     });
   },
 
-  async createResource(
-    _,
-    res,
-    [uid, cid, catid, rid],
-    body: ResourceFormSchema
-  ) {
+  async createResource(_, res, [uid, cid, catid], body: ResourceFormSchema) {
     const resource = await prisma.resource.create({
       data: {
         title: body.title,
@@ -151,6 +146,51 @@ const resource = {
 
     return res.json(resource);
   },
+
+  async updateResource(
+    _,
+    res,
+    [uid, cid, catid, rid],
+    body: ResourceFormSchema
+  ) {
+    const resource = await prisma.resource.findFirstOrThrow({
+      where: { id: rid },
+    });
+
+    if (body.type !== resource.type) {
+      throw Error("Cannot do that");
+    }
+
+    const updatedResource = await prisma.resource.update({
+      where: { id: rid },
+      data: {
+        title: body.title,
+        content: body.content,
+      },
+    });
+
+    if (body.type === ResourceType.ASSIGNMENT) {
+      await prisma.assignment.update({
+        where: { id: rid },
+        data: {
+          dueDate: body.dueDate,
+          point: body.point,
+          xpReward: body.xp,
+        },
+      });
+    } else if (body.type === ResourceType.DISCUSSION) {
+      await prisma.discussion.update({
+        where: { id: rid },
+        data: {
+          dueDate: body.dueDate,
+          point: body.point,
+          xpReward: body.xp,
+        },
+      });
+    }
+
+    return res.json(updatedResource);
+  },
 } satisfies HandlerLookup;
 
 export const resourceRoutes: RouteLookupType = {
@@ -167,4 +207,6 @@ export const resourceRoutes: RouteLookupType = {
     resource.deleteComment,
   "DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]":
     resource.deleteResource,
+  "PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]":
+    resource.updateResource,
 };

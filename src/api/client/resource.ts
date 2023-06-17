@@ -58,6 +58,27 @@ export function useCreateResource(classid: string, catid: string) {
   });
 }
 
+export function useUpdateResource(
+  classid: string,
+  catid: string,
+  resid: string
+) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn(data: ResourceFormSchema) {
+      return ClientAPI.updateResource({ userid, classid, catid, resid }).with(
+        data
+      );
+    },
+
+    onSuccess() {
+      qc.invalidateQueries(["category", catid, "resources"]);
+    },
+  });
+}
+
 export function useCreateComment(
   classid: string,
   catid: string,
