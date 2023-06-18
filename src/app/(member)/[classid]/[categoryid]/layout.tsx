@@ -41,7 +41,7 @@ export default async function CategoryPage({ children, params }: LayoutProps) {
 
   return (
     <div className="m-8 flex flex-col gap-4 w-full h-max">
-      <Header title={category.title} />
+      <Header title={category.title} classId={classid} />
       <div className="flex flex-row space-x-4">
         <ResourceList />
         {children}
