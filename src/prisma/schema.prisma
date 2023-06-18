@@ -11,29 +11,56 @@ datasource db {
 }
 
 model User {
-  id           String       @id @unique
-  name         String
-  created_at   DateTime     @default(now())
-  pfp          String
-  classes      Classroom[]
-  ownedClasses Classroom[]  @relation("owner")
-  Comment      Comment[]
-  Submission   Submission[]
-  Resource     Resource[]
+  id            String       @id @unique
+  name          String
+  created_at    DateTime     @default(now())
+  pfp           String
+  memberClasses Member[]
+  ownedClasses  Classroom[]  @relation("owner")
+  Comment       Comment[]
+  Submission    Submission[]
+  Resource      Resource[]
+}
+
+model Member {
+  id        String    @id @default(cuid())
+  user      User      @relation(fields: [userId], references: [id])
+  classroom Classroom @relation(fields: [classroomId], references: [id])
+  xp        Int       @default(0)
+  points    Int       @default(0)
+  inactive  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  userId       String
+  classroomId  String
+  MemberReward MemberReward[]
+}
+
+model MemberReward {
+  id        String    @id @default(cuid())
+  member    Member    @relation(fields: [memberId], references: [id])
+  name      String
+  classroom Classroom @relation(fields: [classroomId], references: [id])
+  note      String
+  redeemed  Boolean   @default(false)
+
+  memberId    String
+  classroomId String
 }
 
 model Classroom {
-  id          String     @id @default(cuid())
-  name        String
-  members     User[]
-  owner       User       @relation("owner", fields: [ownerId], references: [id])
-  ownerId     String
-  categories  Category[]
-  created_at  DateTime   @default(now())
-  inviteID    String     @unique
-  subject     String?
-  description String?
-  emoji       String?
+  id           String         @id @default(cuid())
+  name         String
+  members      Member[]
+  owner        User           @relation("owner", fields: [ownerId], references: [id])
+  ownerId      String
+  categories   Category[]
+  created_at   DateTime       @default(now())
+  inviteID     String         @unique
+  subject      String?
+  description  String?
+  emoji        String?
+  MemberReward MemberReward[]
 }
 
 model Category {
