@@ -1,7 +1,8 @@
 import { Comment, ResourceType } from "@prisma/client"
 import { Assignment, Category, Classroom, Discussion, Resource, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
-
+import { routes } from "../routes"
+import { NextResponse } from "next/server"
 
 type ClientAPISimple = {
   [model: string]: ( params: any ) => any
@@ -50,46 +51,88 @@ export type IdResponse<T> = {
   id: T
 }
 
+export type method =
+  | "GET"
+  | "POST"
+  | "PATCH"
+  | "DELETE"
+  | "PUT"
+
 // alt+shift+a " \(|=>"
 // export const ClientAPI = {
 
 // alt+shift+a requestFn\(||`/
 export const ClientAPI = {
 
-  getUser:                       requestFn(fetch<User>,                       `/api/users/[userid]`) // ✅
-  , getClassroomList:            requestFn(fetch<Classroom[]>,                `/api/users/[userid]/classrooms`) // ✅
-  , getClassroom:                requestFn(fetch<ClassroomWithOwner>,         `/api/users/[userid]/classrooms/[classid]`) // ✅
-  , getClassroomMembers:         requestFn(fetch<User[]>,                     `/api/users/[userid]/classrooms/[classid]/members`) // ✅
-  , getCategoryList:             requestFn(fetch<Category[]>,                 `/api/users/[userid]/classrooms/[classid]/categories`)  // ✅
-  , getCategory:                 requestFn(fetch<Category>,                   `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)  // ✅
-  , getResourceList:             requestFn(fetch<ResourcePopulated[]>,        `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources`)
-  , getResource:                 requestFn(fetch<ResourcePopulated>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
-  , getComments:                 requestFn(fetch<CommentWithUser[]>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
+  getUser:                       anotherLayer("GET:/users/[userid]") // ✅
+  , getClassroomList:            anotherLayer("GET:/users/[userid]/classrooms") // ✅
+  , getClassroom:                anotherLayer("GET:/users/[userid]/classrooms/[classid]") // ✅
+  , getClassroomMembers:         anotherLayer("GET:/users/[userid]/classrooms/[classid]/members") // ✅
+  , getCategoryList:             anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories")  // ✅
+  , getCategory:                 anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[catid]")  // ✅
+  , getResourceList:             anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources")
+  , getResource:                 anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[categoryid]/resources/[resourceid]")
+  , getComments:                 anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment")
 
   // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
-  , createAttachment:            requestFn(create<IdResponse<string>>,         `/api/users/[userid]/attachment`)
-  , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
-  , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , createComment:               requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
+  , createAttachment:            anotherLayer(`POST:/users/[userid]/attachment`)
+  , createCategory:              anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories`)
+  , createResource:              anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[categoryid]`)
+  , createComment:               anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
 
-  , joinClassroom:               requestFn(join<Classroom>,          `/api/users/[userid]/classrooms/[classid]`) // ✅
+  , joinClassroom:               anotherLayer(`PUT:/users/[userid]/classrooms/[classid]`) // ✅
 
-  , updateUser:                  requestFn(update<User>,             `/api/users/[userid]`)
-  , updateClassroom:             requestFn(update<Classroom>,        `/api/users/[userid]/classrooms/[classid]`) // ✅
-  , updateCategory:              requestFn(update<Category>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , updateResource:              requestFn(update<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
+  , updateUser:                  anotherLayer("PATCH:/users/[userid]")
+  , updateClassroom:             anotherLayer("PATCH:/users/[userid]/classrooms/[classid]") // ✅
+  // , updateCategory:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]")
+  , updateResource:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]")
 
-  , deleteClassroom:             requestFn(remove<Classroom[]>,      `/api/users/[userid]/classrooms/[classid]`) // ✅
-  , deleteCategory:              requestFn(remove<Category[]>,       `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
-  , deleteResource:              requestFn(remove<MessageResponse>,  `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]`)
-  , deleteComment:               requestFn(remove<MessageResponse>,  `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]`)
-  , leaveClassroom:              requestFn(remove<Classroom>,        `/api/users/[userid]/classrooms/[classid]/leave`) // ✅
+  , deleteClassroom:             anotherLayer("DELETE:/users/[userid]/classrooms/[classid]") // ✅
+  , deleteCategory:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]")
+  , deleteResource:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]")
+  , deleteComment:               anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]")
+  , leaveClassroom:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/leave") // ✅
 
 } satisfies ClientAPISimple
 
+type AllRoutes = keyof typeof routes
+type ExtractMethod<Routing extends AllRoutes> =
+  Routing extends `${infer RequestMethod & method}:${infer RouteUrl}`
+  ? [RequestMethod, RouteUrl]
+  : never
 
+interface RequestFunctionSig<T> {
+  "GET": Promise<T>,
+  "DELETE": Promise<T>
+  "POST": {
+    with: (data: Object) => Promise<T>;
+  }
+  "PATCH": {
+    with: (data: Object) => Promise<T>;
+  }
+  "PUT": Promise<T>
+}
 
-
+type ExtractResponse<T extends (...args: any) => any> = ReturnType<T> extends Promise<NextResponse<infer U>> ? U : never;
+function anotherLayer<Route extends AllRoutes>(route: Route): ReturnType<typeof requestFn<RequestFunctionSig<ExtractResponse<(typeof routes)[Route]>>[ExtractMethod<Route>[0]], ExtractMethod<Route>[1]>> {
+  const [method, url] = route.split(":") as ExtractMethod<Route>
+  if (method === "GET") {
+    // @ts-ignore
+    return requestFn(fetch<ExtractResponse<(typeof routes)[Route]>>, `/api${url}`)
+  } else if (method === "POST") {
+    // @ts-ignore
+    return requestFn(create<(typeof routes)[Route]>, `/api${url}`)
+  }else if (method === "PATCH") {
+    // @ts-ignore
+    return requestFn(update<(typeof routes)[Route]>, `/api${url}`)
+  } else if (method === "DELETE") {
+    // @ts-ignore
+    return requestFn(remove<(typeof routes)[Route]>, `/api${url}`)
+  } else {
+    // @ts-ignore
+    return requestFn(join<(typeof routes)[Route]>, `/api${url}`)
+  } 
+}
 
 
 

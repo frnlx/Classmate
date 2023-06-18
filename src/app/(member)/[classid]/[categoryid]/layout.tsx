@@ -31,7 +31,7 @@ export default async function CategoryPage({ children, params }: LayoutProps) {
         id: classid,
         members: {
           some: {
-            id: await getUserId(),
+            userId: await getUserId(),
           },
         },
       },

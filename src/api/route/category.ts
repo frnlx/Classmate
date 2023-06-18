@@ -6,20 +6,10 @@ const category = {
   // ✅ Idempotent // ❌ Untested
   async getData(_, res, [uid, cid, catid]) {
     await membersOnly();
-    const data = await prisma.user.findUniqueOrThrow({
-      where: { id: uid },
-      select: {
-        classes: {
-          where: { id: cid },
-          select: {
-            categories: {
-              where: { id: catid },
-            },
-          },
-        },
-      },
+    const data = await prisma.category.findUniqueOrThrow({
+      where: { id: catid },
     });
-    return res.json(data.classes[0].categories[0]);
+    return res.json(data);
   },
 
   // ✅ Idempotent // ❌ Untested
@@ -28,18 +18,22 @@ const category = {
     const data = await prisma.user.findUniqueOrThrow({
       where: { id: uid },
       include: {
-        classes: {
-          where: { id: cid },
+        memberClasses: {
+          where: { classroomId: cid },
           include: {
-            categories: {
-              where: { id: catid },
+            classroom: {
               include: {
-                Resource: {
+                categories: {
+                  where: { id: catid },
                   include: {
-                    Assignment: true,
-                    Discussion: true,
-                    _count: {
-                      select: { Comment: true },
+                    Resource: {
+                      include: {
+                        Assignment: true,
+                        Discussion: true,
+                        _count: {
+                          select: { Comment: true },
+                        },
+                      },
                     },
                   },
                 },
@@ -49,7 +43,7 @@ const category = {
         },
       },
     });
-    return res.json(data.classes[0].categories[0].Resource);
+    return res.json(data.memberClasses[0].classroom.categories[0].Resource);
   },
 
   async deleteCategory(_, res, [uid, cid, catid]) {
@@ -57,11 +51,11 @@ const category = {
   },
 } satisfies HandlerLookup;
 
-export const categoryRoutes: RouteLookupType = {
+export const categoryRoutes = {
   "GET:/users/[userid]/classrooms/[classid]/categories/[catid]":
     category.getData,
   "DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]":
     category.deleteCategory,
   "GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources":
     category.getResources,
-};
+} satisfies RouteLookupType;

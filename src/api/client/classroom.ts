@@ -1,8 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ClassroomWithOwner, ClientAPI } from "./api";
 import { useUserid } from "./auth";
-import { Classroom, User } from "@prisma/client";
+import { Classroom, Member, User } from "@prisma/client";
 import { EditClassroomFormSchema } from "@/components/form/EditClassForm";
+
+type MemberWithUser = Member & {
+  user: User;
+};
 
 // Get Class -- 'GET:/classrooms/[classid]' -- https://notion.so/skripsiadekelas/5c9abfbdf06948728a6127e6d5327954
 export function useClassroomQuery(
@@ -27,7 +31,7 @@ export function useClassroomQuery(
 // Get Class Members -- 'GET:/classrooms/[classid]/members'
 export function useClassroomMembersQuery(
   classid: string,
-  initialData?: User[]
+  initialData?: MemberWithUser[]
 ) {
   const userid = useUserid();
   return useQuery({

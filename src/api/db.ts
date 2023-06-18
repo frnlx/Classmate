@@ -1,70 +1,74 @@
-import { prisma } from "@/lib/db"
-import { ServerFunctionError } from "@/lib/error"
-import { Category, Classroom, Resource, Section } from "@prisma/client"
-
-export type SectionIncludeResources = Section & { post: Resource[] }
-
+import { prisma } from "@/lib/db";
+import { ServerFunctionError } from "@/lib/error";
+import { Category, Classroom, Resource } from "@prisma/client";
 
 // Semi-Pure DB Methods
 // NO SIDE EFFECTS
 // Prisma one and only
 export const db = {
-
   // ✅ USER
   async getUser(id: string) {
     return await prisma.user.findUnique({
-      where: { id }
-    })
+      where: { id },
+    });
   },
   // ✅ USER -> CLASSROOM[]
   async getUserJoinedClassroomList(id: string) {
     return await prisma.user.findUnique({
       where: { id },
       include: {
-        classes: true
-      }
-    })
+        memberClasses: true,
+      },
+    });
   },
   // ✅ USER -> CLASSROOM[] -> [] -> CATEGORIES []
   async getUserClassroomCategories(id: string, classid: string) {
     return await prisma.user.findUnique({
       where: { id },
       include: {
-        classes: {
+        memberClasses: {
           include: {
-            categories: {
-              where: {
-                classroomId: classid
-              }
-            }
-          }
-        }
-      }
-    })
+            classroom: {
+              include: {
+                categories: {
+                  where: {
+                    classroomId: classid,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
   },
   // ✅ USER -> CLASSROOM[] -> [] -> CATEGORIES [] -> [] -> SECTIONS[] & RESOURCES[]
-  async getUserClassroomCategoriesSectionsAndResourcse(id: string, classid: string, categories: string) {
+  async getUserClassroomCategoriesSectionsAndResourcse(
+    id: string,
+    classid: string,
+    categories: string
+  ) {
     return await prisma.user.findUnique({
       where: { id },
       include: {
-        classes: {
+        memberClasses: {
           include: {
-            categories: {
-              where: {
-                classroomId: classid
-              },
+            classroom: {
               include: {
-                sections: {
+                categories: {
+                  where: {
+                    classroomId: classid,
+                  },
                   include: {
-                    post: true
-                  }
-                }
-              }
-            }
+                    Resource: true,
+                  },
+                },
+              },
+            },
           },
-        }
-      }
-    })
+        },
+      },
+    });
   },
 
   // Get all data required in user data
@@ -72,23 +76,20 @@ export const db = {
     return await prisma.user.findUniqueOrThrow({
       where: { id },
       include: {
-        classes: {
+        memberClasses: {
           include: {
-            categories: {
+            classroom: {
               include: {
-                sections: {
+                categories: {
                   include: {
-                    post: true
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    })
-  }
-
-
-  
-}
+                    Resource: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+  },
+};

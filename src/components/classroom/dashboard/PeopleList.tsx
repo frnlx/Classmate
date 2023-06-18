@@ -64,7 +64,7 @@ export function PeopleList({ classId }: { classId: string }) {
           return (
             <PeopleRow
               key={user.id}
-              user={user}
+              user={user.user}
               isAdmin={false}
               classId={classId}
               ownerId={classroom?.ownerId ?? ""}
@@ -74,12 +74,12 @@ export function PeopleList({ classId }: { classId: string }) {
       </div>
 
       <PeopleModal
-        users={data ?? []}
+        users={data?.map((u) => u.user) ?? []}
         isAdmin={isAdmin}
         classId={classId}
         ownerId={classroom?.ownerId ?? ""}
       >
-        <ModalButton label="Open List" onClick={ () => { } } />
+        <ModalButton label="Open List" onClick={() => {}} />
       </PeopleModal>
     </div>
   );
@@ -90,17 +90,13 @@ export function PeopleModal({
   isAdmin,
   classId,
   ownerId,
-  children
+  children,
 }: {
   users: User[];
-  children: ReactNode
+  children: ReactNode;
 } & CommonProps) {
   return (
-    <ModalBase
-      title="People"
-      trigger={children}
-      size="lg"
-    >
+    <ModalBase title="People" trigger={children} size="lg">
       <div className="flex flex-col gap-y-2">
         {users.map((user) => {
           return (

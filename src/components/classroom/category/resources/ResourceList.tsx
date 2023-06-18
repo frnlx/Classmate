@@ -36,6 +36,7 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
   return (
     <div className="flex flex-col gap-2 flex-none basis-1/3">
       {data?.map((resources) => (
+        /* @ts-ignore */
         <ResourceItem key={resources.id} resource={resources} />
       ))}
     </div>

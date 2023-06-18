@@ -2,78 +2,104 @@ import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 import { nanoid } from "nanoid";
-import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm"
+import { InferedCreateClassroomFormSchema } from "@/components/form/CreateClassForm";
 import { EditProfileFormSchema } from "@/components/home/dashboard/EditProfile";
 
-
 const user = {
-
   // ✅ Idempotent // ❌ Untested
   async getData(_, res, [id]) {
-    await membersOnly()
+    await membersOnly();
     const data = await prisma.user.findUniqueOrThrow({
-      where: { id }
-    })
-    return res.json(data)
+      where: { id },
+    });
+    return res.json(data);
   },
 
   // ✅ Idempotent // ❌ Untested
   async getClassrooms(_, res, [id]) {
-    await membersOnly()
+    await membersOnly();
     const data = await prisma.user.findUniqueOrThrow({
       where: { id },
-      include: { classes: true }
-    })
-    return res.json(data.classes)
+      include: {
+        memberClasses: {
+          where: {
+            inactive: false,
+          },
+          include: {
+            classroom: true,
+          },
+        },
+      },
+    });
+    return res.json(data.memberClasses);
   },
 
   // ✅ Idempotent // ❌ Untested
   async updateUser(_, res, [id], body: EditProfileFormSchema) {
-    await membersOnly()
+    await membersOnly();
     const updatedUser = await prisma.user.update({
       where: { id },
       data: {
-        name: body.name
-      }
-    })
-    return res.json(updatedUser)
+        name: body.name,
+      },
+    });
+    return res.json(updatedUser);
   },
 
   // ✅ Idempotent // ❌ Untested
   async deleteUser(_, res, [id]) {
-    await membersOnly()
+    await membersOnly();
     const removedUser = await prisma.user.delete({
       where: { id },
-    })
-    return res.json(removedUser)
+    });
+    return res.json(removedUser);
   },
 
   // ✅ Idempotent // ❌ Untested
   async joinClassroom(_, res, [uid, cid]) {
-    await membersOnly()
+    await membersOnly();
     try {
+      const data = await prisma.user.findMany({
+        where: {
+          id: uid,
+          memberClasses: {
+            some: {
+              classroom: {
+                inviteID: cid,
+              },
+            },
+          },
+        },
+      });
+      if (data.length !== 0) throw "AlreadyJoined";
 
-      const data = await prisma.user.findUniqueOrThrow({
-        where: { id: uid },
-        select: { classes: { where: { inviteID: cid } } }
-      })
-      if (data.classes[0]) throw 'AlreadyJoined'
+      console.log("MASUSDH");
+      const classroom = await prisma.classroom.findUniqueOrThrow({
+        where: { inviteID: cid },
+      });
 
+      console.log("AAAAAAAA");
       await prisma.user.update({
         where: { id: uid },
-        data: { classes: { connect: { inviteID: cid } } }
-      })
+        data: {
+          memberClasses: {
+            create: {
+              classroom: {
+                connect: { id: classroom.id },
+              },
+            },
+          },
+        },
+      });
 
-      const classroom = await prisma.classroom.findUniqueOrThrow({
-        where: { inviteID: cid }
-      })
-      return res.json(classroom)
-
+      return res.json(classroom);
     } catch (error: any) {
-      if (error === 'AlreadyJoined')
-        return res.ok()
-      else
-        throw error
+      if (error === "AlreadyJoined") {
+        const classroom = await prisma.classroom.findUniqueOrThrow({
+          where: { inviteID: cid },
+        });
+        return res.json(classroom);
+      } else throw error;
     }
   },
 
@@ -121,45 +147,48 @@ const user = {
 
   // ❌ Non-Idempotent // ❌ Untested
   async leaveClassroom(_, res, [uid, cid]) {
-    await membersOnly()
+    await membersOnly();
     try {
-      
-      const data = await prisma.user.findUniqueOrThrow({
-        where: { id: uid },
-        select: { classes: { where: { id: cid } } }
-      })
-      if (!data.classes[0]) throw 'NotJoined'
+      const member = await prisma.member.findFirst({
+        where: {
+          userId: uid,
+          classroomId: cid,
+        },
+        select: {
+          id: true,
+        },
+      });
+      if (!member) throw "NotJoined";
 
-      await prisma.user.update({
-        where: { id: uid },
-        data: { classes: { disconnect: { id: cid } } }
-      })
+      await prisma.member.updateMany({
+        where: { userId: uid, classroomId: cid },
+        data: {
+          inactive: true,
+        },
+      });
 
       const classroom = await prisma.classroom.findUniqueOrThrow({
-        where: {id: cid}
-      })
-      return res.json(classroom)
+        where: { id: cid },
+      });
+      return res.json(classroom);
     } catch (error: any) {
-      if (error === 'NotJoined')
-        return res.ok()
-      else
-        throw error
+      if (error === "NotJoined") {
+        const classroom = await prisma.classroom.findUniqueOrThrow({
+          where: { id: cid },
+        });
+        return res.json(classroom);
+      }
+      throw error;
     }
   },
+} satisfies HandlerLookup;
 
-} satisfies HandlerLookup
-
-
-
-
-
-export const userRoutes: RouteLookupType = {
-     'GET:/users/[userid]':                            user.getData,
-  'DELETE:/users/[userid]':                            user.deleteUser,
-   'PATCH:/users/[userid]':                            user.updateUser,
-     'GET:/users/[userid]/classrooms':                 user.getClassrooms,
-     'PUT:/users/[userid]/classrooms/[classid]':       user.joinClassroom,
-    // 'POST:/users/[userid]/classrooms':                 user.createClassroom,
-  'DELETE:/users/[userid]/classrooms/[classid]/leave': user.leaveClassroom
-
-}
+export const userRoutes = {
+  "GET:/users/[userid]": user.getData,
+  "DELETE:/users/[userid]": user.deleteUser,
+  "PATCH:/users/[userid]": user.updateUser,
+  "GET:/users/[userid]/classrooms": user.getClassrooms,
+  "PUT:/users/[userid]/classrooms/[classid]": user.joinClassroom,
+  // 'POST:/users/[userid]/classrooms':                 user.createClassroom,
+  "DELETE:/users/[userid]/classrooms/[classid]/leave": user.leaveClassroom,
+} satisfies RouteLookupType;

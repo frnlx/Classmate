@@ -1,7 +1,7 @@
-import { getUserId } from "@/lib/auth"
-import { prisma } from "@/lib/db"
-import { color } from "@/lib/logger/chalk"
-import { cache } from "react"
+import { getUserId } from "@/lib/auth";
+import { prisma } from "@/lib/db";
+import { color } from "@/lib/logger/chalk";
+import { cache } from "react";
 
 export const getClassroomData = cache(async (classid: string) => {
   return await prisma.classroom.findFirst({
@@ -9,28 +9,35 @@ export const getClassroomData = cache(async (classid: string) => {
       id: classid,
       members: {
         some: {
-          id: await getUserId()
-        }
-      }
+          id: await getUserId(),
+        },
+      },
     },
     include: {
-      categories: true
-    }
-  })
-})
+      categories: true,
+    },
+  });
+});
 
 export const getUserData = cache(async (userid: string) => {
-  color.green('User data fetched fresh')
+  color.green("User data fetched fresh");
   return await prisma.user.findUnique({
     where: {
       id: userid,
     },
     include: {
-      classes: {
+      memberClasses: {
+        where: {
+          inactive: false,
+        },
         include: {
-          categories: true
-        }
-      }
-    }
-  })
-})
+          classroom: {
+            include: {
+              categories: true,
+            },
+          },
+        },
+      },
+    },
+  });
+});

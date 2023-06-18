@@ -18,21 +18,25 @@ const resource = {
     const data = await prisma.user.findUniqueOrThrow({
       where: { id: uid },
       select: {
-        classes: {
-          where: { id: cid },
-          select: {
-            categories: {
-              where: { id: catid },
-              include: {
-                Resource: {
-                  where: {
-                    id: rid,
-                  },
+        memberClasses: {
+          where: { classroomId: cid },
+          include: {
+            classroom: {
+              select: {
+                categories: {
+                  where: { id: catid },
                   include: {
-                    Assignment: true,
-                    Discussion: true,
-                    _count: {
-                      select: { Comment: true },
+                    Resource: {
+                      where: {
+                        id: rid,
+                      },
+                      include: {
+                        Assignment: true,
+                        Discussion: true,
+                        _count: {
+                          select: { Comment: true },
+                        },
+                      },
                     },
                   },
                 },
@@ -43,7 +47,7 @@ const resource = {
       },
     });
 
-    return res.json(data.classes[0].categories[0].Resource[0]);
+    return res.json(data.memberClasses[0].classroom.categories[0].Resource[0]);
   },
 
   async getResourceComments(_, res, [uid, cid, catid, rid]) {
@@ -189,12 +193,13 @@ const resource = {
     };
 
     if (body.attachmentId) {
-      await prisma.resource.update({
-        where: { id: rid },
-        data: {
-          attachment: { delete: true },
-        },
-      });
+      resource.attachmentId &&
+        (await prisma.resource.update({
+          where: { id: rid },
+          data: {
+            attachment: { delete: true },
+          },
+        }));
       newData.attachment = { connect: { id: body.attachmentId } };
     }
 
@@ -249,7 +254,7 @@ const resource = {
   },
 } satisfies HandlerLookup;
 
-export const resourceRoutes: RouteLookupType = {
+export const resourceRoutes = {
   // Get Resource	https://notion.so/skripsiadekelas/b362f54d439f48e2ba91828fb82c4590
   "POST:/users/[userid]/attachment": resource.createAttachment,
   "GET:/attachment/[attachmentid]": resource.getAttachment,
@@ -267,4 +272,4 @@ export const resourceRoutes: RouteLookupType = {
     resource.deleteResource,
   "PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]":
     resource.updateResource,
-};
+} satisfies RouteLookupType;

@@ -1,4 +1,3 @@
-import { useGetResource } from "@/api/client/resource";
 import { useRoom } from "@/app/(member)/-Navbar/Navbar";
 import { usePage } from "../../../../app/(member)/[classid]/-Sidebar/Pages";
 import Link from "next/link";

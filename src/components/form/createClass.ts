@@ -32,7 +32,7 @@ export async function SAcreateClass(values: InferedCreateClassroomFormSchema) {
       subject: values.subject,
       emoji: values.emoji,
       members: {
-        connect: { id: session.user.id }, // will throw if not found
+        create: { userId: session.user.id }, // will throw if not found
       },
       owner: {
         connect: { id: session.user.id }, // will throw if not found
