@@ -14,7 +14,6 @@ import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string().nonempty("can't be empty").max(64, "too long"),
-  bio: z.string().optional(),
 });
 export type EditProfileFormSchema = z.infer<typeof formSchema>;
 
@@ -25,8 +24,6 @@ function EditProfileForm(p: { onCancel: () => void; onUpdated: () => void }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: session.data?.user.name ?? "",
-      // FIXME: This thing
-      //   bio: session.data?.user.bio ?? "",
     },
     mode: "onBlur",
   });
@@ -64,20 +61,6 @@ function EditProfileForm(p: { onCancel: () => void; onUpdated: () => void }) {
               </div>
               <FormControl>
                 <TextInput {...field} />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex gap-1 align-bottom h-3">
-                <FormLabel>Bio</FormLabel> <FormMessage />
-              </div>
-              <FormControl>
-                <TextAreaInput rows={20} {...field} />
               </FormControl>
             </FormItem>
           )}

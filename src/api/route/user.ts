@@ -33,8 +33,7 @@ const user = {
     const updatedUser = await prisma.user.update({
       where: { id },
       data: {
-        name: body.name,
-        bio: body.bio
+        name: body.name
       }
     })
     return res.json(updatedUser)

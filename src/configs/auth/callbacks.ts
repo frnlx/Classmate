@@ -31,7 +31,6 @@ export async function udpateJWTfromOAuth(
       data: {
         id: extractedUser.id,
         name: defaultname,
-        bio: '',
         pfp: defaultpfp,
       }
     })
