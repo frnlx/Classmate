@@ -111,6 +111,7 @@ function ResourceForm(p: {
                       onChange={(event) =>
                         field.onChange(new Date(event.target.value))
                       }
+                      value={field.value.toISOString().slice(0, -1)}
                     />
                   </FormControl>
                 </FormItem>
