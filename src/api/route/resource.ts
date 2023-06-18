@@ -76,12 +76,23 @@ const resource = {
 
   async deleteComment(_, res, [uid, cid, catid, rid, commentid]) {
     await membersOnly();
-    await prisma.comment.deleteMany({
-      where: {
-        id: BigInt(commentid),
-        userId: uid,
-      },
+    const classroom = await prisma.classroom.findFirstOrThrow({
+      where: { id: cid },
     });
+    if (classroom.ownerId === uid) {
+      await prisma.comment.delete({
+        where: {
+          id: BigInt(commentid),
+        },
+      });
+    } else {
+      await prisma.comment.deleteMany({
+        where: {
+          id: BigInt(commentid),
+          userId: uid,
+        },
+      });
+    }
 
     return res.json({
       message: "OK",
