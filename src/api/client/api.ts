@@ -46,6 +46,9 @@ export type MessageResponse = {
   message: string
 }
 
+export type IdResponse<T> = {
+  id: T
+}
 
 // alt+shift+a " \(|=>"
 // export const ClientAPI = {
@@ -64,6 +67,7 @@ export const ClientAPI = {
   , getComments:                 requestFn(fetch<CommentWithUser[]>,          `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
 
   // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
+  , createAttachment:            requestFn(create<IdResponse<string>>,         `/api/users/[userid]/attachment`)
   , createCategory:              requestFn(create<Category>,         `/api/users/[userid]/classrooms/[classid]/categories`)
   , createResource:              requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]`)
   , createComment:               requestFn(create<Resource>,         `/api/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)

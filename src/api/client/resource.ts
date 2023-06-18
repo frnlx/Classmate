@@ -4,6 +4,7 @@ import { useUserid } from "./auth";
 import { Comment, Resource } from "@prisma/client";
 import { ResourceFormSchema } from "@/components/classroom/category/resources/AddResource";
 import { CommentFormSchema } from "@/components/classroom/category/post/CommentSection";
+import { AttachmentRequest } from "../route/resource";
 
 // Get Section Resources -- 'GET:/classrooms/[classid]/categories/[categoryid]/sections/[sectionid]/resources' -- https://notion.so/skripsiadekelas/63010a1242af4058898dce5b067f5da0
 export const useCategoryResources = (
@@ -177,6 +178,17 @@ export function useDeleteResource(classid: string, catid: string) {
 
     onSuccess() {
       qc.invalidateQueries(["category", catid, "resources"]);
+    },
+  });
+}
+
+export function useCreateAttachment() {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn(data: AttachmentRequest) {
+      return ClientAPI.createAttachment({ userid }).with(data);
     },
   });
 }

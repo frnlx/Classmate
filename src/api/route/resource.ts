@@ -6,6 +6,11 @@ import { ResourceFormSchema } from "@/components/classroom/category/resources/Ad
 import { ResourceType } from "@prisma/client";
 import { CommentFormSchema } from "@/components/classroom/category/post/CommentSection";
 
+export type AttachmentRequest = {
+  filename: string;
+  data: string;
+};
+
 const resource = {
   async getData(_, res, [uid, cid, catid, rid]) {
     await membersOnly();
@@ -114,19 +119,25 @@ const resource = {
   },
 
   async createResource(_, res, [uid, cid, catid], body: ResourceFormSchema) {
-    const resource = await prisma.resource.create({
-      data: {
-        title: body.title,
-        content: body.content,
-        category: {
-          connect: { id: catid },
-        },
-        user: {
-          connect: { id: uid },
-        },
-        type: body.type,
-        order: 0,
+    const dbData: any = {
+      title: body.title,
+      content: body.content,
+      category: {
+        connect: { id: catid },
       },
+      user: {
+        connect: { id: uid },
+      },
+      type: body.type,
+      order: 0,
+    };
+
+    if (body.attachmentId) {
+      dbData.attachment = { connect: { id: body.attachmentId } };
+    }
+
+    const resource = await prisma.resource.create({
+      data: dbData,
     });
 
     if (body.type === ResourceType.NORMAL_POST) {
@@ -172,12 +183,24 @@ const resource = {
       throw Error("Cannot do that");
     }
 
+    let newData: any = {
+      title: body.title,
+      content: body.content,
+    };
+
+    if (body.attachmentId) {
+      await prisma.resource.update({
+        where: { id: rid },
+        data: {
+          attachment: { delete: true },
+        },
+      });
+      newData.attachment = { connect: { id: body.attachmentId } };
+    }
+
     const updatedResource = await prisma.resource.update({
       where: { id: rid },
-      data: {
-        title: body.title,
-        content: body.content,
-      },
+      data: newData,
     });
 
     if (body.type === ResourceType.ASSIGNMENT) {
@@ -202,10 +225,34 @@ const resource = {
 
     return res.json(updatedResource);
   },
+
+  async createAttachment(_, res, __, body: AttachmentRequest) {
+    const attachment = await prisma.attachment.create({
+      data: {
+        filename: body.filename,
+        data: body.data,
+      },
+    });
+
+    return res.json({
+      id: attachment.id,
+    });
+  },
+
+  async getAttachment(_, res, [aid]) {
+    const attachment = await prisma.attachment.findUniqueOrThrow({
+      where: { id: aid },
+    });
+
+    const data = await fetch(attachment.data);
+    return res.send(await data.blob(), attachment.filename);
+  },
 } satisfies HandlerLookup;
 
 export const resourceRoutes: RouteLookupType = {
   // Get Resource	https://notion.so/skripsiadekelas/b362f54d439f48e2ba91828fb82c4590
+  "POST:/users/[userid]/attachment": resource.createAttachment,
+  "GET:/attachment/[attachmentid]": resource.getAttachment,
   "GET:/users/[userid]/classrooms/[classid]/categories/[categoryid]/resources/[resourceid]":
     resource.getData,
   "POST:/users/[userid]/classrooms/[classid]/categories/[categoryid]":

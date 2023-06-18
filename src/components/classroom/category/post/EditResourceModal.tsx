@@ -8,6 +8,7 @@ import {
   TextInput,
   TextAreaInput,
   SelectInput,
+  AttachmentInput,
 } from "@/components/static/Inputs";
 import { ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Form, FormField, FormItem } from "@/components/use-client/form/Form";
@@ -60,6 +61,10 @@ function ResourceForm(p: {
     }
   }
 
+  function onAttachmentUploaded(attachmentId: string) {
+    form.setValue("attachmentId", attachmentId);
+  }
+
   const valid = form.formState.isValid;
   return (
     <Form {...form}>
@@ -93,6 +98,18 @@ function ResourceForm(p: {
             </FormItem>
           )}
         />
+
+        <FormItem>
+          <div className="flex gap-1 align-bottom h-3">
+            <FormLabel>Attachment (optional)</FormLabel>
+          </div>
+          <FormControl>
+            <AttachmentInput onUploaded={onAttachmentUploaded} />
+            <span className="text-sm text-light1">
+              NOTE: If no attachment is given, we will use previous attachment
+            </span>
+          </FormControl>
+        </FormItem>
 
         {p.resource.type !== ResourceType.NORMAL_POST && (
           <>

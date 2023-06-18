@@ -8,7 +8,10 @@ export const Res = {
   json:    <T>(data: T) => NextResponse.json(data, { status: 200 }),
   created: <T>(data: T) => NextResponse.json(data, { status: 201 }),
   ok:      () => new NextResponse(undefined, { status: 204 }),
-
+  send: (data: Blob, filename: string) => new Response(data, { status: 200, headers: {
+    "Content-Type": data.type,
+    "Content-Disposition": `attachment; filename="${filename}"`
+  } })
 };
 
 

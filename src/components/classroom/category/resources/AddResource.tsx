@@ -7,6 +7,7 @@ import {
   TextInput,
   TextAreaInput,
   SelectInput,
+  AttachmentInput,
 } from "@/components/static/Inputs";
 import { ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Form, FormField, FormItem } from "@/components/use-client/form/Form";
@@ -24,6 +25,7 @@ const baseSchema = z.object({
   title: z.string().nonempty("can't be empty").max(64, "too long"),
   content: z.string().nonempty("can't be empty"),
   type: z.nativeEnum(ResourceType),
+  attachmentId: z.string().optional(),
 });
 
 export const resourceFormSchema = z
@@ -77,6 +79,10 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
     } catch (error: any) {
       form.setError("root", error?.message);
     }
+  }
+
+  function onAttachmentUploaded(attachmentId: string) {
+    form.setValue("attachmentId", attachmentId);
   }
 
   const valid = form.formState.isValid;
@@ -141,6 +147,15 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                 </FormItem>
               )}
             />
+
+            <FormItem>
+              <div className="flex gap-1 align-bottom h-3">
+                <FormLabel>Attachment (optional)</FormLabel>
+              </div>
+              <FormControl>
+                <AttachmentInput onUploaded={onAttachmentUploaded} />
+              </FormControl>
+            </FormItem>
 
             {resourceType !== ResourceType.NORMAL_POST && (
               <>

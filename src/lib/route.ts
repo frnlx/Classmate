@@ -106,7 +106,7 @@ export type RouteHandler = (
   response: ResponseGenerator,
   params: string[],
   body?: any
-) => Awaitable<NextResponse>
+) => Awaitable<Response>
 
 export type RouteHandlerParam = Parameters<RouteHandler>
 
