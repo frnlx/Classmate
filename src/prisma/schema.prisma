@@ -60,6 +60,7 @@ model Classroom {
   description  String?
   emoji        String?
   MemberReward MemberReward[]
+  Reward       Reward[]
 }
 
 model Category {
@@ -136,6 +137,10 @@ model Submission {
   createdAt    DateTime    @default(now())
   attachment   Attachment? @relation(fields: [attachmentId], references: [id])
   attachmentId String?     @unique
+  rewarded     Boolean     @default(false)
+  graded       Boolean     @default(false)
+
+  @@unique([userId, assignmentId])
 }
 
 model Attachment {
@@ -144,4 +149,13 @@ model Attachment {
   filename   String
   Submission Submission?
   Resource   Resource?
+}
+
+model Reward {
+  id          String    @id @default(cuid())
+  name        String
+  pointCost   Int
+  createdAt   DateTime  @default(now())
+  classroom   Classroom @relation(fields: [classroomId], references: [id])
+  classroomId String
 }
