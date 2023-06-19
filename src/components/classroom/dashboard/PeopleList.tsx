@@ -9,6 +9,7 @@ import { ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Classroom, User } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import React, { ReactNode, useState } from "react";
+import Image from "next/image";
 
 type CommonProps = {
   isAdmin: boolean;
@@ -31,7 +32,14 @@ function PeopleRow({
 
   return (
     <div key={user.id} className="flex flex-row items-center space-x-2">
-      <div className="w-6 h-6 bg-green-600 rounded-full" />
+      <div className="w-6 h-6 relative">
+        <Image
+          src={user.pfp}
+          className="object-contain rounded-full"
+          alt="Profile picture"
+          fill
+        />
+      </div>
       <div className="flex flex-col">
         <span>{user.name}</span>
         {user.id === ownerId && (
