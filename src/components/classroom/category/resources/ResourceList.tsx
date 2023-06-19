@@ -16,6 +16,13 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
     page.currentid
   );
 
+  // sort data by createdAt
+  const sortedData = data?.sort((a, b) => {
+    if (a.createdAt > b.createdAt) return -1;
+    if (a.createdAt < b.createdAt) return 1;
+    return 0;
+  });
+
   if (isLoading) {
     return (
       <div className="mx-auto min-w-1/3">
@@ -27,18 +34,18 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
   if (data?.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 mx-auto">
-        <Info size={48} />
+        <Info size={ 48 } />
         <p>There is nothing here!</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-2 flex-none basis-1/3">
-      {data?.map((resources) => (
+    <div className="flex flex-col gap-2 flex-none basis-1/3 overflow-auto max-h-pc80">
+      { sortedData?.map((resources) => (
         /* @ts-ignore */
-        <ResourceItem key={resources.id} resource={resources} showStats />
-      ))}
+        <ResourceItem key={ resources.id } resource={ resources } showStats />
+      )) }
     </div>
   );
 }

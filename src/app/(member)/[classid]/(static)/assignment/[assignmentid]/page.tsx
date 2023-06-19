@@ -47,34 +47,47 @@ export default async function AssignmentMarkPage({
   return (
     <div className="m-8 flex flex-col gap-4 w-full h-max">
       <Link
-        href={`/${classId}/assignment`}
-        className="flex flex-row items-center gap-x-4 text-light1"
+        href={ `/${classId}/assignment` }
+        className="flex flex-row items-center gap-x-4 text-light1 hover:brightness-150 duration-100"
       >
-        <ArrowLeft size={32} />
+        <ArrowLeft size={ 32 } />
         <span className="font-semibold">Return to submissions list</span>
       </Link>
       <div className="flex flex-row gap-x-4">
         <div className="flex flex-col gap-1 basis-1/2">
           <header className="text-xl font-bold">
-            {assignment.resource.title}
+            { assignment.resource.title }
           </header>
           <span className="text-sm -mt-1 text-light1">
-            {formatDate(assignment.resource.createdAt)}
+            Posted at { assignment.resource.createdAt.toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            }) }
           </span>
-          <p>Due {formatDate(assignment.dueDate)}</p>
-          <p>XP Gain: {assignment.xpReward}</p>
-          <p>Points Gain: {assignment.point}</p>
-          {assignment.resource.attachment && (
+          <p className="text-sm">XP Gain: { assignment.xpReward }</p>
+          <p className="text-sm">Points Gain: { assignment.point }</p>
+          <p className="text-sm">Due { assignment.dueDate.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          }
+          ) }</p>
+          { assignment.resource.attachment && (
             <>
               <p>Attachment</p>
-              <Attachment attachment={assignment.resource.attachment} />
+              <Attachment attachment={ assignment.resource.attachment } />
             </>
-          )}
+          ) }
         </div>
         <div className="flex flex-col gap-2">
-          <h4 className="font-bold text-xl">Assignment Description</h4>
-          <p className="whitespace-pre-line break-words  basis-1/2">
-            {assignment.resource.content}
+          <div className="font-bold text-xl">Assignment Description</div>
+          <p className="whitespace-pre-line break-words basis-1/2">
+            { assignment.resource.content }
           </p>
         </div>
       </div>
@@ -82,8 +95,8 @@ export default async function AssignmentMarkPage({
       <h2 className="text-xl font-bold">Submissions</h2>
       <SearchFilterContextProvider>
         <SearchFilter />
-        {/* @ts-ignore */}
-        <SubmissionTable submissions={assignment.Submission} />
+        {/* @ts-ignore */ }
+        <SubmissionTable submissions={ assignment.Submission } />
       </SearchFilterContextProvider>
     </div>
   );

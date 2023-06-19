@@ -14,17 +14,17 @@ export default function PostContent({
 }) {
   return (
     <>
-      <p className="whitespace-pre-line break-words">{resource.content}</p>
-      {resource.attachment && (
+      <p className="whitespace-pre-line break-words text-sm">{ resource.content }</p>
+      { resource.attachment && (
         <a
           target="_blank"
-          href={`/api/attachment/${resource.attachment.id}`}
+          href={ `/api/attachment/${resource.attachment.id}` }
           className="flex flex-row space-x-4 hover:text-blue-500"
         >
-          <Paperclip size={24} />
-          <span>{resource.attachment.filename}</span>
+          <Paperclip size={ 24 } />
+          <span>{ resource.attachment.filename }</span>
         </a>
-      )}
+      ) }
     </>
   );
 }

@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { prefetch } from "@/api/caching/prefetch";
 import { color } from "@/lib/logger/chalk";
 import { getUserId } from "@/lib/auth";
-import { HashStraight, Paperclip } from "@phosphor-icons/react";
 import { Header } from "@/components/classroom/category/resources/Header";
 import PostHeader from "@/components/classroom/category/post/PostHeader";
 import {
@@ -71,52 +70,57 @@ export default async function PostLayout({ params }: PageProps) {
     rewardDueData = resource.Discussion;
   }
   return (
-    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-4 bg-dark1 relative h-fit">
+    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-4 bg-dark1 relative" >
       <PostHeader
         /* @ts-ignore */
-        resource={resource}
-        classId={classId}
-        isOwner={userId === classroom.ownerId}
+        resource={ resource }
+        classId={ classId }
+        isOwner={ userId === classroom.ownerId }
       />
-      <p>
-        {resource.type
-          .split("_")
-          .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
-          .join(" ")}{" "}
-        {rewardDueData && (
+      <div className="flex justify-between text-xs text-light1">
+        <div>
+          { resource.type
+            .split("_")
+            .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
+            .join(" ") }{ " " }
+        </div>
+        <div>
+          { rewardDueData && (
+            <div className="">
+              Due:{ " " }
+              { rewardDueData.dueDate.toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+              }) }
+            </div>
+          ) }
+        </div>
+        { rewardDueData && (
           <>
-            | +{rewardDueData.point} Point | +{rewardDueData.xpReward} XP
+            +{ rewardDueData.point } Point | +{ rewardDueData.xpReward } XP
           </>
-        )}
-      </p>
 
-      {rewardDueData && (
-        <strong>
-          Due:{" "}
-          {rewardDueData.dueDate.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-          })}
-        </strong>
-      )}
-
-      <PostContent resource={resource} />
+        ) }
+      </div>
+      <PostContent resource={ resource } />
       <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700" />
-      {userId !== classroom.ownerId &&
+      { userId !== classroom.ownerId &&
         resource.type === ResourceType.ASSIGNMENT && (
           <>
             <SubmitAssignment
-              classId={classId}
-              resource={resource}
-              submission={submission}
-              assignment={resource.Assignment!}
+              classId={ classId }
+              resource={ resource }
+              submission={ submission }
+              assignment={ resource.Assignment! }
             />
             <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700" />
           </>
-        )}
-      {/* @ts-ignore */}
-      <CommentSection classId={classId} resource={resource} />
+        ) }
+      {/* @ts-ignore */ }
+      <CommentSection classId={ classId } resource={ resource } />
     </div>
   );
 }

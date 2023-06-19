@@ -32,22 +32,16 @@ export function SidebarHeader(p: {}) {
 
   return (
     <div
-      className={clsx(
+      className={ clsx(
         "font-bold leading-5 py-4 px-4 border-slate-700 truncate",
         "text-sm",
-        "hover:bg-dark2/50 group",
         "flex",
         "gap-1"
-      )}
+      ) }
     >
       <div className="truncate text-white">
-        {data ? data.name : "loading..."}
+        { data ? data.name : "loading..." }
       </div>
-      <CaretDown
-        size={16}
-        weight={"bold"}
-        className="fill-light1 group-hover:fill-light0"
-      />
     </div>
   );
 }
@@ -74,19 +68,19 @@ export function CategoryList(p: {}) {
   }, []);
   return (
     <>
-      {categoryList ? (
+      { categoryList ? (
         categoryList.map((page, idx) => (
           <SidebarItem
-            key={page.id}
-            id={page.id}
-            icon={<SidebarCategoryIcon />}
-            label={page.title}
+            key={ page.id }
+            id={ page.id }
+            icon={ <SidebarCategoryIcon /> }
+            label={ page.title }
             isCategory // enables context menu
           />
         ))
       ) : (
         <>Loading Categories</>
-      )}
+      ) }
     </>
   );
 }
@@ -104,7 +98,7 @@ export function AddCategoryButton() {
     <ButtonTooltip label="Add New Category">
       <button
         className="text-light2 hover:text-light0 text-sm"
-        onClick={() =>
+        onClick={ () =>
           startTransition(() => {
             return addCategory(room.currentId).then(() => {
               qc.invalidateQueries([

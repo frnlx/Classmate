@@ -28,36 +28,36 @@ export default function PostHeader({
   return (
     <>
       <div className="flex flex-col gap-1">
-        <header className="text-2xl font-bold">{resource.title}</header>
-        <span className="text-sm text-light1">
-          By {resource.user.name} |{" "}
-          {resource.createdAt.toLocaleDateString("en-US", {
+        <header className="text-2xl font-bold">{ resource.title }</header>
+        <span className="text-xs text-light1">
+          By { resource.user.name } - { " " }
+          { resource.createdAt.toLocaleDateString("en-US", {
             weekday: "long",
             month: "long",
             day: "numeric",
-          })}
+          }) }
         </span>
       </div>
 
-      {isOwner && (
+      { isOwner && (
         <div className="absolute top-4 right-4 flex flex-row rounded-md">
-          <EditResourceModal classId={classId} resource={resource} />
+          <EditResourceModal classId={ classId } resource={ resource } />
           <ConfirmModal
             title="Delete resource?"
             desc="Are you sure you want to delete this resource?"
-            open={open}
-            onChange={setOpen}
-            onConfirm={async () => {
+            open={ open }
+            onChange={ setOpen }
+            onConfirm={ async () => {
               await deleteResource(resource.id);
               back();
-            }}
+            } }
           >
             <button className="bg-alert/80 p-2 hover:bg-alert transition-all duration-150 rounded-tr-md rounded-br-md">
-              <Trash size={24} />
+              <Trash size={ 24 } />
             </button>
           </ConfirmModal>
         </div>
-      )}
+      ) }
     </>
   );
 }

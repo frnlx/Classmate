@@ -42,27 +42,27 @@ function CommentItem(p: {
       <div className="flex flex-row gap-2 items-center">
         <div className="w-5 h-5 relative">
           <Image
-            src={p.comment.user.pfp}
+            src={ p.comment.user.pfp }
             className="object-contain rounded-full"
             alt="Profile picture"
             fill
           />
         </div>
-        <strong className="font-bold">{p.comment.user.name}</strong>
+        <strong className="font-bold">{ p.comment.user.name }</strong>
         <span className="text-xs">
-          {p.comment.createdAt.toLocaleDateString("en-US")}
+          { p.comment.createdAt.toLocaleDateString("en-US") }
         </span>
       </div>
-      <p className="whitespace-pre-line break-words">{p.comment.content}</p>
+      <p className="whitespace-pre-line break-words">{ p.comment.content }</p>
 
-      {canDelete && (
+      { canDelete && (
         <button
-          onClick={() => onDelete()}
-          className="h-6 w-6 bg-alert/80 hover:bg-alertduration-150 transition-all absolute top-0 right-0 rounded-md"
+          onClick={ () => onDelete() }
+          className="h-6 w-6 bg-alert/80 hover:bg-alertduration-150 transition-all absolute top-0 right-0 rounded-md mr-2"
         >
-          <Trash size={18} className="m-auto" />
+          <Trash size={ 18 } className="m-auto" />
         </button>
-      )}
+      ) }
     </div>
   );
 }
@@ -111,38 +111,39 @@ export default function CommentSection(p: {
   }, [form.formState]);
 
   return (
-    <div className="flex flex-col justify-between gap-2">
-      <div className="flex flex-col gap-4">
-        {comments?.map((c) => (
+    <div className="flex flex-col justify-between gap-2 h-full overflow-auto max-h-pc80">
+      <div className="flex flex-col gap-4 max-h-pc55 overflow-auto">
+        { comments?.map((c) => (
           <CommentItem
-            key={c.id.toString()}
-            comment={c}
-            deleteFunc={deleteComment}
-            isClassOwner={p.resource.userId === session.data?.user.id}
+            key={ c.id.toString() }
+            comment={ c }
+            deleteFunc={ deleteComment }
+            isClassOwner={ p.resource.userId === session.data?.user.id }
           />
-        ))}
+        )) }
       </div>
-      <Form {...form}>
+
+      <Form { ...form }>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={ form.handleSubmit(onSubmit) }
           className="flex flex-row justify-between gap-2 items-end"
         >
           <FormField
-            control={form.control}
+            control={ form.control }
             name="content"
-            render={({ field }) => (
+            render={ ({ field }) => (
               <FormItem className="w-full">
                 <div className="flex gap-1 align-bottom h-3 mb-2">
                   <FormLabel>Comment</FormLabel> <FormMessage />
                 </div>
                 <FormControl className="w-full">
-                  <TextInput className="w-full" {...field} />
+                  <TextInput className="w-full" { ...field } />
                 </FormControl>
               </FormItem>
-            )}
+            ) }
           />
           <button className="h-10 w-10 bg-ok hover:bg-oklight duration-150 transition-all rounded-md">
-            <PaperPlaneRight className="m-auto" size={20} />
+            <PaperPlaneRight className="m-auto" size={ 20 } />
           </button>
         </form>
       </Form>
