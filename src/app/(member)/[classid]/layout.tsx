@@ -12,13 +12,22 @@ import { notFound, redirect } from "next/navigation"
 
 
 export default async function ClassroomLayout({ children, params }: LayoutProps) {
+  const session = await getCachedSession();
+  const classId = params!.classid as string
+  const classroom  = await prisma.classroom.findUnique({
+    where: {id: classId},
+    select: { ownerId: true }
+  })
+
+  if (!classroom) notFound()
+  
 
   return (
     <Pages defaultTab="home">
 
       <Sidebar>
         <SidebarItem icon={<SidebarHomeIcon />}       label="Home"        id="home" />
-        <SidebarItem icon={<SidebarTasksIcon />}      label="Assignment"  id="assignment" />
+        {classroom.ownerId === session.user.id && <SidebarItem icon={<SidebarTasksIcon />}      label="Assignment"  id="assignment" /> }
       </Sidebar>
       { children }
       
