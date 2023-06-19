@@ -47,8 +47,8 @@ export default function SubmitAssignment(p: {
               (
               {p.submission.graded
                 ? p.submission.rewarded
-                  ? "Graded, not rewarded"
-                  : "Graded, rewarded"
+                  ? "Graded, rewarded"
+                  : "Graded, not rewarded"
                 : "Not graded"}
               )
             </span>
@@ -59,7 +59,7 @@ export default function SubmitAssignment(p: {
         </div>
       )}
 
-      {p.assignment.dueDate > new Date() && (
+      {p.assignment.dueDate > new Date() && !p.submission?.graded && (
         <div className="flex flex-row gap-2">
           <AttachmentInput onUploaded={setAttachmentId} />
           <ModalButton

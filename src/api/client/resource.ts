@@ -191,3 +191,18 @@ export function useCreateSubmission(
     },
   });
 }
+
+export function useGradeSubmission(sid: string) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn(giveRewards: boolean) {
+      return ClientAPI.gradeSubmission({
+        submissionid: sid,
+      }).with({
+        giveRewards,
+      });
+    },
+  });
+}

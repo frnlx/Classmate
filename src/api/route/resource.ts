@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { ResourceFormSchema } from "@/components/classroom/category/resources/AddResource";
 import { ResourceType } from "@prisma/client";
 import { CommentFormSchema } from "@/components/classroom/category/post/CommentSection";
-import { notAuthorized } from "../responses";
+import { notAuthorized, notFound } from "../responses";
 
 export type AttachmentRequest = {
   filename: string;
@@ -254,6 +254,45 @@ const resource = {
     return res.send(await data.blob(), attachment.filename);
   },
 
+  async gradeSubmission(
+    _,
+    res,
+    [sid],
+    body: {
+      giveRewards: boolean;
+    }
+  ) {
+    if (body.giveRewards) {
+      const submission = await prisma.submission.findUnique({
+        where: { id: BigInt(sid) },
+        include: {
+          assignment: true,
+        },
+      });
+
+      if (!submission) notFound();
+      if (submission.graded) notAuthorized();
+
+      await prisma.member.update({
+        where: { id: submission.memberId },
+        data: {
+          xp: { increment: submission.assignment.xpReward },
+          points: { increment: submission.assignment.point },
+        },
+      });
+    }
+
+    await prisma.submission.update({
+      where: { id: BigInt(sid) },
+      data: {
+        graded: true,
+        rewarded: body.giveRewards,
+      },
+    });
+
+    return res.ok();
+  },
+
   async submitAssignment(
     _,
     res,
@@ -325,4 +364,5 @@ export const resourceRoutes = {
     resource.updateResource,
   "POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/submit":
     resource.submitAssignment,
+  "POST:/submission/[submissionid]/grade": resource.gradeSubmission,
 } satisfies RouteLookupType;

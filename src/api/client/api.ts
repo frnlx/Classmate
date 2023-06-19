@@ -80,6 +80,7 @@ export const ClientAPI = {
   , createResource:              anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[categoryid]`)
   , createComment:               anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
   , createSubmission:            anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/submit`)
+  , gradeSubmission:             anotherLayer(`POST:/submission/[submissionid]/grade`)
 
   , joinClassroom:               anotherLayer(`PUT:/users/[userid]/classrooms/[classid]`) // ✅
 

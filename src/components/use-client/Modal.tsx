@@ -145,6 +145,7 @@ interface ModalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   submit?: boolean
   reset?: boolean
   disabled?: boolean
+  danger?: boolean
 }
 
 const ModalButton = forwardRef<HTMLButtonElement, ModalButtonProps>(
@@ -175,11 +176,20 @@ const ModalButton = forwardRef<HTMLButtonElement, ModalButtonProps>(
           "active:brightness-90",
           // "disabled:grayscale",
           "disabled:hover:brightness-100",
-        ) : clsx(
-          "text-light1",
-          "hover:text-light0 hover:bg-light2/20",
-          "active:brightness-125"
-        )
+          p.className
+        ) : p.danger ? 
+          clsx(
+            "text-whiter bg-alert px-8",
+            "hover:shadow-[0_0_20px_-3px_#ff3333]",
+            "hover:shadow-alert",
+            "active:brightness-90",
+            p.className
+          ) : clsx(
+              "text-light1",
+              "hover:text-light0 hover:bg-light2/20",
+              "active:brightness-125",
+              p.className
+            )
       ) }>
       { p.label }
     </button>
