@@ -11,14 +11,13 @@ datasource db {
 }
 
 model User {
-  id            String       @id @unique
+  id            String      @id @unique
   name          String
-  created_at    DateTime     @default(now())
+  created_at    DateTime    @default(now())
   pfp           String
   memberClasses Member[]
-  ownedClasses  Classroom[]  @relation("owner")
+  ownedClasses  Classroom[] @relation("owner")
   Comment       Comment[]
-  Submission    Submission[]
   Resource      Resource[]
 }
 
@@ -34,6 +33,9 @@ model Member {
   userId       String
   classroomId  String
   MemberReward MemberReward[]
+  Submission   Submission[]
+
+  @@unique([userId, classroomId])
 }
 
 model MemberReward {
@@ -130,8 +132,8 @@ model Comment {
 
 model Submission {
   id           BigInt      @id @default(autoincrement())
-  userId       String
-  user         User        @relation(fields: [userId], references: [id])
+  memberId     String
+  member       Member      @relation(fields: [memberId], references: [id])
   assignmentId String
   assignment   Assignment  @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   createdAt    DateTime    @default(now())
@@ -140,7 +142,7 @@ model Submission {
   rewarded     Boolean     @default(false)
   graded       Boolean     @default(false)
 
-  @@unique([userId, assignmentId])
+  @@unique([memberId, assignmentId])
 }
 
 model Attachment {
