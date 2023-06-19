@@ -29,7 +29,6 @@ export async function SAcreateClass(values: InferedCreateClassroomFormSchema) {
   const classroom = await prisma.classroom.create({
     data: {
       name: values.name,
-      subject: values.subject,
       emoji: values.emoji,
       members: {
         create: { userId: session.user.id }, // will throw if not found

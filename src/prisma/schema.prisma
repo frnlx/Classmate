@@ -57,7 +57,6 @@ model Classroom {
   categories   Category[]
   created_at   DateTime       @default(now())
   inviteID     String         @unique
-  subject      String?
   description  String?
   emoji        String?
   MemberReward MemberReward[]
