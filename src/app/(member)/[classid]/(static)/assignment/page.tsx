@@ -15,6 +15,11 @@ export default async function ClassAssignmentPage({
         classroomId: classId,
       },
       type: ResourceType.ASSIGNMENT,
+      Assignment: {
+        dueDate: {
+          lte: new Date(),
+        },
+      },
     },
     include: {
       Assignment: true,
@@ -28,10 +33,10 @@ export default async function ClassAssignmentPage({
     <div className="m-8 flex flex-col gap-4 w-full h-max">
       <Header />
       <div className="flex flex-col gap-2 flex-none basis-1/3">
-        {data?.map((resources) => (
+        { data?.map((resources) => (
           /* @ts-ignore */
-          <ResourceItem key={resources.id} resource={resources} />
-        ))}
+          <ResourceItem key={ resources.id } resource={ resources } />
+        )) }
       </div>
     </div>
   );
