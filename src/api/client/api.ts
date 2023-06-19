@@ -79,6 +79,7 @@ export const ClientAPI = {
   , createCategory:              anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories`)
   , createResource:              anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[categoryid]`)
   , createComment:               anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
+  , createSubmission:            anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/submit`)
 
   , joinClassroom:               anotherLayer(`PUT:/users/[userid]/classrooms/[classid]`) // ✅
 

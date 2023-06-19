@@ -169,3 +169,25 @@ export function useCreateAttachment() {
     },
   });
 }
+
+export function useCreateSubmission(
+  classid: string,
+  catid: string,
+  resid: string
+) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn(attachmentId: string) {
+      return ClientAPI.createSubmission({
+        userid,
+        catid,
+        classid,
+        resid,
+      }).with({
+        attachmentId,
+      });
+    },
+  });
+}

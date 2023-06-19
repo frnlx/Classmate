@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { ResourceFormSchema } from "@/components/classroom/category/resources/AddResource";
 import { ResourceType } from "@prisma/client";
 import { CommentFormSchema } from "@/components/classroom/category/post/CommentSection";
+import { notAuthorized } from "../responses";
 
 export type AttachmentRequest = {
   filename: string;
@@ -252,6 +253,56 @@ const resource = {
     const data = await fetch(attachment.data);
     return res.send(await data.blob(), attachment.filename);
   },
+
+  async submitAssignment(
+    _,
+    res,
+    [uid, cid, catid, rid],
+    body: {
+      attachmentId: string;
+    }
+  ) {
+    const member = await prisma.member.findUnique({
+      where: {
+        userId_classroomId: {
+          userId: uid,
+          classroomId: cid,
+        },
+      },
+    });
+
+    if (!member) throw notAuthorized();
+
+    const existingSubmission = await prisma.submission.findUnique({
+      where: {
+        memberId_assignmentId: { assignmentId: rid, memberId: member.id },
+      },
+    });
+
+    if (existingSubmission && existingSubmission.attachmentId) {
+      await prisma.submission.update({
+        where: { id: existingSubmission.id },
+        data: {
+          attachment: { delete: true },
+        },
+      });
+    }
+
+    await prisma.submission.upsert({
+      where: {
+        memberId_assignmentId: { assignmentId: rid, memberId: member.id },
+      },
+      create: {
+        assignment: { connect: { id: rid } },
+        member: { connect: { id: member.id } },
+        attachment: { connect: { id: body.attachmentId } },
+      },
+      update: {
+        attachment: { connect: { id: body.attachmentId } },
+      },
+    });
+    return res.ok();
+  },
 } satisfies HandlerLookup;
 
 export const resourceRoutes = {
@@ -272,4 +323,6 @@ export const resourceRoutes = {
     resource.deleteResource,
   "PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]":
     resource.updateResource,
+  "POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/submit":
+    resource.submitAssignment,
 } satisfies RouteLookupType;

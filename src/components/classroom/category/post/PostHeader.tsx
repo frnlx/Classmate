@@ -12,9 +12,11 @@ import EditResourceModal from "./EditResourceModal";
 export default function PostHeader({
   classId,
   resource,
+  isOwner,
 }: {
   classId: string;
   resource: Omit<ResourcePopulatedWithUser, "_count">;
+  isOwner: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const { mutateAsync: deleteResource } = useDeleteResource(
@@ -37,23 +39,25 @@ export default function PostHeader({
         </span>
       </div>
 
-      <div className="absolute top-4 right-4 flex flex-row rounded-md">
-        <EditResourceModal classId={classId} resource={resource} />
-        <ConfirmModal
-          title="Delete resource?"
-          desc="Are you sure you want to delete this resource?"
-          open={open}
-          onChange={setOpen}
-          onConfirm={async () => {
-            await deleteResource(resource.id);
-            back();
-          }}
-        >
-          <button className="bg-alert/80 p-2 hover:bg-alert transition-all duration-150 rounded-tr-md rounded-br-md">
-            <Trash size={24} />
-          </button>
-        </ConfirmModal>
-      </div>
+      {isOwner && (
+        <div className="absolute top-4 right-4 flex flex-row rounded-md">
+          <EditResourceModal classId={classId} resource={resource} />
+          <ConfirmModal
+            title="Delete resource?"
+            desc="Are you sure you want to delete this resource?"
+            open={open}
+            onChange={setOpen}
+            onConfirm={async () => {
+              await deleteResource(resource.id);
+              back();
+            }}
+          >
+            <button className="bg-alert/80 p-2 hover:bg-alert transition-all duration-150 rounded-tr-md rounded-br-md">
+              <Trash size={24} />
+            </button>
+          </ConfirmModal>
+        </div>
+      )}
     </>
   );
 }

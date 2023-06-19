@@ -1,3 +1,5 @@
+"use client";
+
 import { useRoom } from "@/app/(member)/-Navbar/Navbar";
 import { usePage } from "../../../../app/(member)/[classid]/-Sidebar/Pages";
 import Link from "next/link";
@@ -7,9 +9,14 @@ import { Route } from "next";
 import { Resource, ResourceType } from "@prisma/client";
 import { usePathname } from "next/navigation";
 import { ResourcePopulated } from "@/api/client/api";
+import { formatDate, relativeTimeFromDates } from "@/lib/util";
 
-export default function ResourceItem(p: { resource: ResourcePopulated }) {
+export default function ResourceItem(p: {
+  resource: ResourcePopulated;
+  showStats: boolean;
+}) {
   const path = usePathname();
+  console.log(p);
 
   let rewardData: {
     xpReward: number;
@@ -27,7 +34,13 @@ export default function ResourceItem(p: { resource: ResourcePopulated }) {
         `/${path.split("/").slice(1, 3).join("/")}/${p.resource.id}` as Route
       }
     >
-      <div className="flex flex-col gap-y-2 bg-dark1/80 hover:bg-dark1 duration-150 transition-all px-4 pt-4 pb-2 rounded-md">
+      <div
+        className={clsx(
+          "flex flex-col gap-y-2 bg-dark1/80 hover:bg-dark1 duration-150 transition-all pb-2 rounded-md",
+          "px-4 pt-4",
+          p.showStats ? "pb-2" : "pb-4"
+        )}
+      >
         <div className={clsx("flex flex-row items-center gap-2")}>
           <div className="p-2 rounded-xl bg-slate-700">
             {p.resource.type === ResourceType.NORMAL_POST ? (
@@ -45,22 +58,28 @@ export default function ResourceItem(p: { resource: ResourcePopulated }) {
               {p.resource.type
                 .split("_")
                 .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
-                .join(" ")}
+                .join(" ")}{" "}
+              {" - "}
+              {p.resource.type === ResourceType.ASSIGNMENT
+                ? `Due ${formatDate(new Date(p.resource.Assignment.dueDate))}`
+                : relativeTimeFromDates(new Date(p.resource.createdAt))}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-row justify-between text-xs items-center">
-          <div className="flex flex-row gap-x-2">
-            <Chat /> {p.resource._count.Comment}
-          </div>
+        {p.showStats && (
+          <div className="flex flex-row justify-between text-xs items-center">
+            <div className="flex flex-row gap-x-2">
+              <Chat /> {p.resource._count.Comment}
+            </div>
 
-          {rewardData && (
-            <span className="ml-auto">
-              +{rewardData.point} Point | +{rewardData.xpReward} XP
-            </span>
-          )}
-        </div>
+            {rewardData && (
+              <span className="ml-auto">
+                +{rewardData.point} Point | +{rewardData.xpReward} XP
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </Link>
   );

@@ -18,7 +18,7 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
 
   if (isLoading) {
     return (
-      <div className="mx-auto">
+      <div className="mx-auto min-w-1/3">
         <Spinner />
       </div>
     );
@@ -37,7 +37,7 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
     <div className="flex flex-col gap-2 flex-none basis-1/3">
       {data?.map((resources) => (
         /* @ts-ignore */
-        <ResourceItem key={resources.id} resource={resources} />
+        <ResourceItem key={resources.id} resource={resources} showStats />
       ))}
     </div>
   );

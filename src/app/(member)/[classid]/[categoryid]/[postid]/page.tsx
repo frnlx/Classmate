@@ -16,10 +16,13 @@ import CommentSection from "@/components/classroom/category/post/CommentSection"
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import PostContent from "@/components/classroom/category/post/PostContent";
+import SubmitAssignment from "@/components/classroom/category/post/SubmitAssignment";
 
 export default async function PostLayout({ params }: PageProps) {
-  const session = await getServerSession();
+  const userId = await getUserId();
   const postId = params!.postid as string;
+  const classId = params!.classid as string;
+
   // Well aware that _count is not there, but using Omit or making another type is tiring
   const resource = await prisma.resource.findUnique({
     where: { id: postId },
@@ -34,7 +37,32 @@ export default async function PostLayout({ params }: PageProps) {
     },
   });
 
-  if (!resource) throw notFound();
+  const classroom = await prisma.classroom.findUnique({
+    where: { id: classId },
+  });
+
+  if (!resource || !classroom) throw notFound();
+
+  const member = await prisma.member.findUnique({
+    where: {
+      userId_classroomId: {
+        userId: userId,
+        classroomId: classId,
+      },
+    },
+  });
+
+  if (!member) throw notFound();
+
+  const submission = await prisma.submission.findUnique({
+    where: {
+      memberId_assignmentId: {
+        memberId: member.id,
+        assignmentId: postId,
+      },
+    },
+    include: { attachment: true },
+  });
 
   let rewardDueData;
   if (resource.type === ResourceType.ASSIGNMENT) {
@@ -44,8 +72,12 @@ export default async function PostLayout({ params }: PageProps) {
   }
   return (
     <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-4 bg-dark1 relative h-fit">
-      {/* @ts-ignore */}
-      <PostHeader resource={resource} classId={params!.classid as string} />
+      <PostHeader
+        /* @ts-ignore */
+        resource={resource}
+        classId={classId}
+        isOwner={userId === classroom.ownerId}
+      />
       <p>
         {resource.type
           .split("_")
@@ -71,8 +103,20 @@ export default async function PostLayout({ params }: PageProps) {
 
       <PostContent resource={resource} />
       <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700" />
+      {userId !== classroom.ownerId &&
+        resource.type === ResourceType.ASSIGNMENT && (
+          <>
+            <SubmitAssignment
+              classId={classId}
+              resource={resource}
+              submission={submission}
+              assignment={resource.Assignment!}
+            />
+            <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700" />
+          </>
+        )}
       {/* @ts-ignore */}
-      <CommentSection classId={params!.classid as string} resource={resource} />
+      <CommentSection classId={classId} resource={resource} />
     </div>
   );
 }
