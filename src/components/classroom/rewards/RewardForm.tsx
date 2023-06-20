@@ -50,7 +50,7 @@ export default function RewardForm(p: {
           render={({ field }) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
-                <FormLabel>Classroom Name</FormLabel> <FormMessage />
+                <FormLabel>Reward Name</FormLabel> <FormMessage />
               </div>
               <FormControl>
                 <TextInput {...field} />

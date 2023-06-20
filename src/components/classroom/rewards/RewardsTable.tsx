@@ -86,7 +86,7 @@ function RewardRow({
               </ConfirmModal>
             </>
           ) : (
-            <ModalButton label="Buy" onClick={() => {}} />
+            <ModalButton label="Buy" primary onClick={() => {}} />
           )}
         </div>
       </td>

@@ -46,7 +46,7 @@ export default function ManageRewards({
         title="Manage Rewards"
         trigger={
           <button className="rounded-md bg-dark2 px-4 py-2 hover:bg-light2 transition-all duration-150">
-            Edit Class
+            Manage Rewards
           </button>
         }
         size="xl"
