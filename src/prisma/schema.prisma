@@ -45,6 +45,7 @@ model MemberReward {
   classroom Classroom @relation(fields: [classroomId], references: [id])
   note      String
   redeemed  Boolean   @default(false)
+  claimDate DateTime  @default(now())
 
   memberId    String
   classroomId String
