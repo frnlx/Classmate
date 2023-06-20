@@ -33,37 +33,37 @@ function SubmissionRow(p: { submission: UserSubmission }) {
 
   return (
     <tr className="divide-x">
-      <td className="p-4">{p.submission.member.user.name}</td>
+      <td className="p-4">{ p.submission.member.user.name }</td>
       <td className="p-4">
         <Attachment
-          attachment={p.submission.attachment}
+          attachment={ p.submission.attachment }
           className="flex-col justify-center gap-y-1 items-center"
         />
       </td>
       <td className="p-4">
-        {!!!p.submission.attachmentId ? (
+        { !!!p.submission.attachmentId ? (
           "No rewards"
         ) : p.submission.graded ? (
           p.submission.rewarded ? (
-            "Rewards given"
+            <p className="text-green-300">Rewards Given</p>
           ) : (
-            "Rewards rejected"
+            <p className="text-red-300">Rewards Rejected</p>
           )
         ) : (
-          <>
+          <div className="flex justify-center">
             <ModalButton
               label="Accept"
               primary
-              onClick={() => sendGrade(true)}
+              onClick={ () => sendGrade(true) }
             />
             <ModalButton
               label="Reject"
               className="ml-4"
-              onClick={() => sendGrade(false)}
+              onClick={ () => sendGrade(false) }
               danger
             />
-          </>
-        )}
+          </div>
+        ) }
       </td>
     </tr>
   );
@@ -77,18 +77,18 @@ export default function SubmissionTable({
   const { name, filters } = useSearchFilter();
   const filteredSubmissions = useMemo(() => {
     return submissions
-      .filter((s) => s.member.user.name.indexOf(name) !== -1)
-      .filter((s) => {
-        if (filters.given && s.rewarded) return true;
-        if (filters.ungraded && !s.graded) return true;
-        if (filters.notGiven && !s.rewarded && s.graded) return true;
-        return false;
-      })
-      .filter((s) => {
-        if (filters.notSubmitted && !!!s.attachmentId) return true;
-        if (filters.submitted && s.attachmentId) return true;
-        return false;
-      });
+      .filter((s) => s.member.user.name.toLowerCase().match(`${name.toLowerCase()}`))
+    // .filter((s) => {
+    //   if (filters.given && s.rewarded) return true;
+    //   if (filters.ungraded && !s.graded) return true;
+    //   if (filters.notGiven && !s.rewarded && s.graded) return true;
+    //   return false;
+    // })
+    // .filter((s) => {
+    //   if (filters.notSubmitted && !!!s.attachmentId) return true;
+    //   if (filters.submitted && s.attachmentId) return true;
+    //   return false;
+    // });
   }, [submissions, name, filters]);
 
   return (
@@ -102,9 +102,9 @@ export default function SubmissionTable({
           </tr>
         </thead>
         <tbody>
-          {filteredSubmissions.map((s) => (
-            <SubmissionRow submission={s} key={s.id.toString()} />
-          ))}
+          { filteredSubmissions.map((s) => (
+            <SubmissionRow submission={ s } key={ s.id.toString() } />
+          )) }
         </tbody>
       </table>
     </div>

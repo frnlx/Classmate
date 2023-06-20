@@ -41,7 +41,7 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-2 flex-none basis-1/3 overflow-auto max-h-pc80">
+    <div className="flex flex-col gap-2 flex-none basis-1/3 overflow-hidden hover:overflow-y-scroll pr-1 max-h-pc80">
       { sortedData?.map((resources) => (
         /* @ts-ignore */
         <ResourceItem key={ resources.id } resource={ resources } showStats />

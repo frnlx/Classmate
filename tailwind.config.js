@@ -102,7 +102,7 @@ module.exports = {
         pc80: "80vh",
       },
       maxHeight: {
-        pc80: "81vh",
+        pc80: "80vh",
         pc55: "55vh",
       },
     },

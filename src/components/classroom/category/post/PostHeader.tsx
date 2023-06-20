@@ -29,13 +29,19 @@ export default function PostHeader({
     <>
       <div className="flex flex-col gap-1">
         <header className="text-2xl font-bold">{ resource.title }</header>
-        <span className="text-xs text-light1">
+        <span className="text-sm text-light1">
           By { resource.user.name } - { " " }
           { resource.createdAt.toLocaleDateString("en-US", {
             weekday: "long",
             month: "long",
             day: "numeric",
-          }) }
+            hour: "numeric",
+            minute: "numeric",
+          }) } - { " " }
+          { resource.type
+            .split("_")
+            .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
+            .join(" ") }{ " " }
         </span>
       </div>
 

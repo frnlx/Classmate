@@ -111,7 +111,7 @@ export default function CommentSection(p: {
   }, [form.formState]);
 
   return (
-    <div className="flex flex-col justify-between gap-2 h-full overflow-auto max-h-pc80">
+    <div className="flex flex-col justify-between gap-2 h-full overflow-auto max-h-pc80 shrink">
       <div className="flex flex-col gap-4 max-h-pc55 overflow-auto">
         { comments?.map((c) => (
           <CommentItem
