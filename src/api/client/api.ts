@@ -73,6 +73,8 @@ export const ClientAPI = {
   , getResourceList:             anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources")
   , getResource:                 anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[categoryid]/resources/[resourceid]")
   , getComments:                 anotherLayer("GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment")
+  , getClassRewards:             anotherLayer("GET:/class/[classid]/rewards")
+  , getReward:                   anotherLayer("GET:/class/[classid]/rewards/[rewardsid]")
 
   // , createClassroom:             requestFn(create<Classroom>,        `/api/users/[userid]/classrooms`) // ✅
   , createAttachment:            anotherLayer(`POST:/users/[userid]/attachment`)
@@ -81,6 +83,7 @@ export const ClientAPI = {
   , createComment:               anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment`)
   , createSubmission:            anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/submit`)
   , gradeSubmission:             anotherLayer(`POST:/submission/[submissionid]/grade`)
+  , createReward:                anotherLayer(`POST:/class/[classid]/rewards`)
 
   , joinClassroom:               anotherLayer(`PUT:/users/[userid]/classrooms/[classid]`) // ✅
 
@@ -88,11 +91,13 @@ export const ClientAPI = {
   , updateClassroom:             anotherLayer("PATCH:/users/[userid]/classrooms/[classid]") // ✅
   // , updateCategory:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]")
   , updateResource:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]")
+  , updateReward:                anotherLayer("PATCH:/class/[classid]/rewards/[rewardsid]")
 
   , deleteClassroom:             anotherLayer("DELETE:/users/[userid]/classrooms/[classid]") // ✅
   , deleteCategory:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]")
   , deleteResource:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]")
   , deleteComment:               anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/comment/[commentid]")
+  , deleteReward:                anotherLayer("DELETE:/class/[classid]/rewards/[rewardsid]")
   , leaveClassroom:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/leave") // ✅
 
 } satisfies ClientAPISimple

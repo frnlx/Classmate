@@ -2,7 +2,7 @@ import { LayoutProps } from "@/types/next"
 import Pages from "./-Sidebar/Pages"
 import Sidebar from "./-Sidebar/Sidebar"
 import { SidebarItem } from "./-Sidebar/SidebarItem"
-import { SidebarHomeIcon, SidebarTasksIcon } from "./-Sidebar/SidebarIcons"
+import { SidebarHomeIcon, SidebarRewardShopIcon, SidebarTasksIcon } from "./-Sidebar/SidebarIcons"
 import { prisma } from "@/lib/db"
 import { getUserData } from "../utils"
 import { getCachedSession } from "@/lib/auth"
@@ -28,6 +28,8 @@ export default async function ClassroomLayout({ children, params }: LayoutProps)
       <Sidebar>
         <SidebarItem icon={<SidebarHomeIcon />}       label="Home"        id="home" />
         {classroom.ownerId === session.user.id && <SidebarItem icon={<SidebarTasksIcon />}      label="Assignment"  id="assignment" /> }
+        <SidebarItem icon={<SidebarRewardShopIcon />} label="Reward Shop" id="rewards" />
+
       </Sidebar>
       { children }
       

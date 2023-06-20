@@ -83,6 +83,7 @@ export function ModalBase(p: {
   open?: boolean
   onChange?: (state: boolean) => void
   size?: ModalSize
+  className?: string
 }) {
   
   return (
@@ -113,10 +114,10 @@ export function ModalBase(p: {
           "data-[state=open]:animate-contentShow",
           "data-[state=closed]:animate-contentHide",
           // center position
-          "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
         ) }>
 
-          <div className="p-6 pt-6">
+          <div className={clsx("p-6 pt-6", p.className)}>
 
             <header className="mb-4 p-2 text-center">
               <Title className="font-semibold text-xl text-white m-0 mb-0.5">
