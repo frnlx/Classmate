@@ -87,65 +87,65 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
 
   const valid = form.formState.isValid;
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <Form { ...form }>
+      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
         <FormField
-          control={form.control}
+          control={ form.control }
           name="type"
-          render={({ field }) => (
+          render={ ({ field }) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
                 <FormLabel>Type</FormLabel> <FormMessage />
               </div>
               <FormControl>
-                <SelectInput placeholder="Resource Type" {...field}>
-                  {Object.keys(ResourceType).map((t) => (
-                    <option className="text-black" key={t} value={t}>
-                      {t
+                <SelectInput placeholder="-" { ...field }>
+                  { Object.keys(ResourceType).map((t) => (
+                    <option className="" key={ t } value={ t }>
+                      { t
                         .split("_")
                         .map(
                           (w) =>
                             w[0].toUpperCase() + w.substring(1).toLowerCase()
                         )
-                        .join(" ")}
+                        .join(" ") }
                     </option>
-                  ))}
+                  )) }
                 </SelectInput>
               </FormControl>
             </FormItem>
-          )}
+          ) }
         />
 
-        {!!resourceType && (
+        { !!resourceType && (
           <>
             <FormField
-              control={form.control}
+              control={ form.control }
               name="title"
-              render={({ field }) => (
+              render={ ({ field }) => (
                 <FormItem>
                   <div className="flex gap-1 align-bottom h-3">
                     <FormLabel>title</FormLabel> <FormMessage />
                   </div>
                   <FormControl>
-                    <TextInput {...field} />
+                    <TextInput { ...field } />
                   </FormControl>
                 </FormItem>
-              )}
+              ) }
             />
 
             <FormField
-              control={form.control}
+              control={ form.control }
               name="content"
-              render={({ field }) => (
+              render={ ({ field }) => (
                 <FormItem>
                   <div className="flex gap-1 align-bottom h-3">
                     <FormLabel>Content</FormLabel> <FormMessage />
                   </div>
                   <FormControl>
-                    <TextAreaInput rows={15} {...field} />
+                    <TextAreaInput rows={ 15 } { ...field } />
                   </FormControl>
                 </FormItem>
-              )}
+              ) }
             />
 
             <FormItem>
@@ -153,16 +153,16 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                 <FormLabel>Attachment (optional)</FormLabel>
               </div>
               <FormControl>
-                <AttachmentInput onUploaded={onAttachmentUploaded} />
+                <AttachmentInput onUploaded={ onAttachmentUploaded } />
               </FormControl>
             </FormItem>
 
-            {resourceType !== ResourceType.NORMAL_POST && (
+            { resourceType !== ResourceType.NORMAL_POST && (
               <>
                 <FormField
-                  control={form.control}
+                  control={ form.control }
                   name="dueDate"
-                  render={({ field }) => (
+                  render={ ({ field }) => (
                     <FormItem>
                       <div className="flex gap-1 align-bottom h-3">
                         <FormLabel>Due Date</FormLabel> <FormMessage />
@@ -171,20 +171,20 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                         <TextInput
                           type="datetime-local"
                           className="[color-scheme:dark]"
-                          onChange={(event) =>
+                          onChange={ (event) =>
                             field.onChange(new Date(event.target.value))
                           }
                         />
                       </FormControl>
                     </FormItem>
-                  )}
+                  ) }
                 />
 
                 <div className="flex flex-row space-x-2">
                   <FormField
-                    control={form.control}
+                    control={ form.control }
                     name="xp"
-                    render={({ field }) => (
+                    render={ ({ field }) => (
                       <FormItem className="w-full">
                         <div className="flex gap-1 align-bottom h-3">
                           <FormLabel>XP Gained</FormLabel> <FormMessage />
@@ -192,19 +192,19 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                         <FormControl>
                           <TextInput
                             type="number"
-                            {...field}
-                            onChange={(event) =>
+                            { ...field }
+                            onChange={ (event) =>
                               field.onChange(+event.target.value)
                             }
                           />
                         </FormControl>
                       </FormItem>
-                    )}
+                    ) }
                   />
                   <FormField
-                    control={form.control}
+                    control={ form.control }
                     name="point"
-                    render={({ field }) => (
+                    render={ ({ field }) => (
                       <FormItem className="w-full">
                         <div className="flex gap-1 align-bottom h-3">
                           <FormLabel>Points Gained</FormLabel> <FormMessage />
@@ -212,29 +212,29 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                         <FormControl>
                           <TextInput
                             type="number"
-                            {...field}
-                            onChange={(event) =>
+                            { ...field }
+                            onChange={ (event) =>
                               field.onChange(+event.target.value)
                             }
                           />
                         </FormControl>
                       </FormItem>
-                    )}
+                    ) }
                   />
                 </div>
               </>
-            )}
+            ) }
           </>
-        )}
+        ) }
 
         <div className="flex justify-end gap-2 pt-2">
-          <ModalButton label="Cancel" onClick={() => p.onCancel()} />
+          <ModalButton label="Cancel" onClick={ () => p.onCancel() } />
           <ModalButton
-            label={valid ? "✨ Create" : "✖️ Create"}
-            onClick={() => {}}
+            label={ valid ? "✨ Create" : "✖️ Create" }
+            onClick={ () => { } }
             primary
             submit
-            disabled={!valid}
+            disabled={ !valid }
           />
         </div>
       </form>
@@ -247,7 +247,7 @@ export default function AddResource() {
 
   return (
     <ModalBase
-      open={isOpen}
+      open={ isOpen }
       size="xl"
       title="Add Resource"
       trigger={
@@ -255,11 +255,11 @@ export default function AddResource() {
           Add Resource
         </button>
       }
-      onChange={setIsOpen}
+      onChange={ setIsOpen }
     >
       <ResourceForm
-        onCancel={() => setIsOpen(false)}
-        onUpdated={() => setIsOpen(false)}
+        onCancel={ () => setIsOpen(false) }
+        onUpdated={ () => setIsOpen(false) }
       />
     </ModalBase>
   );

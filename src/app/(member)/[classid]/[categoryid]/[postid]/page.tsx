@@ -16,6 +16,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import PostContent from "@/components/classroom/category/post/PostContent";
 import SubmitAssignment from "@/components/classroom/category/post/SubmitAssignment";
+import { formatDate } from "@/lib/util";
 
 export default async function PostLayout({ params }: PageProps) {
   const userId = await getUserId();
@@ -70,43 +71,35 @@ export default async function PostLayout({ params }: PageProps) {
     rewardDueData = resource.Discussion;
   }
   return (
-    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-4 bg-dark1 relative h-pc80" >
+    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-3 bg-dark1 relative h-pc80" >
       <PostHeader
         /* @ts-ignore */
         resource={ resource }
         classId={ classId }
         isOwner={ userId === classroom.ownerId }
       />
-      <div className="flex justify-between text-sm text-light1">
+      <div className="flex justify-between">
         <div>
           { rewardDueData && (
-            <div className="flex flex-row text-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M128,36a92,92,0,1,0,92,92A92.1,92.1,0,0,0,128,36Zm0,176a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212ZM58.83,26.83l-32,32a4,4,0,0,1-5.66-5.66l32-32a4,4,0,0,1,5.66,5.66Zm176,32a4,4,0,0,1-5.66,0l-32-32a4,4,0,0,1,5.66-5.66l32,32A4,4,0,0,1,234.83,58.83ZM188,128a4,4,0,0,1-4,4H128a4,4,0,0,1-4-4V72a4,4,0,0,1,8,0v52h52A4,4,0,0,1,188,128Z"></path>
-              </svg>
+            <div className="flex flex-row">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff" viewBox="0 0 256 256"><path d="M216,128a88,88,0,1,1-88-88A88,88,0,0,1,216,128Z" opacity="0.2"></path><path d="M128,32a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,32Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,208ZM61.66,29.66l-32,32A8,8,0,0,1,18.34,50.34l32-32A8,8,0,1,1,61.66,29.66Zm176,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,237.66,61.66ZM184,120a8,8,0,0,1,0,16H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48Z"></path></svg>
               <div className="p-1"></div>
-              { rewardDueData.dueDate.toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              }
-              ) }
+              { formatDate(new Date(rewardDueData.dueDate)) }
             </div>
           ) }
         </div>
         { rewardDueData && (
           <div className="flex flex-row">
-            <div className="flex flex-row text-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff" viewBox="0 0 256 256"><path d="M228.13,116.77,164.67,93.69a3.94,3.94,0,0,1-2.36-2.36L139.23,27.87a11.95,11.95,0,0,0-22.46,0L93.69,91.33a3.94,3.94,0,0,1-2.36,2.36L27.87,116.77a11.95,11.95,0,0,0,0,22.46l63.46,23.08a3.94,3.94,0,0,1,2.36,2.36l23.08,63.46a11.95,11.95,0,0,0,22.46,0l23.08-63.46h0a3.94,3.94,0,0,1,2.36-2.36l63.46-23.08a11.95,11.95,0,0,0,0-22.46Zm-2.73,15-63.46,23.07a11.93,11.93,0,0,0-7.15,7.15L131.72,225.4a4,4,0,0,1-7.44,0l-23.07-63.46a11.93,11.93,0,0,0-7.15-7.15L30.6,131.72a4,4,0,0,1,0-7.44l63.46-23.07a11.93,11.93,0,0,0,7.15-7.15L124.28,30.6a4,4,0,0,1,7.44,0l23.07,63.46a11.93,11.93,0,0,0,7.15,7.15l63.46,23.07a4,4,0,0,1,0,7.44Z"></path></svg>
+            <div className="flex flex-row">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff" viewBox="0 0 256 256"><path d="M226.76,135.48l-63.45,23.07a8,8,0,0,0-4.76,4.76l-23.07,63.45a8,8,0,0,1-15,0L97.45,163.31a8,8,0,0,0-4.76-4.76L29.24,135.48a8,8,0,0,1,0-15L92.69,97.45a8,8,0,0,0,4.76-4.76l23.07-63.45a8,8,0,0,1,15,0l23.07,63.45a8,8,0,0,0,4.76,4.76l63.45,23.07A8,8,0,0,1,226.76,135.48Z" opacity="0.2"></path><path d="M229.5,113,166.07,90,143,26.5a16,16,0,0,0-30,0L90,89.93,26.5,113a16,16,0,0,0,0,30l63.43,23L113,229.5a16,16,0,0,0,30,0l23.07-63.44L229.5,143a16,16,0,0,0,0-30Zm-68.93,38a16,16,0,0,0-9.54,9.54L128,223.9l-23-63.33A16,16,0,0,0,95.43,151L32.1,128l63.33-23A16,16,0,0,0,105,95.43L128,32.1l23,63.33a16,16,0,0,0,9.54,9.54l63.33,23Z"></path></svg>
               <div className="p-1"></div>
-              { rewardDueData.xpReward }
+              { rewardDueData.xpReward } XP
             </div>
             <div className="px-2"></div>
-            <div className="flex flex-row text-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FFFFFF" viewBox="0 0 256 256"><path d="M180,93.11V84c0-22.43-36.9-40-84-40S12,61.57,12,84v40c0,19.14,26.86,34.72,64,38.89V172c0,22.43,36.9,40,84,40s84-17.57,84-40V132C244,113.12,217.87,97.37,180,93.11ZM236,132c0,15.45-30.54,32-76,32a165.71,165.71,0,0,1-28-2.34v-1.39c28.61-6.31,48-20,48-36.27V101.17C212.22,105,236,117.93,236,132ZM108.19,155.59Q102.3,156,96,156c-5.47,0-10.72-.25-15.73-.69l-.27,0h0c-4.16-.38-8.16-.9-12-1.56V121.8A174.87,174.87,0,0,0,96,124a174.87,174.87,0,0,0,28-2.2v31.92a155,155,0,0,1-15.52,1.85ZM172,101.32V124c0,10.88-15.16,22.3-40,28.11V120.27C149.63,116.38,163.75,109.69,172,101.32ZM96,52c45.46,0,76,16.55,76,32s-30.54,32-76,32S20,99.45,20,84,50.54,52,96,52ZM20,124V101.32c8.25,8.37,22.37,15.06,40,19v31.84C35.16,146.3,20,134.88,20,124Zm64,48v-8.4c3.91.26,7.92.4,12,.4s8.06-.14,12-.39a123.93,123.93,0,0,0,16,4.63v31.87C99.16,194.3,84,182.88,84,172Zm48,29.72V169.77A174.48,174.48,0,0,0,160,172a174.87,174.87,0,0,0,28-2.2v31.92a173.07,173.07,0,0,1-56,0ZM236,172c0,10.88-15.16,22.3-40,28.11V168.27c17.63-3.89,31.75-10.58,40-19Z"></path></svg>
+            <div className="flex flex-row">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ffffff" viewBox="0 0 256 256"><path d="M240,132c0,19.88-35.82,36-80,36-19.6,0-37.56-3.17-51.47-8.44h0C146.76,156.85,176,142,176,124V96.72h0C212.52,100.06,240,114.58,240,132ZM176,84c0-19.88-35.82-36-80-36S16,64.12,16,84s35.82,36,80,36S176,103.88,176,84Z" opacity="0.2"></path><path d="M184,89.57V84c0-25.08-37.83-44-88-44S8,58.92,8,84v40c0,20.89,26.25,37.49,64,42.46V172c0,25.08,37.83,44,88,44s88-18.92,88-44V132C248,111.3,222.58,94.68,184,89.57ZM232,132c0,13.22-30.79,28-72,28-3.73,0-7.43-.13-11.08-.37C170.49,151.77,184,139,184,124V105.74C213.87,110.19,232,122.27,232,132ZM72,150.25V126.46A183.74,183.74,0,0,0,96,128a183.74,183.74,0,0,0,24-1.54v23.79A163,163,0,0,1,96,152,163,163,0,0,1,72,150.25Zm96-40.32V124c0,8.39-12.41,17.4-32,22.87V123.5C148.91,120.37,159.84,115.71,168,109.93ZM96,56c41.21,0,72,14.78,72,28s-30.79,28-72,28S24,97.22,24,84,54.79,56,96,56ZM24,124V109.93c8.16,5.78,19.09,10.44,32,13.57v23.37C36.41,141.4,24,132.39,24,124Zm64,48v-4.17c2.63.1,5.29.17,8,.17,3.88,0,7.67-.13,11.39-.35A121.92,121.92,0,0,0,120,171.41v23.46C100.41,189.4,88,180.39,88,172Zm48,26.25V174.4a179.48,179.48,0,0,0,24,1.6,183.74,183.74,0,0,0,24-1.54v23.79a165.45,165.45,0,0,1-48,0Zm64-3.38V171.5c12.91-3.13,23.84-7.79,32-13.57V172C232,180.39,219.59,189.4,200,194.87Z"></path></svg>
               <div className="p-1"></div>
-              { rewardDueData.point }
+              { rewardDueData.point } points
             </div>
 
           </div>
@@ -118,12 +111,14 @@ export default async function PostLayout({ params }: PageProps) {
       { userId !== classroom.ownerId &&
         resource.type === ResourceType.ASSIGNMENT && (
           <>
-            <SubmitAssignment
-              classId={ classId }
-              resource={ resource }
-              submission={ submission }
-              assignment={ resource.Assignment! }
-            />
+            <div className="flex flex-col gap-2">
+              <SubmitAssignment
+                classId={ classId }
+                resource={ resource }
+                submission={ submission }
+                assignment={ resource.Assignment! }
+              />
+            </div>
             <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700" />
           </>
         ) }

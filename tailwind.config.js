@@ -105,6 +105,9 @@ module.exports = {
         pc80: "80vh",
         pc55: "55vh",
       },
+      minHeight: {
+        rem2: "2rem",
+      },
     },
   },
 

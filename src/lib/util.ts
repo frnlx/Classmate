@@ -43,9 +43,11 @@ export function relativeTimeFromElapsed(elapsed: number): string {
 }
 
 export function formatDate(date: Date) {
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString("en-SG", {
     weekday: "long",
     month: "long",
     day: "numeric",
+    minute: "numeric",
+    hour: "numeric",
   });
 }

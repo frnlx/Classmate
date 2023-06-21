@@ -79,7 +79,7 @@ export function CategoryList(p: {}) {
           />
         ))
       ) : (
-        <>Loading Categories</>
+        <div className="text-light1 text-sm">Loading Categories</div>
       ) }
     </>
   );

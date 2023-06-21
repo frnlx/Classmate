@@ -37,39 +37,46 @@ export default function SubmitAssignment(p: {
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <strong>Submission</strong>
-      {p.submission && (
-        <div className="flex flex-col gap-2">
-          <p>
-            Existing submission:{" "}
-            <span className="text-xs">
-              (
-              {p.submission.graded
+    <>
+      <div className="flex flex-row justify-between">
+        <strong>Submission</strong>
+        { p.submission && (
+          <div className="text-xs text-light1">
+            {
+              p.submission.graded
                 ? p.submission.rewarded
-                  ? "Graded, rewarded"
-                  : "Graded, not rewarded"
-                : "Not graded"}
-              )
-            </span>
-          </p>
-          {p.submission.attachment && (
-            <Attachment attachment={p.submission.attachment} />
-          )}
-        </div>
-      )}
+                  ? "(Checked, rewarded)"
+                  : "(Checked, not rewarded)"
+                : ""
+            }
+          </div>
+        ) }
+      </div>
 
-      {p.assignment.dueDate > new Date() && !p.submission?.graded && (
+      { p.submission && (
+        <div className="flex flex-col gap-2 text-sm">
+          <div className="flex flex-row">
+            Last submission:
+            <div className="px-1"></div>
+            { p.submission.attachment && (
+              <Attachment attachment={ p.submission.attachment } />
+            ) }
+            <div className="px-1"></div>
+          </div>
+        </div>
+      ) }
+      { p.assignment.dueDate > new Date() && !p.submission?.graded && (
         <div className="flex flex-row gap-2">
-          <AttachmentInput onUploaded={setAttachmentId} />
+          <AttachmentInput onUploaded={ setAttachmentId } />
           <ModalButton
             primary
             label="Submit"
-            disabled={uploadAttachmentId === ""}
-            onClick={() => onSubmit()}
+            disabled={ uploadAttachmentId === "" }
+            onClick={ () => onSubmit() }
           />
         </div>
-      )}
-    </div>
+      ) }
+
+    </>
   );
 }

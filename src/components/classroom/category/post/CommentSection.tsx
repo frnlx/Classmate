@@ -50,7 +50,12 @@ function CommentItem(p: {
         </div>
         <strong className="font-bold">{ p.comment.user.name }</strong>
         <span className="text-xs">
-          { p.comment.createdAt.toLocaleDateString("en-US") }
+          { p.comment.createdAt.toLocaleDateString("en-SG", {
+            day: "numeric",
+            month: "short",
+            hour: "numeric",
+            minute: "numeric",
+          }) }
         </span>
       </div>
       <p className="whitespace-pre-line break-words">{ p.comment.content }</p>
@@ -111,8 +116,8 @@ export default function CommentSection(p: {
   }, [form.formState]);
 
   return (
-    <div className="flex flex-col justify-between gap-2 h-full overflow-auto max-h-pc80 shrink">
-      <div className="flex flex-col gap-4 max-h-pc55 overflow-auto">
+    <div className="flex flex-col justify-between gap-2 h-full overflow-y-auto">
+      <div className="flex flex-col gap-4 overflow-auto">
         { comments?.map((c) => (
           <CommentItem
             key={ c.id.toString() }
