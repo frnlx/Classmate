@@ -67,28 +67,30 @@ const user = {
               classroom: {
                 inviteID: cid,
               },
+              inactive: false,
             },
           },
         },
       });
       if (data.length !== 0) throw "AlreadyJoined";
 
-      console.log("MASUSDH");
       const classroom = await prisma.classroom.findUniqueOrThrow({
         where: { inviteID: cid },
       });
 
-      console.log("AAAAAAAA");
-      await prisma.user.update({
-        where: { id: uid },
-        data: {
-          memberClasses: {
-            create: {
-              classroom: {
-                connect: { id: classroom.id },
-              },
-            },
+      await prisma.member.upsert({
+        where: {
+          userId_classroomId: {
+            userId: uid,
+            classroomId: classroom.id,
           },
+        },
+        update: {
+          inactive: false,
+        },
+        create: {
+          classroom: { connect: { id: classroom.id } },
+          user: { connect: { id: uid } },
         },
       });
 
