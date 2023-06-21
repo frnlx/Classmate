@@ -22,15 +22,21 @@ export default async function ClassHomePage({
       },
     },
   });
+  const classroomOwnerId = await prisma.classroom.findUnique({
+    where: {
+      id: classId,
+    },
+    select: { ownerId: true },
+  });
 
-  if (!member) notFound();
+  if (!member || !classroomOwnerId) notFound();
 
   return (
     <div className="w-full p-16 overflow-y-auto">
       <ControlButton classId={classId} />
       <div className="container max-w-3xl mx-auto flex flex-col space-y-2">
         <CourseAbout classId={classId} />
-        <MemberLevel member={member} />
+        {userId !== classroomOwnerId.ownerId && <MemberLevel member={member} />}
         <div className="flex flex-row space-x-4">
           {/* <Box title="Assignments" className="basis-1/2" /> */}
           <Box title="People" className="w-full">
