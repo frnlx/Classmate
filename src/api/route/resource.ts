@@ -70,6 +70,27 @@ const resource = {
 
   async createComment(_, res, [uid, cid, catid, rid], body: CommentFormSchema) {
     await membersOnly();
+
+    const resource = await prisma.resource.findUnique({
+      where: {
+        id: rid,
+      },
+      include: {
+        Discussion: true,
+        category: {
+          include: {
+            classroom: {
+              select: {
+                ownerId: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!resource) notFound();
+
     const comment = await prisma.comment.create({
       data: {
         content: body.content,
@@ -78,10 +99,34 @@ const resource = {
       },
     });
 
-    return res.json({
+    const response = res.json({
       ...comment,
       id: comment.id.toString(), // BigInt hotfix, will be reconverted to BigInt in client
     });
+    if (
+      resource.type !== ResourceType.DISCUSSION ||
+      uid === resource.category.classroom?.ownerId
+    )
+      return response;
+
+    const discussion = resource.Discussion!;
+    if (discussion.dueDate < new Date()) {
+      return response;
+    }
+
+    await prisma.member.update({
+      where: {
+        userId_classroomId: {
+          userId: uid,
+          classroomId: resource.category.classroomId!,
+        },
+      },
+      data: {
+        xp: { increment: discussion.xpReward },
+        points: { increment: discussion.point },
+      },
+    });
+    return response;
   },
 
   async deleteComment(_, res, [uid, cid, catid, rid, commentid]) {
