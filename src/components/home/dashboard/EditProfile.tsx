@@ -2,7 +2,7 @@
 
 import { useSessionRequired } from "@/api/client/auth";
 import { useUpdateUser } from "@/api/client/user";
-import { TextInput, TextAreaInput } from "@/components/static/Inputs";
+import { TextInput } from "@/components/static/Inputs";
 import { ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Form, FormField, FormItem } from "@/components/use-client/form/Form";
 import { FormMessage } from "@/components/use-client/form/FormField";
@@ -30,18 +30,9 @@ function EditProfileForm(p: { onCancel: () => void; onUpdated: () => void }) {
 
   async function onSubmit(values: EditProfileFormSchema) {
     try {
-      const data = await updateProfile(values);
+      await updateProfile(values);
       session.update();
       p.onUpdated && p.onUpdated();
-    } catch (error: any) {
-      form.setError("root", error?.message);
-    }
-  }
-
-  async function onDelete() {
-    try {
-      //   await removeClass();
-      //   push("/dashboard");
     } catch (error: any) {
       form.setError("root", error?.message);
     }
@@ -67,12 +58,6 @@ function EditProfileForm(p: { onCancel: () => void; onUpdated: () => void }) {
         />
         <div className="flex justify-end gap-2 pt-2">
           <ModalButton label="Cancel" onClick={() => p.onCancel()} />
-          <ModalButton
-            label="Delete Account"
-            onClick={() => {
-              onDelete();
-            }}
-          />
           <ModalButton
             label={valid ? "✨ Update" : "✖️ Update"}
             onClick={() => {}}
