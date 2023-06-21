@@ -40,16 +40,19 @@ export default function SubmitAssignment(p: {
     <>
       <div className="flex flex-row justify-between">
         <strong>Submission</strong>
-        { p.submission && (
+        { p.submission && p.assignment.dueDate < new Date() && (
           <div className="text-xs text-light1">
             {
               p.submission.graded
                 ? p.submission.rewarded
                   ? "(Checked, rewarded)"
                   : "(Checked, not rewarded)"
-                : ""
+                : "(Not checked yet)"
             }
           </div>
+        ) }
+        { !p.submission && p.assignment.dueDate < new Date() && (
+          <div className="text-xs text-light1">(Not submitted)</div>
         ) }
       </div>
 

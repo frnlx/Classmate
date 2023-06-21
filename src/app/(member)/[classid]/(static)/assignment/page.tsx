@@ -27,6 +27,11 @@ export default async function ClassAssignmentPage({
         select: { Comment: true },
       },
     },
+    orderBy: {
+      Assignment: {
+        dueDate: "desc",
+      },
+    },
   });
 
   return (

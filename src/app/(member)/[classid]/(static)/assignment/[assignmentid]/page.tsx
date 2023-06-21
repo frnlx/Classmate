@@ -53,7 +53,7 @@ export default async function AssignmentMarkPage({
         <ArrowLeft size={ 32 } />
         <span className="font-semibold">Return to submissions list</span>
       </Link>
-      <div className="flex flex-row gap-x-4 h-40">
+      <div className="flex flex-row gap-x-4">
         <div className="flex flex-col gap-1 basis-1/4 shrink-0 h-max-full">
           <header className="text-xl font-bold">
             { assignment.resource.title }
@@ -86,7 +86,7 @@ export default async function AssignmentMarkPage({
         </div>
         <div className="flex flex-col gap-2 basis-3/4 shrink-0">
           <div className="font-bold text-xl">Assignment Description</div>
-          <p className="whitespace-pre-line break-words overflow-y-auto bg-dark2/50 rounded-lg py-2 pl-2">
+          <p className="whitespace-pre-line break-words overflow-y-auto bg-dark2/50 rounded-lg p-2 h-40">
             { assignment.resource.content }
           </p>
         </div>

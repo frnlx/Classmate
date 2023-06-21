@@ -35,6 +35,7 @@ const category = {
                           select: { Comment: true },
                         },
                       },
+                      orderBy: { createdAt: "desc" },
                     },
                   },
                 },

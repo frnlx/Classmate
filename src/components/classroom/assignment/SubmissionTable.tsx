@@ -93,7 +93,7 @@ export default function SubmissionTable({
 
   return (
     <div className="bg-dark1 p-4 rounded-md">
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse table-fixed">
         <thead>
           <tr className="border-b divide-x">
             <th>Name</th>
