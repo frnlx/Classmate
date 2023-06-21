@@ -1,6 +1,7 @@
 import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
+import { CategoryFormSchema } from "@/app/(member)/[classid]/-Sidebar/CategoryForm";
 
 const category = {
   // ✅ Idempotent // ❌ Untested
@@ -47,7 +48,20 @@ const category = {
   },
 
   async deleteCategory(_, res, [uid, cid, catid]) {
+    await prisma.category.delete({
+      where: { id: catid },
+    });
     return res.json({});
+  },
+
+  async updateCategory(_, res, [uid, cid, catid], body: CategoryFormSchema) {
+    await prisma.category.update({
+      where: { id: catid },
+      data: {
+        title: body.name,
+      },
+    });
+    return res.ok();
   },
 } satisfies HandlerLookup;
 
@@ -58,4 +72,6 @@ export const categoryRoutes = {
     category.deleteCategory,
   "GET:/users/[userid]/classrooms/[classid]/categories/[catid]/resources":
     category.getResources,
+  "PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]":
+    category.updateCategory,
 } satisfies RouteLookupType;

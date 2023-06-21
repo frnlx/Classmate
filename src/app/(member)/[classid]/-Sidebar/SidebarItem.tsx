@@ -1,15 +1,18 @@
 'use client'
 import useAppToast from "@/components/lib/toasts"
 import { Trigger } from "@radix-ui/react-tabs"
-import { ReactNode } from "react"
+import { ReactNode, useState } from "react"
 import { useRoom } from "../../-Navbar/Navbar"
 import { ContextMenuBase, ContextMenuItem } from "@/components/use-client/ContextMenu"
 import { GearSix, Hash, Link, Trash } from "@phosphor-icons/react"
 import { ClientAPI } from "@/api/client/api"
 import { useUserid } from "@/api/client/auth"
-import { useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
+import { usePathname, useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments } from "next/navigation"
 import clsx from "clsx"
 import { ButtonTooltip } from "@/components/use-client/Tooltip"
+import { ModalBase } from "@/components/use-client/Modal"
+import CategoryForm from "./CategoryForm"
+import { Route } from "next"
 
 export function SidebarItem(p: {
   icon: ReactNode
@@ -49,7 +52,7 @@ export function SidebarItem(p: {
         <span className="w-8 leading-5">{ p.icon }</span>
         <span className="font-semibold leading-5 w-full">{ p.label }</span>
         {
-          p.isCategory ? <SettingsButton active={ active } /> : null
+          p.isCategory ? <SettingsButton active={ active } categoryId={p.id} name={p.label} /> : null
         }
       </Trigger>
     </ContextMenu>
@@ -60,18 +63,49 @@ export function SidebarItem(p: {
 
 function SettingsButton(p: {
   active: boolean
+  categoryId: string
+  name: string
 }) {
+  const {push} = useRouter()
+  const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false)
+  const room = useRoom()
+  const userid = useUserid()
 
   return (
+    <>
     <ButtonTooltip label="Edit Category">
-      <div className={ clsx(
-        "w-4 h-4 text-light1",
-        p.active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
-        "hover:text-white"
-      ) }>
-        <GearSix weight={ "fill" } />
-      </div>
-    </ButtonTooltip>
+        <div
+          className={clsx(
+            "w-4 h-4 text-light1",
+            p.active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+            "hover:text-white"
+          )}
+          onClick={() => setIsOpen(true)}
+        >
+          <GearSix weight={"fill"} />
+        </div>
+      </ButtonTooltip>
+    <ModalBase
+      open={isOpen}
+      size="xl"
+      title="Edit Category"
+      onChange={setIsOpen}
+    >
+      <CategoryForm
+        onCancel={ () => setIsOpen(false) }
+        onUpdated={ () => setIsOpen(false) }
+        onDeleted={ () => {
+          setIsOpen(false)
+          push(`${pathname.split("/").slice(0,-1).join("/")}/home` as Route)
+         } }
+        idData={ {
+          userid, classid: room.currentId, catid: p.categoryId
+        } }
+        defaultTitle={p.name}
+        />
+    </ModalBase>
+    </>
   )
 }
 
@@ -134,3 +168,4 @@ function ContextMenu(p: {
   )
 
 }
+

@@ -4,10 +4,10 @@ import { prisma } from "@/lib/db";
 import { color } from "@/lib/logger/chalk";
 import { revalidatePath } from "next/cache";
 
-export async function addCategory(classid: string) {
+export async function addCategory(classid: string, title: string) {
   await prisma.category.create({
     data: {
-      title: "Untitled Category using Server Action",
+      title: title,
       classroomId: classid,
     },
   });

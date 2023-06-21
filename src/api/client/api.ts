@@ -90,7 +90,7 @@ export const ClientAPI = {
 
   , updateUser:                  anotherLayer("PATCH:/users/[userid]")
   , updateClassroom:             anotherLayer("PATCH:/users/[userid]/classrooms/[classid]") // ✅
-  // , updateCategory:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]")
+  , updateCategory:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]")
   , updateResource:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]")
   , updateReward:                anotherLayer("PATCH:/class/[classid]/rewards/[rewardsid]")
   , claimReward:                 anotherLayer("PATCH:/class/[classid]/redeem/[memberrewardid]")

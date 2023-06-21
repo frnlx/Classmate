@@ -6,14 +6,17 @@ import { CaretDown, Plus } from "@phosphor-icons/react";
 import { Classroom } from "@prisma/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useEffect, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { SidebarItem } from "./SidebarItem";
 import { SidebarCategoryIcon } from "./SidebarIcons";
 import { useRoom } from "../../-Navbar/Navbar";
 import { useCreateCategory } from "@/api/client/category";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { addCategory } from "./addsidebar";
 import { ButtonTooltip } from "@/components/use-client/Tooltip";
+import { ModalBase } from "@/components/use-client/Modal";
+import { Route } from "next";
+import CategoryForm from "./CategoryForm";
 
 export { List } from "@radix-ui/react-tabs";
 
@@ -87,32 +90,39 @@ export function CategoryList(p: {}) {
 
 export function AddCategoryButton() {
   const room = useRoom();
-  const createCategory = useCreateCategory(room.currentId ?? "");
-
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-
-  const qc = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false)
+  const {push} = useRouter();
+  const pathname = usePathname()
+  const userid = useUserid()
 
   return (
+    <>
+    
     <ButtonTooltip label="Add New Category">
       <button
         className="text-light2 hover:text-light0 text-sm"
-        onClick={ () =>
-          startTransition(() => {
-            return addCategory(room.currentId).then(() => {
-              qc.invalidateQueries([
-                "classrooms",
-                room.currentId,
-                "categorylist",
-              ]);
-              // router.refresh()
-            });
-          })
+        onClick={ () => setIsOpen(true)
         }
       >
         <Plus weight="bold" />
       </button>
     </ButtonTooltip>
-  );
+    
+    <ModalBase
+        open={isOpen}
+        size="xl"
+        title="New Category"
+        onChange={setIsOpen}
+      >
+        <CategoryForm
+          onCancel={ () => setIsOpen(false) }
+          onUpdated={ () => setIsOpen(false) }
+          onDeleted={ () => {} }
+          idData={ {
+            userid, classid: room.currentId
+          } }
+          />
+      </ModalBase>
+    </>
+  )
 }
