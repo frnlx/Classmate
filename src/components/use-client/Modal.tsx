@@ -3,7 +3,7 @@ import { Close, Content, Description, Overlay, Portal, Root, Title, Trigger } fr
 import clsx from "clsx"
 import React, { ButtonHTMLAttributes, ReactNode, forwardRef } from "react"
 
-type ModalSize = "sm" | "md" | "lg" | "xl"
+type ModalSize = "sm" | "md" | "lg" | "xl" | "4xl"
 
 // const ModalBase2 = forwardRef(
 //   (p: {
@@ -108,6 +108,7 @@ export function ModalBase(p: {
           p.size === "md" && "max-w-md",
           p.size === "lg" && "max-w-lg",
           p.size === "xl" && "max-w-xl",
+          p.size === "4xl" && "max-w-4xl",
           // shadow
           "shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]", //shadow
           // animation

@@ -22,7 +22,7 @@ export default function RewardsHistory({
           History
         </button>
       }
-      size="xl"
+      size="4xl"
       className="relative"
     >
       <RewardManageTable
