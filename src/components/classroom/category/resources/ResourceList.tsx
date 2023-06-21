@@ -34,7 +34,7 @@ export function ResourceList(p: { prefetchedData?: Resource[] }) {
   }
 
   return (
-    <div className="relative basis-1/3 flex-[1] min-w-[33.333%] self-stretch">
+    <div className="relative basis-1/3 min-w-[33.333%]">
       <div className="w-full absolute top-0 left-0 right-0 bottom-0 overflow-auto">
         <div className="flex flex-col gap-2">
           {data?.map((resources) => (
