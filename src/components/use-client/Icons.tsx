@@ -1,3 +1,3 @@
 "use client";
 
-export * from "@phosphor-icons/react";
+export { Pencil, Trash, ArrowLeft, Storefront } from "@phosphor-icons/react";
