@@ -71,7 +71,7 @@ export default async function PostLayout({ params }: PageProps) {
     rewardDueData = resource.Discussion;
   }
   return (
-    <div className="p-4 w-full rounded-md overflow-y-auto flex flex-col gap-y-3 bg-dark1 relative h-pc80" >
+    <div className="p-4 w-full rounded-md flex flex-col gap-y-3 bg-dark1 relative h-full" >
       <PostHeader
         /* @ts-ignore */
         resource={ resource }

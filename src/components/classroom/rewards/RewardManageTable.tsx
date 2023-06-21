@@ -37,29 +37,29 @@ function RewardManageRow({
 
   return (
     <tr className="divide-x">
-      {isOwner && <td className="p-4">{rewardRequest.member.user.name}</td>}
-      <td className="p-4 text-center">{rewardRequest.name}</td>
-      <td className="p-4 text-center">{formatDate(rewardRequest.claimDate)}</td>
-      <td className="p-4 text-center">{rewardRequest.note}</td>
+      { isOwner && <td className="p-4">{ rewardRequest.member.user.name }</td> }
+      <td className="p-4 text-center">{ rewardRequest.name }</td>
+      <td className="p-4 text-center">{ rewardRequest.claimDate.toLocaleDateString("en-SG") }</td>
+      <td className="p-4 text-center">{ rewardRequest.note }</td>
 
       <td className="p-4">
         <div
-          className={clsx(
+          className={ clsx(
             "mx-auto w-fit text-center",
             rewardRequest.redeemed ? "text-ok" : "text-light1"
-          )}
+          ) }
         >
-          {rewardRequest.redeemed ? (
+          { rewardRequest.redeemed ? (
             "Redeemed"
           ) : isOwner ? (
             <ModalButton
               label="Redeem Request"
-              onClick={() => onClaim()}
+              onClick={ () => onClaim() }
               primary
             />
           ) : (
             "Requested"
-          )}
+          ) }
         </div>
       </td>
     </tr>
@@ -81,22 +81,22 @@ export default function RewardManageTable({
       <table className="w-full border-collapse">
         <thead>
           <tr className="border-b divide-x">
-            {isOwner && <th>Name</th>}
+            { isOwner && <th>Name</th> }
             <th>Reward Name</th>
-            <th>Created Date</th>
+            <th>Date Bought</th>
             <th>Notes</th>
-            <th>{isOwner ? "Action" : "Status"}</th>
+            <th>{ isOwner ? "Action" : "Status" }</th>
           </tr>
         </thead>
         <tbody>
-          {rewardRequests.map((r) => (
+          { rewardRequests.map((r) => (
             <RewardManageRow
-              key={r.id}
-              rewardRequest={r}
-              isOwner={isOwner}
-              classId={classId}
+              key={ r.id }
+              rewardRequest={ r }
+              isOwner={ isOwner }
+              classId={ classId }
             />
-          ))}
+          )) }
         </tbody>
       </table>
     </div>
