@@ -30,11 +30,17 @@ export default async function ClassRewardsPage({
   const isOwner = userId === classroomRewards.ownerId;
   const whereClause = isOwner
     ? {
-        member: {
-          userId: userId,
+        classroom: {
+          id: classId,
         },
       }
-    : {};
+    : {
+        member: {
+          user: {
+            id: userId,
+          },
+        },
+      };
   const memberRewards = await prisma.memberReward.findMany({
     where: whereClause,
     include: {
@@ -45,6 +51,20 @@ export default async function ClassRewardsPage({
       },
     },
   });
+
+  console.log(whereClause, memberRewards);
+
+  let member = null;
+  if (!isOwner) {
+    member = await prisma.member.findUnique({
+      where: {
+        userId_classroomId: {
+          userId: userId,
+          classroomId: classId,
+        },
+      },
+    });
+  }
 
   return (
     <div className="m-8 flex flex-col gap-4 w-full h-max">
@@ -68,7 +88,7 @@ export default async function ClassRewardsPage({
         </div>
       </header>
 
-      <div className="flex flex-row space-x-4 overflow-auto">
+      <div className="flex flex-col gap-2 overflow-auto">
         {isOwner ? (
           <RewardManageTable
             rewardRequests={memberRewards}
@@ -76,11 +96,15 @@ export default async function ClassRewardsPage({
             isOwner={true}
           />
         ) : (
-          <RewardsTable
-            rewards={classroomRewards.Reward}
-            isOwner={isOwner}
-            classId={classId}
-          />
+          <>
+            <p>{member?.points} points available</p>
+            <RewardsTable
+              rewards={classroomRewards.Reward}
+              isOwner={isOwner}
+              classId={classId}
+              member={member!}
+            />
+          </>
         )}
       </div>
     </div>

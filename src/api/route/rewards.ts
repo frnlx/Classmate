@@ -2,6 +2,7 @@ import { HandlerLookup, RouteLookupType } from "@/lib/route";
 import { membersOnly } from "../utils";
 import { prisma } from "@/lib/db";
 import { RewardFormSchema } from "@/components/classroom/rewards/RewardForm";
+import { notFound } from "../responses";
 
 const category = {
   // ✅ Idempotent // ❌ Untested
@@ -53,6 +54,62 @@ const category = {
     });
     return res.ok();
   },
+
+  async createMemberReward(
+    _,
+    res,
+    [cid, rid],
+    body: {
+      note: string;
+    }
+  ) {
+    const session = await membersOnly();
+    const userId = session.user.id;
+    const member = await prisma.member.findUnique({
+      where: {
+        userId_classroomId: {
+          classroomId: cid,
+          userId: userId,
+        },
+      },
+    });
+
+    if (!member) notFound();
+    const reward = await prisma.reward.findUnique({
+      where: { id: rid },
+      select: { name: true, pointCost: true },
+    });
+    if (!reward) notFound();
+
+    await prisma.member.update({
+      where: { id: member.id },
+      data: {
+        points: { decrement: reward.pointCost },
+      },
+    });
+    const memberReward = await prisma.memberReward.create({
+      data: {
+        note: body.note,
+        name: reward.name,
+        member: { connect: { id: member.id } },
+        classroom: { connect: { id: cid } },
+      },
+    });
+    return res.json(memberReward);
+  },
+
+  async claimMemberReward(_, res, [cid, mrid]) {
+    await membersOnly();
+    const updatedMemberReward = await prisma.memberReward.update({
+      where: {
+        id: mrid,
+      },
+      data: {
+        redeemed: true,
+      },
+    });
+    return res.json(updatedMemberReward);
+  },
 } satisfies HandlerLookup;
 
 export const rewardRoutes = {
@@ -61,4 +118,7 @@ export const rewardRoutes = {
   "GET:/class/[classid]/rewards/[rewardsid]": category.getData,
   "PATCH:/class/[classid]/rewards/[rewardsid]": category.updateReward,
   "DELETE:/class/[classid]/rewards/[rewardsid]": category.deleteReward,
+  "POST:/class/[classid]/rewards/[rewardsid]/redeem":
+    category.createMemberReward,
+  "PATCH:/class/[classid]/redeem/[memberrewardid]": category.claimMemberReward,
 } satisfies RouteLookupType;

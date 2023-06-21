@@ -71,3 +71,35 @@ export function useDeleteReward(classid: string, rewardsid: string) {
     },
   });
 }
+
+export function useCreateMemberReward(classid: string, rewardsid: string) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn(note: string) {
+      return ClientAPI.createMemberReward({
+        classid,
+        rewardsid,
+      }).with({
+        note,
+      });
+    },
+  });
+}
+
+export function useClaimReward(classid: string, memberrewardid: string) {
+  const userid = useUserid();
+  const qc = useQueryClient();
+
+  return useMutation({
+    async mutationFn() {
+      const result = await ClientAPI.claimReward({
+        classid,
+        memberrewardid,
+      }).with({});
+
+      return result;
+    },
+  });
+}

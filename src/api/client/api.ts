@@ -84,6 +84,7 @@ export const ClientAPI = {
   , createSubmission:            anotherLayer(`POST:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]/submit`)
   , gradeSubmission:             anotherLayer(`POST:/submission/[submissionid]/grade`)
   , createReward:                anotherLayer(`POST:/class/[classid]/rewards`)
+  , createMemberReward:          anotherLayer(`POST:/class/[classid]/rewards/[rewardsid]/redeem`)
 
   , joinClassroom:               anotherLayer(`PUT:/users/[userid]/classrooms/[classid]`) // ✅
 
@@ -92,6 +93,7 @@ export const ClientAPI = {
   // , updateCategory:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]")
   , updateResource:              anotherLayer("PATCH:/users/[userid]/classrooms/[classid]/categories/[catid]/resources/[resid]")
   , updateReward:                anotherLayer("PATCH:/class/[classid]/rewards/[rewardsid]")
+  , claimReward:                 anotherLayer("PATCH:/class/[classid]/redeem/[memberrewardid]")
 
   , deleteClassroom:             anotherLayer("DELETE:/users/[userid]/classrooms/[classid]") // ✅
   , deleteCategory:              anotherLayer("DELETE:/users/[userid]/classrooms/[classid]/categories/[catid]")
