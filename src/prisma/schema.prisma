@@ -23,8 +23,8 @@ model User {
 
 model Member {
   id        String    @id @default(cuid())
-  user      User      @relation(fields: [userId], references: [id])
-  classroom Classroom @relation(fields: [classroomId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: NoAction)
+  classroom Classroom @relation(fields: [classroomId], references: [id], onDelete: Cascade)
   xp        Int       @default(0)
   points    Int       @default(0)
   inactive  Boolean   @default(false)
@@ -40,9 +40,9 @@ model Member {
 
 model MemberReward {
   id        String    @id @default(cuid())
-  member    Member    @relation(fields: [memberId], references: [id])
+  member    Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
   name      String
-  classroom Classroom @relation(fields: [classroomId], references: [id])
+  classroom Classroom @relation(fields: [classroomId], references: [id], onDelete: Cascade)
   note      String
   redeemed  Boolean   @default(false)
   claimDate DateTime  @default(now())
@@ -69,7 +69,7 @@ model Classroom {
 model Category {
   id          String     @id @default(cuid())
   title       String
-  classroom   Classroom? @relation(fields: [classroomId], references: [id])
+  classroom   Classroom? @relation(fields: [classroomId], references: [id], onDelete: Cascade)
   classroomId String?
   Resource    Resource[]
 }
@@ -80,16 +80,16 @@ model Resource {
   content      String
   order        Int
   createdAt    DateTime     @default(now())
-  user         User         @relation(fields: [userId], references: [id])
+  user         User         @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId       String
-  category     Category     @relation(fields: [categoryId], references: [id])
+  category     Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId   String
   Assignment   Assignment?
   Discussion   Discussion?
   NormalPost   NormalPost?
   type         ResourceType
   Comment      Comment[]
-  attachment   Attachment?  @relation(fields: [attachmentId], references: [id])
+  attachment   Attachment?  @relation(fields: [attachmentId], references: [id], onDelete: SetNull)
   attachmentId String?      @unique
 }
 
@@ -125,7 +125,7 @@ model Comment {
   id         BigInt   @id @default(autoincrement())
   content    String
   userId     String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: NoAction)
   resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
   resourceId String
   createdAt  DateTime @default(now())
@@ -134,11 +134,11 @@ model Comment {
 model Submission {
   id           BigInt      @id @default(autoincrement())
   memberId     String
-  member       Member      @relation(fields: [memberId], references: [id])
+  member       Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
   assignmentId String
   assignment   Assignment  @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
   createdAt    DateTime    @default(now())
-  attachment   Attachment? @relation(fields: [attachmentId], references: [id])
+  attachment   Attachment? @relation(fields: [attachmentId], references: [id], onDelete: SetNull)
   attachmentId String?     @unique
   rewarded     Boolean     @default(false)
   graded       Boolean     @default(false)
@@ -159,6 +159,6 @@ model Reward {
   name        String
   pointCost   Int
   createdAt   DateTime  @default(now())
-  classroom   Classroom @relation(fields: [classroomId], references: [id])
+  classroom   Classroom @relation(fields: [classroomId], references: [id], onDelete: Cascade)
   classroomId String
 }
