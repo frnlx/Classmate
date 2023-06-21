@@ -4,7 +4,7 @@ export const __defaultTitle = 'Classmate | 🚀 Power Up Your Class'
 export const __appName = 'Classmate'
 export const __appDescription = 'A new tool that powers up your classrooms. Gamify your learning and teaching experience'
 
-export const __creator = 'Alfonsus Ardani'
+export const __creator = 'Alfonsus Ardani, Eugene Reginald Patrick, Aileen'
 export const __publisher = ''
 
 export const __lightBrandColor = '#00B876'

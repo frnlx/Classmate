@@ -62,7 +62,7 @@ export default function LandingPage() {
               <p className='text-xs text-slate-400'>
                 Made with love for our thesis <br />
                 Released under the MIT License.<br />
-                Copyright © 2023-present Alfonsus Ardani
+                Copyright © 2023-present Alfonsus Ardani, Eugene Reginald Patrick, Aileen
               </p>
             </div>
           </footer>

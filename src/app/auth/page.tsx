@@ -33,7 +33,7 @@ export default function AuthPage() {
             <BrandLogo className='h-[50px] w-[190px] mx-auto' />
           </Link>
           <div className='m-auto text-zinc-200/20 text-sm mt-8'>
-            Copyright © 2023-present Alfonsus Ardani
+            Copyright © 2023-present Alfonsus Ardani, Eugene Reginald Patrick, Aileen
           </div>
         </div>
       </AppBackground>
