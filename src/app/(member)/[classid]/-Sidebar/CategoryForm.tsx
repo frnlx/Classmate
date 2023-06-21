@@ -76,7 +76,7 @@ export default function CategoryForm(p: {
     await ClientAPI.deleteCategory({
       userid: p.idData.userid,
       classid: p.idData.classid,
-      catid: p.idData.userid,
+      catid: p.idData.catid!,
     });
     qc.invalidateQueries(["classrooms", p.idData!.classid, "categorylist"]);
     p.onDeleted?.();
