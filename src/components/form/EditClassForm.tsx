@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem } from "../use-client/form/Form";
 import {
@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "../use-client/form/FormField";
 import { TextAreaInput, TextInput } from "../static/Inputs";
-import { ModalButton } from "../use-client/Modal";
+import { ConfirmModal, ModalButton } from "../use-client/Modal";
 import { Classroom } from "@prisma/client";
 import { useDeleteClass, useEditClass } from "@/api/client/classroom";
 import { useRouter } from "next/navigation";
@@ -34,6 +34,7 @@ export default function EditClassForm(p: {
   classId: string;
 }) {
   const session = useSession();
+  const [openDeleteMdal, setOpenDeleteModal] = useState(false);
   const { push } = useRouter();
   const { mutateAsync: editClass } = useEditClass(p.classId);
   const { mutateAsync: removeClass } = useDeleteClass(p.classId);
@@ -101,13 +102,15 @@ export default function EditClassForm(p: {
         />
         <div className="flex justify-end gap-2 pt-2">
           <ModalButton label="Cancel" onClick={() => p.onCancel()} />
-          <ModalButton
-            label="Delete Class"
-            onClick={() => {
-              onDelete();
-            }}
-            danger
-          />
+          <ConfirmModal
+            title="Delete class?"
+            desc="Are you sure you want to delete this class?"
+            open={openDeleteMdal}
+            onChange={setOpenDeleteModal}
+            onConfirm={() => onDelete()}
+          >
+            <ModalButton label="Delete Class" onClick={() => {}} danger />
+          </ConfirmModal>
           <ModalButton
             label={valid ? "✨ Update" : "✖️ Update"}
             onClick={() => {}}

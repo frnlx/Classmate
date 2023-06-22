@@ -1,7 +1,7 @@
 "use client";
 
 import { Comment } from "@prisma/client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CommentWithUser,
   ResourcePopulatedWithUserComment,
@@ -21,6 +21,7 @@ import {
 } from "@/api/client/resource";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { ConfirmModal } from "@/components/use-client/Modal";
 
 function CommentItem(p: {
   comment: CommentWithUser;
@@ -28,6 +29,7 @@ function CommentItem(p: {
   deleteFunc: (id: BigInt) => unknown;
   onDelete?: () => void;
 }) {
+  const [open, setOpen] = useState(false)
   const session = useSession();
   const canDelete =
     p.comment.userId === session.data?.user.id || p.isClassOwner;
@@ -61,12 +63,19 @@ function CommentItem(p: {
       <p className="whitespace-pre-line break-words">{ p.comment.content }</p>
 
       { canDelete && (
-        <button
-          onClick={ () => onDelete() }
-          className="h-6 w-6 bg-alert/80 hover:bg-alertduration-150 transition-all absolute top-0 right-0 rounded-md mr-2"
+        <ConfirmModal
+          title="Delete comment?"
+          desc="Are you sure you want to delete this comment?"
+          open={ open }
+          onChange={ setOpen }
+          onConfirm={ () => onDelete() }
         >
-          <Trash size={ 18 } className="m-auto" />
-        </button>
+          <button
+            className="h-6 w-6 bg-alert/80 hover:bg-alertduration-150 transition-all absolute top-0 right-0 rounded-md mr-2"
+          >
+            <Trash size={ 18 } className="m-auto" />
+          </button>
+        </ConfirmModal>
       ) }
     </div>
   );
