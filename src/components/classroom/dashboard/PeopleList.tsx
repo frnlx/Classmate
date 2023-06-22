@@ -65,8 +65,8 @@ export function PeopleList({ classId }: { classId: string }) {
   if (data?.length === 0) return <p>There is no one in this class</p>;
 
   return (
-    <div className="flex flex-col gap-y-2">
-      <div className="grid grid-cols-2">
+    <div className="flex flex-col max-h-40">
+      <div className="grid grid-cols-2 h-full gap-y-2 overflow-hidden">
         { data?.map((user) => {
           return (
             <PeopleRow
@@ -79,7 +79,11 @@ export function PeopleList({ classId }: { classId: string }) {
           );
         }) }
       </div>
-
+      { data && data.length >= 8 && (
+        <div className="relative">
+          <div className="w-full h-12 bg-gradient-to-t from-dark1 absolute bottom-0"></div>
+        </div>
+      ) }
       <PeopleModal
         users={ data?.map((u) => u.user) ?? [] }
         isAdmin={ isAdmin }
@@ -104,7 +108,7 @@ export function PeopleModal({
 } & CommonProps) {
   return (
     <ModalBase title="People" trigger={ children } size="lg">
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-2 max-h-pc55 overflow-y-auto">
         { users.map((user) => {
           return (
             <PeopleRow

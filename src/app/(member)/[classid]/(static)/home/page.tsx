@@ -33,14 +33,13 @@ export default async function ClassHomePage({
 
   return (
     <div className="w-full p-16 overflow-y-auto">
-      <ControlButton classId={classId} />
-      <div className="container max-w-3xl mx-auto flex flex-col space-y-2">
-        <CourseAbout classId={classId} />
-        {userId !== classroomOwnerId.ownerId && <MemberLevel member={member} />}
+      <ControlButton classId={ classId } />
+      <div className="container max-w-3xl mx-auto flex flex-col space-y-4">
+        <CourseAbout classId={ classId } />
+        { userId !== classroomOwnerId.ownerId && <MemberLevel member={ member } /> }
         <div className="flex flex-row space-x-4">
-          {/* <Box title="Assignments" className="basis-1/2" /> */}
           <Box title="People" className="w-full">
-            <PeopleList classId={classId} />
+            <PeopleList classId={ classId } />
           </Box>
         </div>
       </div>
