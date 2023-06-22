@@ -2,7 +2,7 @@
 
 import { useSessionRequired } from "@/api/client/auth";
 import { useClassroomQuery } from "@/api/client/classroom";
-import { useLeaveClass } from "@/api/client/user";
+import { useLeaveClass, useUserClassList } from "@/api/client/user";
 import EditClassForm from "@/components/form/EditClassForm";
 import { ConfirmModal, ModalBase } from "@/components/use-client/Modal";
 import { Classroom } from "@prisma/client";
@@ -39,6 +39,7 @@ function EditClassButton({ classroom }: ButtonProps) {
 function LeaveClassButton({ classroom }: ButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { mutateAsync: leaveClassroom } = useLeaveClass();
+  const { refetch } = useUserClassList();
   const { push } = useRouter();
 
   return (
@@ -49,6 +50,7 @@ function LeaveClassButton({ classroom }: ButtonProps) {
       onChange={setIsOpen}
       onConfirm={async () => {
         await leaveClassroom(classroom.id);
+        await refetch();
         setIsOpen(false);
         push("/dashboard");
       }}
