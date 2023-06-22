@@ -15,6 +15,7 @@ import { ModalButton } from "../use-client/Modal";
 import { Classroom } from "@prisma/client";
 import { useDeleteClass, useEditClass } from "@/api/client/classroom";
 import { useRouter } from "next/navigation";
+import { useUserClassList } from "@/api/client/user";
 
 /**
  * Form Schema Type
@@ -36,6 +37,7 @@ export default function EditClassForm(p: {
   const { push } = useRouter();
   const { mutateAsync: editClass } = useEditClass(p.classId);
   const { mutateAsync: removeClass } = useDeleteClass(p.classId);
+  const { refetch } = useUserClassList();
   const form = useForm<EditClassroomFormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,12 +59,12 @@ export default function EditClassForm(p: {
   async function onDelete() {
     try {
       await removeClass();
+      await refetch();
       push("/dashboard");
     } catch (error: any) {
       form.setError("root", error?.message);
     }
   }
-
 
   const valid = form.formState.isValid;
 
@@ -104,6 +106,7 @@ export default function EditClassForm(p: {
             onClick={() => {
               onDelete();
             }}
+            danger
           />
           <ModalButton
             label={valid ? "✨ Update" : "✖️ Update"}
