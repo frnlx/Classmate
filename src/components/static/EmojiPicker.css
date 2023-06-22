@@ -1,0 +1,21 @@
+.pickerroot{
+  /* outline: red 5px solid; */
+  overflow: hidden
+}
+
+.pickerroot > div{
+  @apply h-full w-full
+}
+
+.pickerroot em-emoji-picker {
+  @apply h-full w-full text-sm
+}
+
+.pickerroot em-emoji-picker section {
+  outline: red 1px solid;
+  background-color: red;
+}
+#root>div.scroll.flex-grow.padding-lr {
+  outline: red 1px solid;
+  background-color: red;
+}

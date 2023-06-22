@@ -1,6 +1,5 @@
-// src/app/api/auth/[...nextauth]
-import config from "@/server/config";
+import { authOptions } from "@/configs/auth";
 import NextAuth from "next-auth/next";
 
-const handler = NextAuth(config.auth) 
+const handler = NextAuth(authOptions) 
 export { handler as GET, handler as POST }

@@ -1,5 +1,5 @@
 import { routes } from "@/api/routes"
-import { routesHandler } from "@/server/lib/route"
+import { routesHandler } from "@/lib/route"
 
 const handler = routesHandler(routes)
 export {

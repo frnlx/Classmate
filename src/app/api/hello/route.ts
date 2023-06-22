@@ -1,4 +1,3 @@
-import { log } from "@/server/lib/logger"
 
 export async function GET(request: Request) {
 
