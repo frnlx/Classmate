@@ -79,7 +79,7 @@ export function PeopleList({ classId }: { classId: string }) {
           );
         }) }
       </div>
-      { data && data.length >= 8 && (
+      { data && data.length > 6 && (
         <div className="relative">
           <div className="w-full h-12 bg-gradient-to-t from-dark1 absolute bottom-0"></div>
         </div>
