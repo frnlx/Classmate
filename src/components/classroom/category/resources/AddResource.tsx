@@ -88,7 +88,7 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
   const valid = form.formState.isValid;
   return (
     <Form { ...form }>
-      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
+      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-4 max-h-pc80 overflow-y-auto">
         <FormField
           control={ form.control }
           name="type"

@@ -31,30 +31,29 @@ function PeopleRow({
   }
 
   return (
-    <div key={user.id} className="flex flex-row items-center space-x-2">
+    <div key={ user.id } className="flex flex-row items-center space-x-2">
       <div className="w-6 h-6 relative">
         <Image
-          src={user.pfp}
+          src={ user.pfp }
           className="object-contain rounded-full"
           alt="Profile picture"
           fill
         />
       </div>
       <div className="flex flex-col">
-        <span>{user.name}</span>
-        {user.id === ownerId && (
-          <span className="text-light2 text-sm">Class owner</span>
-        )}
+        <span>{ user.name } { user.id === ownerId && (
+          <span className="self-center text-sm text-light2"> - Owner</span>
+        ) }</span>
       </div>
 
-      {isAdmin && data?.user.id !== user.id && ownerId !== user.id && (
+      { isAdmin && data?.user.id !== user.id && ownerId !== user.id && (
         <button
           className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150 !ml-auto"
-          onClick={onRemove}
+          onClick={ onRemove }
         >
           Remove
         </button>
-      )}
+      ) }
     </div>
   );
 }
@@ -68,26 +67,26 @@ export function PeopleList({ classId }: { classId: string }) {
   return (
     <div className="flex flex-col gap-y-2">
       <div className="grid grid-cols-2">
-        {data?.map((user) => {
+        { data?.map((user) => {
           return (
             <PeopleRow
-              key={user.id}
-              user={user.user}
-              isAdmin={false}
-              classId={classId}
-              ownerId={classroom?.ownerId ?? ""}
+              key={ user.id }
+              user={ user.user }
+              isAdmin={ false }
+              classId={ classId }
+              ownerId={ classroom?.ownerId ?? "" }
             />
           );
-        })}
+        }) }
       </div>
 
       <PeopleModal
-        users={data?.map((u) => u.user) ?? []}
-        isAdmin={isAdmin}
-        classId={classId}
-        ownerId={classroom?.ownerId ?? ""}
+        users={ data?.map((u) => u.user) ?? [] }
+        isAdmin={ isAdmin }
+        classId={ classId }
+        ownerId={ classroom?.ownerId ?? "" }
       >
-        <ModalButton label="Open List" onClick={() => {}} />
+        <ModalButton label="Open List" onClick={ () => { } } />
       </PeopleModal>
     </div>
   );
@@ -104,19 +103,19 @@ export function PeopleModal({
   children: ReactNode;
 } & CommonProps) {
   return (
-    <ModalBase title="People" trigger={children} size="lg">
+    <ModalBase title="People" trigger={ children } size="lg">
       <div className="flex flex-col gap-y-2">
-        {users.map((user) => {
+        { users.map((user) => {
           return (
             <PeopleRow
-              key={user.id}
-              user={user}
-              isAdmin={isAdmin}
-              classId={classId}
-              ownerId={ownerId}
+              key={ user.id }
+              user={ user }
+              isAdmin={ isAdmin }
+              classId={ classId }
+              ownerId={ ownerId }
             />
           );
-        })}
+        }) }
       </div>
     </ModalBase>
   );

@@ -77,28 +77,28 @@ export default function RewardManageTable({
 }) {
   console.log(rewardRequests);
   return (
-    <div className="bg-dark1 p-4 rounded-md w-full">
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b divide-x">
-            { isOwner && <th>Name</th> }
-            <th>Reward Name</th>
-            <th>Date Bought</th>
-            <th>Notes</th>
-            <th>{ isOwner ? "Action" : "Status" }</th>
-          </tr>
-        </thead>
-        <tbody>
-          { rewardRequests.map((r) => (
-            <RewardManageRow
-              key={ r.id }
-              rewardRequest={ r }
-              isOwner={ isOwner }
-              classId={ classId }
-            />
-          )) }
-        </tbody>
-      </table>
+    <div className="bg-dark1 p-4 rounded-lg w-full max-h-pc80">
+      <div className="flex flex-row w-full justify-around border-b text-center">
+        { isOwner && <div className="mb-2 w-full">Name</div> }
+        <div className="mb-2 w-full">Reward Name</div>
+        <div className="mb-2 w-full">Date Bought</div>
+        <div className="mb-2 w-full">Notes</div>
+        <div className="mb-2 w-full">{ isOwner ? "Action" : "Status" }</div>
+      </div>
+      <div className="flex overflow-y-auto max-h-pc55">
+        <table className="w-full border-collapse table-fixed">
+          <tbody>
+            { rewardRequests.map((r) => (
+              <RewardManageRow
+                key={ r.id }
+                rewardRequest={ r }
+                isOwner={ isOwner }
+                classId={ classId }
+              />
+            )) }
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
