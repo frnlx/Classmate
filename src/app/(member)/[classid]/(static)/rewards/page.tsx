@@ -50,6 +50,9 @@ export default async function ClassRewardsPage({
         },
       },
     },
+    orderBy: {
+      claimDate: "desc",
+    },
   });
 
   console.log(whereClause, memberRewards);
