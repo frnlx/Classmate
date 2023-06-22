@@ -70,7 +70,11 @@ export default function RewardForm(p: {
                 <TextInput
                   type="number"
                   {...field}
-                  onChange={(event) => field.onChange(+event.target.value)}
+                  onChange={(event) =>
+                    field.onChange(
+                      event.target.value === "" ? null : +event.target.value
+                    )
+                  }
                 />
               </FormControl>
             </FormItem>

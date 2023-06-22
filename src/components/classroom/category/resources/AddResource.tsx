@@ -194,7 +194,7 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                             type="number"
                             { ...field }
                             onChange={ (event) =>
-                              field.onChange(+event.target.value)
+                              field.onChange(event.target.value === "" ? null : +event.target.value)
                             }
                           />
                         </FormControl>
@@ -214,7 +214,7 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
                             type="number"
                             { ...field }
                             onChange={ (event) =>
-                              field.onChange(+event.target.value)
+                              field.onChange(event.target.value === "" ? null : +event.target.value)
                             }
                           />
                         </FormControl>

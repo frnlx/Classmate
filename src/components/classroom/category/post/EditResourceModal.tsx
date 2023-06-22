@@ -149,7 +149,7 @@ function ResourceForm(p: {
                         type="number"
                         {...field}
                         onChange={(event) =>
-                          field.onChange(+event.target.value)
+                          field.onChange(event.target.value === "" ? null : +event.target.value)
                         }
                       />
                     </FormControl>
@@ -169,7 +169,7 @@ function ResourceForm(p: {
                         type="number"
                         {...field}
                         onChange={(event) =>
-                          field.onChange(+event.target.value)
+                          field.onChange(event.target.value === "" ? null : +event.target.value)
                         }
                       />
                     </FormControl>
