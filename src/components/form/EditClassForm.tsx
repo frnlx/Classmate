@@ -59,9 +59,9 @@ export default function EditClassForm(p: {
 
   async function onDelete() {
     try {
+      push("/dashboard");
       await removeClass();
       await refetch();
-      push("/dashboard");
     } catch (error: any) {
       form.setError("root", error?.message);
     }
