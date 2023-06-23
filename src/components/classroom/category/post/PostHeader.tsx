@@ -31,7 +31,7 @@ export default function PostHeader({
         <header className="text-2xl font-bold">{ resource.title }</header>
         <span className="text-sm text-light1">
           By { resource.user.name } - { " " }
-          { resource.createdAt.toLocaleDateString("en-US", {
+          { resource.createdAt.toLocaleDateString("en-SG", {
             weekday: "long",
             month: "long",
             day: "numeric",
