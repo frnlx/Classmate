@@ -1,9 +1,23 @@
+"use client"
+
 import { Member } from "@prisma/client";
 import React from "react";
+import { ModalBase, ModalButton } from "@/components/use-client/Modal";
+import { User } from "@prisma/client";
+import { prisma } from "@/lib/db";
 
-export default function MemberLevel({ member }: { member: Member }) {
-  const userLevel = (member.xp / 100).toFixed();
-  const modulo = member.xp % 100;
+type RankingItems = {
+  username: string;
+  xp: number;
+}
+
+export default function MemberLevel(p: {
+  member: Member,
+  rankingList: RankingItems[]
+}) {
+  const userLevel = (p.member.xp / 100).toFixed();
+  const modulo = p.member.xp % 100;
+  const rankingList = p.rankingList
 
   return (
     <div className="rounded-lg bg-dark1 p-4 flex flex-row space-x-4 w-full">
@@ -26,6 +40,41 @@ export default function MemberLevel({ member }: { member: Member }) {
           />
         </div>
       </div>
+      <RankingModal
+        usersList={ rankingList }
+      >
+        <ModalButton label="Ranking List" onClick={ () => { } } />
+      </RankingModal>
     </div>
+  );
+}
+
+export function RankingModal({ usersList, children }: { usersList: RankingItems[], children: React.ReactNode }) {
+  const rankingItems = usersList.sort((a, b) => b.xp - a.xp)
+  return (
+    <ModalBase title="Ranking" trigger={ children } size="lg">
+      <div className="flex flex-col gap-y-2 max-h-pc55 overflow-y-auto">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="border-b divide-x">
+              <th className="text-center">Rank</th>
+              <th className="text-center mx-auto">Username</th>
+              <th className="text-center">XP</th>
+            </tr>
+          </thead>
+          <tbody className="gap-y-2">
+            { rankingItems.map(
+              (item, index) => (
+                <tr key={ index } className="pb-2 text-sm">
+                  <td className="text-center">{ index + 1 }</td>
+                  <td className="text-center">{ item.username }</td>
+                  <td className="text-center">{ item.xp }</td>
+                </tr>
+              )
+            ) }
+          </tbody>
+        </table>
+      </div>
+    </ModalBase>
   );
 }

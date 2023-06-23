@@ -8,6 +8,11 @@ import { prisma } from "@/lib/db";
 import { PageProps } from "@/types/next";
 import { notFound } from "next/navigation";
 
+type RankingItems = {
+  username: string;
+  xp: number;
+}
+
 export default async function ClassHomePage({
   params,
   searchParams,
@@ -29,6 +34,32 @@ export default async function ClassHomePage({
     select: { ownerId: true },
   });
 
+  const members = await prisma.member.findMany({
+    where: {
+      classroomId: classId,
+      inactive: false,
+      userId: {
+        not: classroomOwnerId?.ownerId,
+      },
+    },
+  });
+  const userList = await prisma.user.findMany({
+    where: {
+      id: {
+        in: members.map((m) => m.userId),
+      },
+    },
+  });
+
+  const rankingItems: RankingItems[] = [
+    ...userList.map((u) => {
+      return {
+        username: u.name,
+        xp: members.find((m) => m.userId === u.id)?.xp ?? 0,
+      };
+    }),
+  ];
+
   if (!member || !classroomOwnerId) notFound();
 
   return (
@@ -36,7 +67,7 @@ export default async function ClassHomePage({
       <ControlButton classId={ classId } />
       <div className="container max-w-3xl mx-auto flex flex-col space-y-4">
         <CourseAbout classId={ classId } />
-        { userId !== classroomOwnerId.ownerId && <MemberLevel member={ member } /> }
+        { userId !== classroomOwnerId.ownerId && <MemberLevel member={ member } rankingList={ rankingItems } /> }
         <div className="flex flex-row space-x-4">
           <Box title="People" className="w-full">
             <PeopleList classId={ classId } />
