@@ -22,7 +22,7 @@ export function SignInButton() {
       onClick={ () => {
         setLoading(true)
         signIn("google", {
-          callbackUrl: '/'
+          callbackUrl: '/dashboard'
         })
       } }
       colorScheme="gray"
