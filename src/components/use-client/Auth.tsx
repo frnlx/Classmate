@@ -4,6 +4,7 @@ import { Route } from "next"
 import { getSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
+import { ConfirmModal } from "./Modal";
 
 export function SignInButton() {
   const [isLoading, setLoading] = useState(false)
@@ -33,14 +34,21 @@ export function SignInButton() {
 }
 
 export function SignOutButton() {
+  const [open, setOpen] = useState(false)
   return (
-    <button
-      className="rounded-md bg-alert bg-opacity-80 px-6 py-3 hover:bg-opacity-100 transition-all duration-150 text-md font-semibold"
-      onClick={ () => signOut({
-        callbackUrl: '/'
-      }) }>
-      Sign out
-    </button>
+    <ConfirmModal
+      title="Sign Out"
+      desc="Are you sure you want to sign out?"
+      open={ open }
+      onChange={ setOpen }
+      onConfirm={ () => signOut({ callbackUrl: '/' }) }
+    >
+      <button
+        className="text-whiter bg-alert px-5 p-2.5 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center hover:shadow-[0_0_20px_-3px_#ff3333] hover:shadow-alert active:brightness-90]"
+      >
+        Sign Out
+      </button>
+    </ConfirmModal>
   )
 }
 

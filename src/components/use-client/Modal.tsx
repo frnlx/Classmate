@@ -85,7 +85,7 @@ export function ModalBase(p: {
   size?: ModalSize
   className?: string
 }) {
-  
+
   return (
     <Root
       open={ p.open }
@@ -118,7 +118,7 @@ export function ModalBase(p: {
           "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
         ) }>
 
-          <div className={clsx("p-6 pt-6", p.className)}>
+          <div className={ clsx("p-6 pt-6", p.className) }>
 
             <header className="mb-4 p-2 text-center">
               <Title className="font-semibold text-xl text-white m-0 mb-0.5">
@@ -153,7 +153,7 @@ interface ModalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const ModalButton = forwardRef<HTMLButtonElement, ModalButtonProps>(
   (p, ref) => (
     <button
-      ref={ref}
+      ref={ ref }
       disabled={ p.disabled ?? false }
       type={ p.submit ? "submit" : p.reset ? "reset" : "button" }
       onClick={ p.onClick }
@@ -179,7 +179,7 @@ const ModalButton = forwardRef<HTMLButtonElement, ModalButtonProps>(
           // "disabled:grayscale",
           "disabled:hover:brightness-100",
           p.className
-        ) : p.danger ? 
+        ) : p.danger ?
           clsx(
             "text-whiter bg-alert px-8",
             "hover:shadow-[0_0_20px_-3px_#ff3333]",
@@ -187,11 +187,11 @@ const ModalButton = forwardRef<HTMLButtonElement, ModalButtonProps>(
             "active:brightness-90",
             p.className
           ) : clsx(
-              "text-light1",
-              "hover:text-light0 hover:bg-light2/20",
-              "active:brightness-125",
-              p.className
-            )
+            "text-light1",
+            "hover:text-light0 hover:bg-light2/20",
+            "active:brightness-125",
+            p.className
+          )
       ) }>
       { p.label }
     </button>
@@ -246,35 +246,44 @@ export { ModalButton }
 //   )
 // }
 
-export function ConfirmModal(p : {
+export function ConfirmModal(p: {
   title: string
   desc: string
   open: boolean
   onChange: (open: boolean) => void
   onConfirm: () => unknown
   children: React.ReactNode
+  approveMode?: boolean
 }) {
   return <ModalBase
-    trigger={p.children
+    trigger={ p.children
     }
-    title={p.title}
-    desc={p.desc}
-    open={p.open}
-    onChange={p.onChange}
+    title={ p.title }
+    desc={ p.desc }
+    open={ p.open }
+    onChange={ p.onChange }
   >
     <div className="flex flex-row space-x-2 justify-center">
       <button
         className="rounded-md bg-dark2 px-4 py-2 hover:bg-light2 transition-all duration-150"
-        onClick={() => p.onChange(false)}
+        onClick={ () => p.onChange(false) }
       >
         No
       </button>
-      <button
-        className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150"
-        onClick={p.onConfirm}
-      >
-        Yes
-      </button>
+      { p.approveMode ? (
+        <button
+          className="rounded-md bg-ok bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150"
+          onClick={ p.onConfirm }
+        >
+          Yes
+        </button>) : (
+        <button
+          className="rounded-md bg-alert bg-opacity-80 px-4 py-2 hover:bg-opacity-100 transition-all duration-150"
+          onClick={ p.onConfirm }
+        >
+          Yes
+        </button>
+      ) }
     </div>
   </ModalBase>
 }
