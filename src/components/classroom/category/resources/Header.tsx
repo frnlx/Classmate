@@ -12,11 +12,15 @@ export function Header(p: { title: string; classId: string }) {
   return (
     <header className="flex flex-row gap-x-4 items-center p-4 w-full">
       <div className="p-4 rounded-md bg-dark1">
-        <HashStraight className="text-light1 font-semibold" size={32} />
+        <HashStraight className="text-light1 font-semibold" size={ 32 } />
       </div>
-      <div className="text-slate-100 text-3xl font-bold ">{p.title}</div>
+      <div className="text-slate-100 text-3xl font-bold ">{ p.title }</div>
 
-      {session.data?.user.id === data?.ownerId && <AddResource />}
+      { session.data?.user.id === data?.ownerId && (
+        <div className="ml-auto">
+          <AddResource />
+        </div>
+      ) }
     </header>
   );
 }
