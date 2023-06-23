@@ -1,7 +1,7 @@
 "use client";
 
 import { useClaimReward } from "@/api/client/reward";
-import { ModalButton } from "@/components/use-client/Modal";
+import { ConfirmModal } from "@/components/use-client/Modal";
 import { formatDate } from "@/lib/util";
 import { Member, MemberReward, User } from "@prisma/client";
 import clsx from "clsx";
@@ -28,6 +28,7 @@ function RewardManageRow({
     classId,
     rewardRequest.id
   );
+  const [open, setOpen] = React.useState(false);
 
   async function onClaim() {
     console.log("CLAIM");
@@ -52,11 +53,20 @@ function RewardManageRow({
           { rewardRequest.redeemed ? (
             "Redeemed"
           ) : isOwner ? (
-            <ModalButton
-              label="Redeem Request"
-              onClick={ () => onClaim() }
-              primary
-            />
+            <ConfirmModal
+              title="Redeem Request"
+              desc="Are you sure you want to redeem this request?"
+              open={ open }
+              onChange={ setOpen }
+              onConfirm={ onClaim }
+              approveMode={ true }
+            >
+              <button
+                className="text-whiter bg-ok p-2.5 px-8 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center hover:shadow-[0_0_20px_-3px_#008E5A] hover:shadow-ok active:brightness-90"
+              >
+                Redeem Request
+              </button>
+            </ConfirmModal>
           ) : (
             "Requested"
           ) }

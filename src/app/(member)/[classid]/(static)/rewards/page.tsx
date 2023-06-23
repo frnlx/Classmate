@@ -44,6 +44,9 @@ export default async function ClassRewardsPage({
           id: userId,
         },
       },
+      classroom: {
+        id: classId,
+      }
     };
   const memberRewards = await prisma.memberReward.findMany({
     where: whereClause,

@@ -71,7 +71,7 @@ function CommentItem(p: {
           onConfirm={ () => onDelete() }
         >
           <button
-            className="h-6 w-6 bg-alert/80 hover:bg-alertduration-150 transition-all absolute top-0 right-0 rounded-md mr-2"
+            className="h-6 w-6 bg-alert/80 hover:bg-alert duration-150 transition-all absolute top-0 right-0 rounded-md mr-2"
           >
             <Trash size={ 18 } className="m-auto" />
           </button>

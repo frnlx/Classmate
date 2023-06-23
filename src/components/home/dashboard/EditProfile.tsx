@@ -40,30 +40,30 @@ function EditProfileForm(p: { onCancel: () => void; onUpdated: () => void }) {
 
   const valid = form.formState.isValid;
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <Form { ...form }>
+      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
         <FormField
-          control={form.control}
+          control={ form.control }
           name="name"
-          render={({ field }) => (
+          render={ ({ field }) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
                 <FormLabel>Name</FormLabel> <FormMessage />
               </div>
               <FormControl>
-                <TextInput {...field} />
+                <TextInput { ...field } />
               </FormControl>
             </FormItem>
-          )}
+          ) }
         />
         <div className="flex justify-end gap-2 pt-2">
-          <ModalButton label="Cancel" onClick={() => p.onCancel()} />
+          <ModalButton label="Cancel" onClick={ () => p.onCancel() } />
           <ModalButton
-            label={valid ? "✨ Update" : "✖️ Update"}
-            onClick={() => {}}
+            label={ valid ? "✨ Update" : "✖️ Update" }
+            onClick={ () => { } }
             primary
             submit
-            disabled={!valid}
+            disabled={ !valid }
           />
         </div>
       </form>
@@ -76,19 +76,19 @@ export default function EditProfile() {
 
   return (
     <ModalBase
-      open={isOpen}
+      open={ isOpen }
       size="xl"
       title="Edit Profile"
       trigger={
-        <button className="rounded-md bg-dark2 px-4 py-2 hover:bg-light2 transition-all duration-150 text-xs font-semibold">
+        <button className="p-2.5 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center text-whiter bg-dark2 px-8 hover:shadow-[0_0_20px_-3px_#3f3f46]">
           Edit Profile
         </button>
       }
-      onChange={setIsOpen}
+      onChange={ setIsOpen }
     >
       <EditProfileForm
-        onCancel={() => setIsOpen(false)}
-        onUpdated={() => setIsOpen(false)}
+        onCancel={ () => setIsOpen(false) }
+        onUpdated={ () => setIsOpen(false) }
       />
     </ModalBase>
   );
