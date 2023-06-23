@@ -100,7 +100,7 @@ function RewardRow({
             <ModalBase
               open={ open }
               onChange={ setOpenProxy }
-              title="Edit Reward"
+              title="Buy Reward"
               trigger={
                 <ModalButton
                   label="Buy"

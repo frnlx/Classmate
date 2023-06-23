@@ -15,7 +15,7 @@ export default async function DashboardPage({
   return (
     <div className="flex flex-col h-full w-full justify-between overflow-y-auto">
       <div className="w-full space-y-12">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between p-4">
           <div></div>
           <EditProfile />
         </div>
@@ -38,7 +38,7 @@ export default async function DashboardPage({
           </h2>
         </div>
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between p-4">
         <div></div>
         <SignOutButton />
       </div>

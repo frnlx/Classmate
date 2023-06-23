@@ -80,7 +80,7 @@ export default function EditProfile() {
       size="xl"
       title="Edit Profile"
       trigger={
-        <button className="rounded-md bg-dark2 px-6 py-3 hover:bg-light2 transition-all duration-150 text-md font-semibold">
+        <button className="p-2.5 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center text-whiter bg-dark2 px-8 hover:shadow-[0_0_20px_-3px_#3f3f46]">
           Edit Profile
         </button>
       }
