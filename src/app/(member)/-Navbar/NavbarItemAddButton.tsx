@@ -85,7 +85,7 @@ function CreateClassModal(p: { children: ReactNode }) {
 
       <ModalBase
         title="Join a Server"
-        desc="Enter an invite below to join an existing server"
+        desc="Enter an invite below to join an existing classroom"
         open={ modalState === "join" ? true : false }
         onChange={ (state) => { } }
       >
