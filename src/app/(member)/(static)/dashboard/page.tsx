@@ -13,11 +13,18 @@ export default async function DashboardPage({
   const date = new Date();
 
   return (
-    <div className="flex flex-col h-full w-full justify-between overflow-y-auto">
+    <div className="flex flex-col h-full w-full overflow-y-auto">
       <div className="w-full space-y-12">
-        <div className="flex flex-row justify-between p-4">
+        <div className="flex flex-row w-full p-4 justify-between">
           <div></div>
-          <EditProfile />
+          <div className="flex flex-row space-x-4 content-center">
+            <div className="">
+              <EditProfile />
+            </div>
+            <div>
+              <SignOutButton />
+            </div>
+          </div>
         </div>
         <div className="container max-w-3xl mx-auto flex flex-col space-y-2 text-center">
           <span>
@@ -37,10 +44,6 @@ export default async function DashboardPage({
             , { user.data?.user.name }
           </h2>
         </div>
-      </div>
-      <div className="flex flex-row justify-between p-4">
-        <div></div>
-        <SignOutButton />
       </div>
     </div>
   );
