@@ -51,8 +51,8 @@ export default function LandingPage() {
             </div>
           </section> */}
 
-            <footer className='mt-24 w-full bg-zinc-950/40 '>
-              <div className='container m-auto p-12 opacity-80 flex flex-col gap-2'>
+            <footer className='w-full bg-zinc-950/40 '>
+              <div className='container m-auto px-12 py-6 opacity-80 flex flex-col'>
                 <a href='/'>
                   <Image
                     className='app-logo-text'
