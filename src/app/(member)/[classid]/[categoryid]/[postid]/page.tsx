@@ -1,22 +1,12 @@
 import { PageProps } from "@/types/next";
 import { prisma } from "@/lib/db";
-import { Category, ResourceType } from "@prisma/client";
+import { ResourceType } from "@prisma/client";
 import { notFound } from "next/navigation";
-import { prefetch } from "@/api/caching/prefetch";
-import { color } from "@/lib/logger/chalk";
 import { getUserId } from "@/lib/auth";
-import { Header } from "@/components/classroom/category/resources/Header";
 import PostHeader from "@/components/classroom/category/post/PostHeader";
-import {
-  ResourcePopulatedWithUser,
-  ResourcePopulatedWithUserComment,
-} from "@/api/client/api";
 import CommentSection from "@/components/classroom/category/post/CommentSection";
-import Link from "next/link";
-import { getServerSession } from "next-auth";
 import PostContent from "@/components/classroom/category/post/PostContent";
 import SubmitAssignment from "@/components/classroom/category/post/SubmitAssignment";
-import { formatDate } from "@/lib/util";
 import { ClientDate } from "@/components/use-client/ClientDate";
 
 export default async function PostLayout({ params }: PageProps) {
