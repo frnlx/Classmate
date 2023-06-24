@@ -24,7 +24,6 @@ export default function LandingPage() {
                 <BrandLogo className='h-[35px] w-[130px]' />
               </a>
               <div className='flex flex-row gap-2'>
-                <Button nextjs href='/auth' xs plain>Log in</Button>
                 <Button nextjs href='/dashboard' xs>Continue To App</Button>
               </div>
             </div>
@@ -49,6 +48,7 @@ export default function LandingPage() {
               <p className='text-xs text-slate-400'>
                 Made with love for our thesis <br />
                 Released under the MIT License.<br />
+                <a href="https://cdn.discordapp.com/attachments/1122106506742071396/1122106552111878174/User_Manual.pdf" className='text-slate-400'>Download User Manual</a>
                 {/* Copyright © 2023-present Alfonsus Ardani, Eugene Reginald Patrick, Aileen */ }
               </p>
             </div>
