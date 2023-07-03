@@ -9,7 +9,6 @@ import PostContent from "@/components/classroom/category/post/PostContent";
 import SubmitAssignment from "@/components/classroom/category/post/SubmitAssignment";
 import { ClientDate } from "@/components/use-client/ClientDate";
 import { formatDate } from "@/lib/util";
-import { ClientDate } from "@/components/use-client/ClientDate";
 
 export default async function PostLayout({ params }: PageProps) {
   const userId = await getUserId();

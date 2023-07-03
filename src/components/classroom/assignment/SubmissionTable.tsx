@@ -48,9 +48,6 @@ function SubmissionRow(p: { submission: UserSubmission }) {
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
 
-    const [open1, setOpen1] = useState(false);
-    const [open2, setOpen2] = useState(false);
-
     return (
       <tr className="divide-x">
         <td className="p-4">{ p.submission.member.user.name }</td>
@@ -85,8 +82,8 @@ function SubmissionRow(p: { submission: UserSubmission }) {
                 </button>
               </ConfirmModal>
               <ConfirmModal
-                title="Accept Reward"
-                desc="Are you sure you want to accept this reward?"
+                title="Approve Reward"
+                desc="Are you sure you want to approve this reward?"
                 open={ open2 }
                 onChange={ setOpen2 }
                 onConfirm={ sendGradeApprove }
