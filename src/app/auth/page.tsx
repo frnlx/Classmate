@@ -21,7 +21,7 @@ export default function AuthPage() {
 
             <div className='flex flex-col items-center'>
               <h1 className='text-2xl'>Welcome Back!</h1>
-              <p className='text-zinc-400'>{"We're excited to see you again"}</p>
+              <p className='text-zinc-400'>{ "We're excited to see you again" }</p>
             </div>
 
             <SignInButton />
@@ -33,11 +33,11 @@ export default function AuthPage() {
             <BrandLogo className='h-[50px] w-[190px] mx-auto' />
           </Link>
           <div className='m-auto text-zinc-200/20 text-sm mt-8'>
-            Copyright © 2023-present Alfonsus Ardani, Eugene Reginald Patrick, Aileen
+            {/* Copyright © 2023-present Alfonsus Ardani, Eugene Reginald Patrick, Aileen */ }
           </div>
         </div>
       </AppBackground>
     </ClientComponentProvider>
-      
+
   );
 }

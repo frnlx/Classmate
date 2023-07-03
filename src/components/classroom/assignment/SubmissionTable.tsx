@@ -6,9 +6,9 @@ import {
   Submission,
   User,
 } from "@prisma/client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Attachment from "../category/post/Attachment";
-import { ModalButton } from "@/components/use-client/Modal";
+import { ModalButton, ConfirmModal } from "@/components/use-client/Modal";
 import { useSearchFilter } from "./SearchFilterContext";
 import { useGradeSubmission } from "@/api/client/resource";
 import { useRouter } from "next/navigation";
@@ -26,10 +26,18 @@ function SubmissionRow(p: { submission: UserSubmission }) {
     p.submission.id.toString()
   );
 
-  async function sendGrade(giveRewards: boolean) {
-    await gradeSubmission(giveRewards);
+  async function sendGradeApprove() {
+    await gradeSubmission(true);
     refresh();
   }
+
+  async function sendGradeReject() {
+    await gradeSubmission(false);
+    refresh();
+  }
+
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
 
   return (
     <tr className="divide-x">
@@ -50,18 +58,34 @@ function SubmissionRow(p: { submission: UserSubmission }) {
             <p className="text-red-300">Rewards Rejected</p>
           )
         ) : (
-          <div className="flex justify-center">
-            <ModalButton
-              label="Accept"
-              primary
-              onClick={ () => sendGrade(true) }
-            />
-            <ModalButton
-              label="Reject"
-              className="ml-4"
-              onClick={ () => sendGrade(false) }
-              danger
-            />
+          <div className="flex gap-x-2 justify-center">
+            <ConfirmModal
+              title="Reject Reward"
+              desc="Are you sure you want to reject this reward?"
+              open={ open1 }
+              onChange={ setOpen1 }
+              onConfirm={ sendGradeReject }
+            >
+              <button
+                className="text-whiter bg-alert px-5 p-2.5 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center hover:shadow-[0_0_20px_-3px_#ff3333] hover:shadow-alert active:brightness-90]"
+              >
+                Reject
+              </button>
+            </ConfirmModal>
+            <ConfirmModal
+              title="Accept Reward"
+              desc="Are you sure you want to accept this reward?"
+              open={ open2 }
+              onChange={ setOpen2 }
+              onConfirm={ sendGradeApprove }
+              approveMode
+            >
+              <button
+                className="text-whiter bg-ok px-5 p-2.5 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center hover:shadow-[0_0_20px_-3px_#ff3333] hover:shadow-ok active:brightness-90]"
+              >
+                Approve
+              </button>
+            </ConfirmModal>
           </div>
         ) }
       </td>

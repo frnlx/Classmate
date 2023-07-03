@@ -49,7 +49,9 @@ export function SidebarHeader(p: {}) {
   );
 }
 
-export function CategoryList(p: {}) {
+export function CategoryList(p: {
+  isOwner: boolean;
+}) {
   const { currentId, userData } = useRoom();
   const userid = useUserid();
 
@@ -78,7 +80,8 @@ export function CategoryList(p: {}) {
             id={ page.id }
             icon={ <SidebarCategoryIcon /> }
             label={ page.title }
-            isCategory // enables context menu
+            isCategory
+            isOwner={ p.isOwner }
           />
         ))
       ) : (
@@ -91,37 +94,37 @@ export function CategoryList(p: {}) {
 export function AddCategoryButton() {
   const room = useRoom();
   const [isOpen, setIsOpen] = useState(false)
-  const {push} = useRouter();
+  const { push } = useRouter();
   const pathname = usePathname()
   const userid = useUserid()
 
   return (
     <>
-    
-    <ButtonTooltip label="Add New Category">
-      <button
-        className="text-light2 hover:text-light0 text-sm"
-        onClick={ () => setIsOpen(true)
-        }
-      >
-        <Plus weight="bold" />
-      </button>
-    </ButtonTooltip>
-    
-    <ModalBase
-        open={isOpen}
+
+      <ButtonTooltip label="Add New Category">
+        <button
+          className="text-light2 hover:text-light0 text-sm"
+          onClick={ () => setIsOpen(true)
+          }
+        >
+          <Plus weight="bold" />
+        </button>
+      </ButtonTooltip>
+
+      <ModalBase
+        open={ isOpen }
         size="xl"
         title="New Category"
-        onChange={setIsOpen}
+        onChange={ setIsOpen }
       >
         <CategoryForm
           onCancel={ () => setIsOpen(false) }
           onUpdated={ () => setIsOpen(false) }
-          onDeleted={ () => {} }
+          onDeleted={ () => { } }
           idData={ {
             userid, classid: room.currentId
           } }
-          />
+        />
       </ModalBase>
     </>
   )

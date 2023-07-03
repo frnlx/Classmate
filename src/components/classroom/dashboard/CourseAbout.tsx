@@ -17,13 +17,13 @@ export function CourseAbout({ classId }: { classId: string }) {
   return (
     <>
       <div className="flex flex-col space-y-1 text-center justify-center">
-        <h1 className="font-xl font-bold">{data?.name}</h1>
-        <p>{data?.owner?.name}</p>
-        {isAdmin && <span>Invite ID: {data?.inviteID}</span>}
+        <h1 className="font-xl font-bold">{ data?.name }</h1>
+        <span>Invite ID: { data?.inviteID }</span>
       </div>
-
-      <span className="font-light text-gray-500">About</span>
-      <p className="whitespace-pre-line">{data?.description}</p>
+      <div className="whitespace-pre-line bg-dark1 rounded-lg p-4 space-y-2">
+        <p className="font-semibold text-xl">About</p>
+        <div className="whitespace-pre-line">{ data?.description }</div>
+      </div>
     </>
   );
 }

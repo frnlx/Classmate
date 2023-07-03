@@ -70,54 +70,56 @@ export default function EditClassForm(p: {
   const valid = form.formState.isValid;
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <Form { ...form }>
+      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
         <FormField
-          control={form.control}
+          control={ form.control }
           name="name"
-          render={({ field }) => (
+          render={ ({ field }) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
                 <FormLabel>Classroom Name</FormLabel> <FormMessage />
               </div>
               <FormControl>
-                <TextInput {...field} />
+                <TextInput { ...field } />
               </FormControl>
             </FormItem>
-          )}
+          ) }
         />
         <FormField
-          control={form.control}
+          control={ form.control }
           name="desc"
-          render={({ field }: any) => (
+          render={ ({ field }: any) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
                 <FormLabel>Description</FormLabel> <FormMessage />
               </div>
               <FormControl>
-                <TextAreaInput rows={20} {...field} />
+                <TextAreaInput rows={ 20 } { ...field } />
               </FormControl>
             </FormItem>
-          )}
+          ) }
         />
-        <div className="flex justify-end gap-2 pt-2">
-          <ModalButton label="Cancel" onClick={() => p.onCancel()} />
+        <div className="flex justify-between gap-2 pt-2">
           <ConfirmModal
             title="Delete class?"
             desc="Are you sure you want to delete this class?"
-            open={openDeleteMdal}
-            onChange={setOpenDeleteModal}
-            onConfirm={() => onDelete()}
+            open={ openDeleteMdal }
+            onChange={ setOpenDeleteModal }
+            onConfirm={ () => onDelete() }
           >
-            <ModalButton label="Delete Class" onClick={() => {}} danger />
+            <ModalButton label="Delete Class" onClick={ () => { } } danger />
           </ConfirmModal>
-          <ModalButton
-            label={valid ? "✨ Update" : "✖️ Update"}
-            onClick={() => {}}
-            primary
-            submit
-            disabled={!valid}
-          />
+          <div className="space-x-2">
+            <ModalButton label="Cancel" onClick={ () => p.onCancel() } />
+            <ModalButton
+              label={ valid ? "✨ Update" : "✖️ Update" }
+              onClick={ () => { } }
+              primary
+              submit
+              disabled={ !valid }
+            />
+          </div>
         </div>
       </form>
     </Form>

@@ -5,7 +5,7 @@ import { useSessionRequired } from "@/api/client/auth";
 import { useCreateCategory, useUpdateCategory } from "@/api/client/category";
 import { useUpdateUser } from "@/api/client/user";
 import { TextInput } from "@/components/static/Inputs";
-import { ModalBase, ModalButton } from "@/components/use-client/Modal";
+import { ConfirmModal, ModalBase, ModalButton } from "@/components/use-client/Modal";
 import { Form, FormField, FormItem } from "@/components/use-client/form/Form";
 import { FormMessage } from "@/components/use-client/form/FormField";
 import { FormLabel, FormControl } from "@chakra-ui/react";
@@ -41,6 +41,7 @@ export default function CategoryForm(p: {
     p.idData.classid,
     p.idData?.catid ?? ""
   );
+  const [open, setOpen] = useState(false);
 
   const form = useForm<CategoryFormSchema>({
     resolver: zodResolver(formSchema),
@@ -85,38 +86,49 @@ export default function CategoryForm(p: {
   const label = p.idData.catid ? "Update" : "Create";
   const valid = form.formState.isValid;
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <Form { ...form }>
+      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
         <FormField
-          control={form.control}
+          control={ form.control }
           name="name"
-          render={({ field }) => (
+          render={ ({ field }) => (
             <FormItem>
               <div className="flex gap-1 align-bottom h-3">
                 <FormLabel>Name</FormLabel> <FormMessage />
               </div>
               <FormControl>
-                <TextInput {...field} />
+                <TextInput { ...field } />
               </FormControl>
             </FormItem>
-          )}
+          ) }
         />
-        <div className="flex justify-end gap-2 pt-2">
-          <ModalButton label="Cancel" onClick={() => p.onCancel()} />
-          {p.idData.catid && (
+        <div className="flex justify-between gap-2 pt-2">
+          { p.idData.catid ? (
+            <ConfirmModal
+              title="Delete Category"
+              desc="Are you sure you want to delete this category?"
+              open={ open }
+              onChange={ setOpen }
+              onConfirm={ onDelete }
+            >
+              <button
+                className="text-whiter bg-alert px-5 p-2.5 rounded-md brightness-100 text-xs font-semibold transition-all duration-200 inline-flex items-center justify-center hover:shadow-[0_0_20px_-3px_#ff3333] hover:shadow-alert active:brightness-90]"
+              >
+                Delete Category
+              </button>
+            </ConfirmModal>
+
+          ) : <div></div> }
+          <div className="space-x-2">
+            <ModalButton label="Cancel" onClick={ () => p.onCancel() } />
             <ModalButton
-              label="Delete Category"
-              danger
-              onClick={() => onDelete()}
+              label={ valid ? `✨ ${label}` : `✖️ ${label}` }
+              onClick={ () => { } }
+              primary
+              submit
+              disabled={ !valid }
             />
-          )}
-          <ModalButton
-            label={valid ? `✨ ${label}` : `✖️ ${label}`}
-            onClick={() => {}}
-            primary
-            submit
-            disabled={!valid}
-          />
+          </div>
         </div>
       </form>
     </Form>

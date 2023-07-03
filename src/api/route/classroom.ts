@@ -90,6 +90,9 @@ const classroom = {
                   include: {
                     user: true,
                   },
+                  orderBy: {
+                    createdAt: "asc",
+                  },
                 },
               },
             },

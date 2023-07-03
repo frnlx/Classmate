@@ -40,10 +40,11 @@ export async function SAcreateClass(values: InferedCreateClassroomFormSchema) {
       categories: {
         create: [
           {
-            title: "My First Topic",
+            title: "First Category",
           },
         ],
       },
+      description: "No Description",
     },
   });
   // revalidatePath('/')

@@ -88,7 +88,7 @@ function ResourceForm(p: { onCancel: () => void; onUpdated: () => void }) {
   const valid = form.formState.isValid;
   return (
     <Form { ...form }>
-      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-6">
+      <form onSubmit={ form.handleSubmit(onSubmit) } className="space-y-4 max-h-pc80 overflow-y-auto">
         <FormField
           control={ form.control }
           name="type"
@@ -251,7 +251,7 @@ export default function AddResource() {
       size="xl"
       title="Add Resource"
       trigger={
-        <button className="rounded-md bg-dark2 text-light0 bg-opacity-80 px-6 py-3 hover:bg-opacity-100 transition-all duration-150 text-md font-semibold ml-auto">
+        <button className="rounded-md bg-dark2 px-4 py-2 hover:bg-light2 transition-all duration-150">
           Add Resource
         </button>
       }
