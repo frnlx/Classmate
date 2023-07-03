@@ -79,7 +79,6 @@ model Resource {
   id           String       @id @default(cuid())
   title        String
   content      String
-  order        Int
   createdAt    DateTime     @default(now())
   user         User         @relation(fields: [userId], references: [id], onDelete: NoAction)
   userId       String
@@ -123,7 +122,7 @@ enum ResourceType {
 }
 
 model Comment {
-  id         BigInt   @id @default(autoincrement())
+  id         String   @id @default(cuid())
   content    String
   userId     String
   user       User     @relation(fields: [userId], references: [id], onDelete: NoAction)
@@ -133,7 +132,7 @@ model Comment {
 }
 
 model Submission {
-  id           BigInt      @id @default(autoincrement())
+  id           String      @id @default(cuid())
   memberId     String
   member       Member      @relation(fields: [memberId], references: [id], onDelete: Cascade)
   assignmentId String

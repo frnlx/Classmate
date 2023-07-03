@@ -63,7 +63,7 @@ const resource = {
     return res.json(
       comments.map((comment) => ({
         ...comment,
-        id: comment.id.toString(), // BigInt hotfix, will be reconverted to BigInt in client
+        id: comment.id,
       }))
     );
   },
@@ -101,7 +101,7 @@ const resource = {
 
     const response = res.json({
       ...comment,
-      id: comment.id.toString(), // BigInt hotfix, will be reconverted to BigInt in client
+      id: comment.id,
     });
     if (
       resource.type !== ResourceType.DISCUSSION ||
@@ -137,13 +137,13 @@ const resource = {
     if (classroom.ownerId === uid) {
       await prisma.comment.delete({
         where: {
-          id: BigInt(commentid),
+          id: commentid,
         },
       });
     } else {
       await prisma.comment.deleteMany({
         where: {
-          id: BigInt(commentid),
+          id: commentid,
           userId: uid,
         },
       });
@@ -179,7 +179,6 @@ const resource = {
         connect: { id: uid },
       },
       type: body.type,
-      order: 0,
     };
 
     if (body.attachmentId) {
@@ -309,7 +308,7 @@ const resource = {
   ) {
     if (body.giveRewards) {
       const submission = await prisma.submission.findUnique({
-        where: { id: BigInt(sid) },
+        where: { id: sid },
         include: {
           assignment: true,
         },
@@ -328,7 +327,7 @@ const resource = {
     }
 
     await prisma.submission.update({
-      where: { id: BigInt(sid) },
+      where: { id: sid },
       data: {
         graded: true,
         rewarded: body.giveRewards,

@@ -26,7 +26,7 @@ import { ConfirmModal } from "@/components/use-client/Modal";
 function CommentItem(p: {
   comment: CommentWithUser;
   isClassOwner: boolean;
-  deleteFunc: (id: BigInt) => unknown;
+  deleteFunc: (id: string) => unknown;
   onDelete?: () => void;
 }) {
   const [open, setOpen] = useState(false)
@@ -129,7 +129,7 @@ export default function CommentSection(p: {
       <div className="flex flex-col gap-4 overflow-auto">
         { comments?.map((c) => (
           <CommentItem
-            key={ c.id.toString() }
+            key={ c.id }
             comment={ c }
             deleteFunc={ deleteComment }
             isClassOwner={ p.resource.userId === session.data?.user.id }
