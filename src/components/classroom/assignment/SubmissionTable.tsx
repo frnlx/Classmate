@@ -23,7 +23,7 @@ type UserSubmission = Submission & {
 function SubmissionRow(p: { submission: UserSubmission }) {
   const { refresh } = useRouter();
   const { mutateAsync: gradeSubmission } = useGradeSubmission(
-    p.submission.id.toString()
+    p.submission.id
   );
 
   async function sendGradeApprove() {
@@ -73,8 +73,8 @@ function SubmissionRow(p: { submission: UserSubmission }) {
               </button>
             </ConfirmModal>
             <ConfirmModal
-              title="Accept Reward"
-              desc="Are you sure you want to accept this reward?"
+              title="Approve Reward"
+              desc="Are you sure you want to approve this reward?"
               open={ open2 }
               onChange={ setOpen2 }
               onConfirm={ sendGradeApprove }
@@ -127,7 +127,7 @@ export default function SubmissionTable({
         </thead>
         <tbody>
           { filteredSubmissions.map((s) => (
-            <SubmissionRow submission={ s } key={ s.id.toString() } />
+            <SubmissionRow submission={ s } key={ s.id } />
           )) }
         </tbody>
       </table>

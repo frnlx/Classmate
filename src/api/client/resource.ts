@@ -76,7 +76,7 @@ export function useCreateComment(
 
       return {
         ...result,
-        id: BigInt(result.id),
+        id: result.id,
       };
     },
 
@@ -107,7 +107,7 @@ export function useComments(
       return result.map((comment) => ({
         ...comment,
         createdAt: new Date(comment.createdAt),
-        id: BigInt(comment.id), // Restore BigInt
+        id: comment.id, // Restore BigInt
       }));
     },
   });
@@ -122,13 +122,13 @@ export function useDeleteComment(
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn(commentId: BigInt) {
+    mutationFn(commentId: string) {
       return ClientAPI.deleteComment({
         userid,
         classid,
         catid,
         resid,
-        commentid: commentId.toString(),
+        commentid: commentId,
       });
     },
 

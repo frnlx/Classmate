@@ -1,7 +1,7 @@
 import { Box } from "@/components/classroom/dashboard/Box";
 import ControlButton from "@/components/classroom/dashboard/ControlButton";
 import { CourseAbout } from "@/components/classroom/dashboard/CourseAbout";
-import MemberLevel from "@/components/classroom/dashboard/MemberLevel";
+import GameInfo from "@/components/classroom/dashboard/GameInfo";
 import { PeopleList } from "@/components/classroom/dashboard/PeopleList";
 import { getUserId } from "@/lib/auth";
 import { prisma } from "@/lib/db";
@@ -60,6 +60,8 @@ export default async function ClassHomePage({
     }),
   ];
 
+  const isMember: boolean = userId !== classroomOwnerId!.ownerId
+
   if (!member || !classroomOwnerId) notFound();
 
   return (
@@ -67,7 +69,7 @@ export default async function ClassHomePage({
       <ControlButton classId={ classId } />
       <div className="container max-w-3xl mx-auto flex flex-col space-y-4">
         <CourseAbout classId={ classId } />
-        { userId !== classroomOwnerId.ownerId && <MemberLevel member={ member } rankingList={ rankingItems } /> }
+        <GameInfo isMember={ isMember } member={ member } rankingList={ rankingItems } />
         <div className="flex flex-row space-x-4">
           <Box title="People" className="w-full">
             <PeopleList classId={ classId } />
